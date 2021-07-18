@@ -7,18 +7,21 @@
   "license": "ISC",
   "private": true,
   "scripts": {
-    "lint": "eslint --ext .js,.vue ./",
-    "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
     "build": "quasar build",
-    "start": "quasar serve --history ./dist/spa",
+    "start": "node server.js",
+    "lint": "eslint --ext .js,.vue ./",
+    "test": "echo \"No test specified\" && exit 0",
     "mockapi": "json-server --watch src/store/db.json"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
+    "connect-history-api-fallback": "^1.6.0",
     "core-js": "^3.6.5",
+    "express": "^4.17.1",
     "quasar": "^2.0.0",
+    "serve-static": "^1.14.1",
     "vuex": "^4.0.1"
   },
   "devDependencies": {
