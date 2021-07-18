@@ -1,6 +1,6 @@
 <template>
-  <q-layout view="hHh Lpr fFf">
-    <q-header elevated>
+  <q-layout view="hHh lpR fFf">
+    <q-header elevated class="bg-primary text-white">
       <q-toolbar>
         <q-btn
           flat
@@ -15,11 +15,11 @@
           Power Up Magazine - Learn About Nuclear Power
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div>Edition: <b>Summer 2021</b></div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered class="bg-grey-1">
+    <q-drawer v-model="leftDrawerOpen" side="left" bordered class="bg-grey-1">
       <q-list>
         <q-item-label header class="text-grey-8">
           Essential Links
@@ -37,8 +37,12 @@
       <router-view />
     </q-page-container>
 
-    <q-footer class="flex flex-center">
-      <div>&copy; 2021 Happy Spirit Publishing</div>
+    <q-footer elevated class="bg-grey-8 text-white text-center">
+      <q-toolbar>
+        <q-toolbar-title>
+          <div>&copy; 2021 Happy Spirit Publishing</div>
+        </q-toolbar-title>
+      </q-toolbar>
     </q-footer>
   </q-layout>
 </template>
