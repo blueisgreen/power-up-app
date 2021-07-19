@@ -1,5 +1,6 @@
 <template>
   <q-page class="flex flex-center">
+    <div>Found {{total.count}} articles.</div>
     <div class="q-pa-md">
       <div class="row q-gutter-md">
         <div class="col-sm">
@@ -44,12 +45,22 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, reactive } from 'vue'
+import { fetchArticles } from '../api/PowerUpService'
 
 export default defineComponent({
   name: 'PageIndex',
   setup() {
+    let total = reactive({count:0})
+    const getArticles = async () => {
+      const results = await fetchArticles()
+      total = {count: results.data.length}
+    }
+
+    onMounted(getArticles)
+
     return {
+      total,
       lorem:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     }
