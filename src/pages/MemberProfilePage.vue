@@ -1,8 +1,8 @@
 <template>
-  <q-page>
+  <q-page class="q-pa-md">
     <h3>Account Settings</h3>
     <div>
-      <q-splitter v-model="splitterModel" style="height: 500px">
+      <q-splitter v-model="splitterModel">
         <template v-slot:before>
           <q-tabs v-model="tab" vertical align="left" indicator-color="teal-10">
             <q-tab
@@ -64,5 +64,6 @@ h4,
 h5,
 h6 {
   margin-top: 0;
+  margin-bottom: 0.em;
 }
 </style>

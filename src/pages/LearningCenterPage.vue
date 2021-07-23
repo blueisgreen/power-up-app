@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="q-pa-md">
     <h3>Learn About Modern Nuclear Power</h3>
     <p>Lots of ways to learn about nuclear.</p>
     <ul>

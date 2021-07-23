@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="q-pa-md">
     <h3>Content Composer</h3>
     <p>
       This area is for content contributors, people who write articles, lessons,

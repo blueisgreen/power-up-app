@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="q-pa-md">
     <h3>Play with Power Up Simulations</h3>
     <p>
       Operate our simulations as a way to learn about nuclear power. This is

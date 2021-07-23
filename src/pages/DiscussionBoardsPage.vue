@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="q-pa-md">
     <h3>Discussion Boards</h3>
     <p>
       Allow reasonable people to conduct civilized discussions about nuclear
