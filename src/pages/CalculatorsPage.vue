@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="q-pa-md">
     <h3>Play with Power Up Calculators</h3>
     <p>
       Find out how much energy is produced by various types of power plants.

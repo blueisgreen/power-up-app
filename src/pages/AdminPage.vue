@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="q-pa-md">
     <h3>Power Up Administration</h3>
     <p>
       This area is for Power Up app administrators. If you have the right

@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="q-pa-md">
     <h3>Need Help? Want to Give Us Feedback?</h3>
     <p>
       Use this contact form to ask questions or tell us what you're thinking.
