@@ -52,16 +52,10 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
   {
-    title: 'Home',
-    caption: 'The magazine cover',
+    title: "What's New",
+    caption: 'The latest headlines and articles',
     icon: 'home',
     link: '/',
-  },
-  {
-    title: 'Profile',
-    caption: 'How others see you',
-    icon: 'person',
-    link: '/profile',
   },
   {
     title: 'Courses',
@@ -78,7 +72,7 @@ const linksList = [
   {
     title: 'Simulation',
     caption: 'Play the simulation game',
-    icon: 'power',
+    icon: 'precision_manufacturing',
     link: '/simulation',
   },
   {
@@ -86,6 +80,12 @@ const linksList = [
     caption: 'Fun with numbers',
     icon: 'calculate',
     link: '/calculators',
+  },
+  {
+    title: 'Account',
+    caption: 'Your profile and settings',
+    icon: 'manage_accounts',
+    link: '/profile',
   },
   {
     title: 'Support',
@@ -102,7 +102,7 @@ const linksList = [
   {
     title: 'Administration',
     caption: 'Administrators only',
-    icon: 'favorite',
+    icon: 'admin_panel_settings',
     link: '/admin',
   },
 ]

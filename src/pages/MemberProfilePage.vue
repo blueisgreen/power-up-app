@@ -5,9 +5,13 @@
       <q-splitter v-model="splitterModel" style="height: 250px">
         <template v-slot:before>
           <q-tabs v-model="tab" vertical align="left">
-            <q-tab name="overview" icon="private" label="Overview"></q-tab>
+            <q-tab
+              name="overview"
+              icon="manage_accounts"
+              label="Overview"
+            ></q-tab>
             <q-tab name="profile" icon="person" label="Profile"></q-tab>
-            <q-tab name="settings" icon="control" label="Preferences"></q-tab>
+            <q-tab name="settings" icon="settings" label="Preferences"></q-tab>
           </q-tabs>
         </template>
         <template v-slot:after>
