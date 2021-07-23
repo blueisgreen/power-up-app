@@ -15,8 +15,9 @@
           Power Up Magazine - Learn About Nuclear Power
         </q-toolbar-title>
 
-        <div>Edition: <b>Summer 2021</b></div>
+        <authorization-widget />
       </q-toolbar>
+      <div>Edition: <b>Summer 2021</b></div>
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" side="left" bordered class="bg-grey-1">
@@ -49,6 +50,7 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
+import AuthorizationWidget from '../components/AuthorizationWidget.vue'
 
 const linksList = [
   {
@@ -114,6 +116,7 @@ export default defineComponent({
 
   components: {
     EssentialLink,
+    AuthorizationWidget,
   },
 
   setup() {
