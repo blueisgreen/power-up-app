@@ -17,6 +17,7 @@
 
         <authorization-widget />
       </q-toolbar>
+      <signup-login-logout-banner />
       <div>Edition: <b>Summer 2021</b></div>
     </q-header>
 
@@ -50,7 +51,8 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
-import AuthorizationWidget from '../components/AuthorizationWidget.vue'
+import AuthorizationWidget from 'components/AuthorizationWidget.vue'
+import SignupLoginLogoutBanner from 'components/SignupLoginLogoutBanner.vue'
 
 const linksList = [
   {
@@ -117,6 +119,7 @@ export default defineComponent({
   components: {
     EssentialLink,
     AuthorizationWidget,
+    SignupLoginLogoutBanner,
   },
 
   setup() {
