@@ -3,7 +3,7 @@ import Account from 'pages/MemberProfilePage'
 
 const routes = [
   {
-    path: '/',  
+    path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') },
@@ -15,10 +15,9 @@ const routes = [
       { path: 'support', component: () => import('pages/SupportPage.vue') },
       { path: 'composer', component: () => import('src/pages/ContentComposerPage.vue') },
       { path: 'admin', component: () => import('pages/AdminPage.vue') },
-      { path: 'login/github/', component: () => import('pages/MemberProfilePage.vue') },
-      { 
-        path: 'login/${authProvider}/callback', 
-        component: () => import('pages/LoginLandingPage.vue') 
+      {
+        path: 'login/:authProvider/callback',
+        component: () => import('pages/LoginLandingPage.vue')
       },
     ]
   },

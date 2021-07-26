@@ -3,6 +3,7 @@
     <q-banner rounded class="bg-purple-8 text-white">
       Who are you?
       <template v-slot:action>
+        <a href="https://github.com/login/oauth/authorize?client_id=c4884cf58449a331758f&redirect_uri=http://localhost:8080/login/github/callback&state=blargy">Login with GitHub</a>
         <q-btn
           flat
           color="white"

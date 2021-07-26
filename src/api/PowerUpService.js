@@ -1,9 +1,11 @@
-import { api } from '../boot/axios'
+import { api, localAPI } from '../boot/axios'
 
-export async function oauthLogin() {
+export async function oauthLogin(authProvider, code, state) {
   // use auth provider ID and given code to finish authenticating via Power Up API
-  const response = await api.post('/login/${authProvider}/callback?code=${authCode}')
-
+  const response = await localAPI.post(
+    `/login/${authProvider}/callback?code=${code}&state=${state}`
+  )
+  console.log(response);
 }
 
 export async function fetchArticles() {
