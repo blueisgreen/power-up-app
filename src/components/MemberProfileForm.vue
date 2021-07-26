@@ -22,6 +22,13 @@
       <q-toggle v-model="accept" label="I accept the license and terms" />
 
       <div>
+        <h4>Roles</h4>
+        <ul>
+          <li v-for="role in roles" :key="role">{{ role }}</li>
+        </ul>
+      </div>
+
+      <div>
         <q-btn label="Submit" type="submit" color="primary" />
         <q-btn
           label="Reset"
@@ -36,6 +43,9 @@
 </template>
 
 <script>
+import { useStore } from 'vuex'
+import { computed } from 'vue'
+
 const onSubmit = () => {
   console.log('IMPLEMENT ME')
 }
@@ -44,19 +54,27 @@ const onReset = () => {
 }
 export default {
   setup() {
+    const store = useStore()
+    const screenName = computed(() => store.state.userSession.screenName)
+    const roles = computed(() => store.state.userSession.roles)
+
     return {
       onSubmit,
       onReset,
       profile: {
-        screenName: 'Bubba',
+        screenName,
         email: 'bubba@happyspiritpublishing.com',
         accessToken: '',
-        roles: ['member', 'author'],
       },
+      roles,
       accept: false,
     }
   },
 }
 </script>
 
-<style></style>
+<style>
+h4 {
+  margin-bottom: 0.5rem;
+}
+</style>
