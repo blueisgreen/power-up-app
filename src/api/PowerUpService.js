@@ -1,5 +1,11 @@
 import { api } from '../boot/axios'
 
+export async function oauthLogin() {
+  // use auth provider ID and given code to finish authenticating via Power Up API
+  const response = await api.post('/login/${authProvider}/callback?code=${authCode}')
+
+}
+
 export async function fetchArticles() {
   console.log('PowerUpService.fetchArticles')
   return await api.get('/articles')
