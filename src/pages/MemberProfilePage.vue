@@ -22,6 +22,7 @@
             </q-tab-panel>
             <q-tab-panel name="profile">
               <h4>Member Profile</h4>
+              <p>Hello, {{ screenName }}</p>
               <member-profile-form />
             </q-tab-panel>
             <q-tab-panel name="settings">
@@ -40,12 +41,20 @@ import { defineComponent, ref } from 'vue'
 import MemberAccountView from 'components/MemberAccountView.vue'
 import MemberProfileForm from 'components/MemberProfileForm.vue'
 import MemberSettingsForm from 'components/MemberSettingsForm.vue'
+import { useStore } from 'vuex'
+import { computed } from 'vue'
 
 export default defineComponent({
   components: {
     MemberAccountView,
     MemberProfileForm,
     MemberSettingsForm,
+  },
+  setup() {
+    const store = useStore()
+    return {
+      screenName: computed(() => store.state.userSession.screenName),
+    }
   },
   data() {
     return {
@@ -64,6 +73,6 @@ h4,
 h5,
 h6 {
   margin-top: 0;
-  margin-bottom: 0.em;
+  margin-bottom: 0em;
 }
 </style>
