@@ -23,9 +23,9 @@ import { defineComponent, ref } from 'vue'
 import { oauthLogin } from '../api/PowerUpService'
 
 export default defineComponent({
-  mounted() {
-    oauthLogin(this.provider, this.code, this.state)
-  },
+  // mounted() {
+  //   oauthLogin(this.provider, this.code, this.state)
+  // },
   data() {
     const provider = this.$route.params.authProvider
     const { code, state } = this.$route.query

@@ -12,11 +12,21 @@
       is needed to fulfill a lifetime of energy needs? How much waste is
       produced? And so on...
     </p>
+    <p>Token: {{ token }}</p>
+    <p>Go To: {{ goTo }}</p>
   </q-page>
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    const { token, goTo } = this.$route.query
+    return {
+      token,
+      goTo,
+    }
+  }
+}
 </script>
 
 <style></style>
