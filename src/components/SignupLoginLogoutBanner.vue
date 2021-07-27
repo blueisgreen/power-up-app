@@ -3,7 +3,13 @@
     <q-banner rounded class="bg-purple-8 text-white">
       Who are you?
       <template v-slot:action>
-        <a href="https://github.com/login/oauth/authorize?client_id=c4884cf58449a331758f&redirect_uri=http://localhost:8080/login/github/callback&state=blargy">Login with GitHub</a>
+        <a href="http://localhost:3000/login/github"
+          >Login with GitHub via Power Up API</a
+        >
+        <a
+          href="https://github.com/login/oauth/authorize?client_id=c4884cf58449a331758f&redirect_uri=http://localhost:8080/login/github/callback&state=blargy"
+          >Login with GitHub directly</a
+        >
         <q-btn
           flat
           color="white"
@@ -17,7 +23,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+  // might want to fetch the token from here
+}
 </script>
 
 <style></style>
