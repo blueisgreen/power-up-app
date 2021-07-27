@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md q-gutter-sm">
-    <q-banner rounded class="bg-purple-8 text-white">
+    <q-banner rounded class="bg-blue-3 text-white">
       Who are you?
       <template v-slot:action>
         <a href="http://localhost:3000/login/github"
@@ -16,6 +16,7 @@
           label="Sign Up or Sign In"
           to="{ path: 'http://localhost:3000/login/github', exact: true }"
         />
+        <span v-show="isLoggedIn">LOGGED IN</span>
         <q-btn flat color="white" label="Sign Out" />
       </template>
     </q-banner>
@@ -25,6 +26,15 @@
 <script>
 export default {
   // might want to fetch the token from here
+  computed: {
+    isLoggedIn() {
+      if (this.$store.getters) {
+        console.log(this.$store.getters.isLoggedIn)
+        return true
+      }
+      return false
+    },
+  },
 }
 </script>
 
