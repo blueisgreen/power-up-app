@@ -10,36 +10,30 @@
       </q-card-section>
       <q-separator inset />
       <q-card-section>
-        Provider: {{ provider }} <br />
-        Code: {{ code }} <br />
-        State: {{ state }}
+        Session Token: {{ token }} <br />
+        Go To Page: {{ goTo }} <br />
       </q-card-section>
     </q-card>
   </q-page>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
-import { oauthLogin } from '../api/PowerUpService'
-
-export default defineComponent({
-  // mounted() {
-  //   oauthLogin(this.provider, this.code, this.state)
-  // },
-  data() {
-    const provider = this.$route.params.authProvider
-    const { code, state } = this.$route.query
-    return {
-      provider,
-      code,
-      state,
-    }
-  },
-})
+import { defineComponent } from 'vue'
 
 // stash jwt for use in subsequent API calls
 // stash roles and preferences in local store
+// redirect to page or home (default)
 // or handle failure to log in
+
+export default defineComponent({
+  data() {
+    const { token, goTo } = this.$route.query
+    return {
+      token,
+      goTo,
+    }
+  },
+})
 </script>
 
 <style scoped></style>
