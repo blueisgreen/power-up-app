@@ -17,7 +17,7 @@ const routes = [
       { path: 'admin', component: () => import('pages/AdminPage.vue') },
       {
         path: 'login/:authProvider/callback',
-        component: () => import('pages/LoginLandingPage.vue')
+        component: () => import('pages/ComingSoon.vue')
       },
     ]
   },
