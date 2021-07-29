@@ -10,7 +10,7 @@
       </q-card-section>
       <q-separator inset />
       <q-card-section>
-        Session Token: {{ token }} <br />
+        Session Token: {{ session }} <br />
         Go To Page: {{ goTo }} <br />
       </q-card-section>
     </q-card>
@@ -27,9 +27,9 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   data() {
-    const { token, goTo } = this.$route.query
+    const { session, goTo } = this.$route.query
     return {
-      token,
+      session,
       goTo,
     }
   },
