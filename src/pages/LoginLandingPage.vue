@@ -13,12 +13,15 @@
         Session Token: {{ session }} <br />
         Go To Page: {{ goTo }} <br />
       </q-card-section>
+      <q-separator inset />
+      <q-card-section> Session Details: {{ sessionDetails }} </q-card-section>
     </q-card>
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
+import jwtDecode from 'jwt-decode'
 
 // stash jwt for use in subsequent API calls
 // stash roles and preferences in local store
@@ -28,9 +31,11 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   data() {
     const { session, goTo } = this.$route.query
+    const sessionDetails = jwtDecode(session)
     return {
       session,
       goTo,
+      sessionDetails,
     }
   },
 })
