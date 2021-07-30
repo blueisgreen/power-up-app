@@ -16,8 +16,8 @@ const routes = [
       { path: 'composer', component: () => import('src/pages/ContentComposerPage.vue') },
       { path: 'admin', component: () => import('pages/AdminPage.vue') },
       {
-        path: 'login/:authProvider/callback',
-        component: () => import('pages/ComingSoon.vue')
+        path: 'login/landing',
+        component: () => import('pages/LoginLandingPage.vue')
       },
     ]
   },
