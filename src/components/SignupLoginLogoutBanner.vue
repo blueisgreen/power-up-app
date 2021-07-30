@@ -3,9 +3,12 @@
     <q-banner rounded class="bg-blue-3 text-white">
       Who are you?
       <template v-slot:action>
-        <a href="http://localhost:3000/login/github"
+        <a href="https://power-up-service-staging.herokuapp.com/login/github"
           >Login with GitHub via Power Up API</a
         >
+        <!-- <a href="http://localhost:3000/login/github"
+          >Login with GitHub via Power Up API</a
+        > -->
         <!-- <a
           href="https://github.com/login/oauth/authorize?client_id=c4884cf58449a331758f&redirect_uri=http://localhost:8080/login/github/callback&state=blargy"
           >Login with GitHub directly</a
