@@ -9,6 +9,21 @@ const getters = {
   isLoggedIn: (state) => {
     return state.sessionToken !== null
   },
+  hasRole: (state) => (roleToMatch) => {
+    return state.roles.find((role) => role === roleToMatch) !== undefined
+  },
+  isGuest: (state) => {
+    return state.roles.find((role) => (role === 'guest')) !== undefined
+  },
+  isMember: (state) => {
+    return state.roles.find((role) => (role === 'member')) !== undefined
+  },
+  isAuthor: (state) => {
+    return state.roles.find((role) => (role === 'author')) !== undefined
+  },
+  isAdmin: (state) => {
+    return state.roles.find((role) => (role === 'admin')) !== undefined
+  },
 }
 
 const actions = {}
