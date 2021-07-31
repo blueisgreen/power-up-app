@@ -3,7 +3,7 @@
     <q-banner rounded class="bg-blue-3 text-white">
       Who are you?
       <template v-slot:action>
-        <a href="https://power-up-service-staging.herokuapp.com/login/github"
+        <a :href="loginUrl"
           >Login with GitHub via Power Up API</a
         >
         <!-- <a href="http://localhost:3000/login/github"
@@ -29,6 +29,11 @@
 <script>
 export default {
   // might want to fetch the token from here
+  data() {
+    return {
+      loginUrl: process.env.LOGIN_URL_BASE + '/login/github'
+    }
+  },
   computed: {
     isLoggedIn() {
       if (this.$store.getters) {
