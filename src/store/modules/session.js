@@ -9,20 +9,23 @@ const getters = {
   isLoggedIn: (state) => {
     return state.sessionToken !== null
   },
-  hasRole: (state) => (roleToMatch) => {
-    return state.roles.find((role) => role === roleToMatch) !== undefined
-  },
   isGuest: (state) => {
-    return state.roles.find((role) => (role === 'guest')) !== undefined
+    return state.roles.length === 0
   },
   isMember: (state) => {
-    return state.roles.find((role) => (role === 'member')) !== undefined
+    return state.roles.find((role) => role === 'member') !== undefined
   },
   isAuthor: (state) => {
-    return state.roles.find((role) => (role === 'author')) !== undefined
+    return state.roles.find((role) => role === 'author') !== undefined
+  },
+  isEditor: (state) => {
+    return state.roles.find((role) => role === 'editor') !== undefined
+  },
+  isEditorInChief: (state) => {
+    return state.roles.find((role) => role === 'editorInChief') !== undefined
   },
   isAdmin: (state) => {
-    return state.roles.find((role) => (role === 'admin')) !== undefined
+    return state.roles.find((role) => role === 'admin') !== undefined
   },
 }
 
