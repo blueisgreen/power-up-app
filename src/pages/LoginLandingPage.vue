@@ -40,7 +40,7 @@ export default defineComponent({
       store.commit('session/setRoles', { roles })
     }
     return {
-      setUserInfo
+      setUserInfo,
     }
   },
   data() {
@@ -52,7 +52,13 @@ export default defineComponent({
       goTo,
       sessionDetails,
     }
-  }
+  },
+  mounted() {
+    console.log('mounted: redirect to', this.goTo)
+    if (this.goTo) {
+      this.$router.push({ name: this.goTo })
+    }
+  },
 })
 </script>
 
