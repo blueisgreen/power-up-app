@@ -21,6 +21,7 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { useStore } from 'vuex'
 import jwtDecode from 'jwt-decode'
 
 // stash jwt for use in subsequent API calls
@@ -29,15 +30,29 @@ import jwtDecode from 'jwt-decode'
 // or handle failure to log in
 
 export default defineComponent({
+  setup() {
+    const store = useStore()
+    const setUserInfo = (token, sessionInfo) => {
+      const { user, screenName, roles } = sessionInfo
+      store.commit('session/setSessionToken', { token })
+      store.commit('session/setUser', { user })
+      store.commit('session/setScreenName', { screenName })
+      store.commit('session/setRoles', { roles })
+    }
+    return {
+      setUserInfo
+    }
+  },
   data() {
     const { session, goTo } = this.$route.query
     const sessionDetails = jwtDecode(session)
+    this.setUserInfo(session, sessionDetails)
     return {
       session,
       goTo,
       sessionDetails,
     }
-  },
+  }
 })
 </script>
 

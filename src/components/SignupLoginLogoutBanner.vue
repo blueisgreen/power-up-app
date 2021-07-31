@@ -3,23 +3,14 @@
     <q-banner rounded class="bg-blue-3 text-white">
       Who are you?
       <template v-slot:action>
-        <a :href="loginUrl"
-          >Login with GitHub via Power Up API</a
-        >
-        <!-- <a href="http://localhost:3000/login/github"
-          >Login with GitHub via Power Up API</a
-        > -->
-        <!-- <a
-          href="https://github.com/login/oauth/authorize?client_id=c4884cf58449a331758f&redirect_uri=http://localhost:8080/login/github/callback&state=blargy"
-          >Login with GitHub directly</a
-        > -->
+        <a :href="loginUrl">Login with GitHub via Power Up API</a>
         <q-btn
           flat
           color="white"
           label="Sign Up or Sign In"
-          to="{ path: 'http://localhost:3000/login/github', exact: true }"
+          :to="{ path: loginUrl, exact: true }"
         />
-        <span v-show="isLoggedIn">LOGGED IN</span>
+        <span v-show="!isLoggedIn">NOT </span> <span>LOGGED IN</span>
         <q-btn flat color="white" label="Sign Out" />
       </template>
     </q-banner>
@@ -27,21 +18,16 @@
 </template>
 
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 export default {
-  // might want to fetch the token from here
-  data() {
+  setup() {
+    const store = useStore()
+    const isLoggedIn = computed(() => store.getters['session/isLoggedIn'])
     return {
-      loginUrl: process.env.LOGIN_URL_BASE + '/login/github'
+      loginUrl: process.env.LOGIN_URL_BASE + '/login/github',
+      isLoggedIn,
     }
-  },
-  computed: {
-    isLoggedIn() {
-      if (this.$store.getters) {
-        console.log(this.$store.getters.isLoggedIn)
-        return true
-      }
-      return false
-    },
   },
 }
 </script>

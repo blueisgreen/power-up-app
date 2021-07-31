@@ -1,7 +1,7 @@
 import { store } from 'quasar/wrappers'
-import { createStore } from 'vuex'
+import { createStore, createLogger } from 'vuex'
 
-import userSession from './userSession'
+import session from './modules/session'
 
 /*
  * If not building with SSR mode, you can
@@ -12,15 +12,18 @@ import userSession from './userSession'
  * with the Store instance.
  */
 
+const debug = process.env.DEBUGGING
+
 export default store(function (/* { ssrContext } */) {
   const Store = createStore({
     modules: {
-      userSession
+      session
     },
 
     // enable strict mode (adds overhead!)
     // for dev mode and --debug builds only
-    strict: process.env.DEBUGGING
+    strict: debug,
+    plugins: debug ? [createLogger()] : []
   })
 
   return Store
