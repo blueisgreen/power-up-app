@@ -24,7 +24,7 @@
     <q-drawer v-model="leftDrawerOpen" side="left" bordered class="bg-grey-1">
       <q-list>
         <q-item-label header class="text-grey-8">
-          Essential Links
+          Site Directory
         </q-item-label>
 
         <EssentialLink
@@ -59,55 +59,55 @@ const linksList = [
     title: "What's New",
     caption: 'The latest headlines and articles',
     icon: 'home',
-    link: '/',
+    link: 'home',
   },
   {
     title: 'Courses',
     caption: 'Learn about nuclear',
     icon: 'school',
-    link: '/learn',
+    link: 'learn',
   },
   {
     title: 'Exchange Ideas',
     caption: 'Message boards',
     icon: 'chat',
-    link: '/boards',
+    link: 'boards',
   },
   {
     title: 'Simulation',
     caption: 'Play the simulation game',
     icon: 'precision_manufacturing',
-    link: '/simulation',
+    link: 'simulation',
   },
   {
     title: 'Calculators',
     caption: 'Fun with numbers',
     icon: 'calculate',
-    link: '/calculators',
+    link: 'calculators',
   },
   {
     title: 'Account',
     caption: 'Your profile and settings',
     icon: 'manage_accounts',
-    link: '/profile',
+    link: 'account',
   },
   {
     title: 'Support',
     caption: 'Get help with Power Up',
     icon: 'support',
-    link: '/support',
+    link: 'support',
   },
   {
     title: 'Course Composer',
     caption: 'Editors only area',
     icon: 'create',
-    link: '/composer',
+    link: 'composer',
   },
   {
     title: 'Administration',
     caption: 'Administrators only',
     icon: 'admin_panel_settings',
-    link: '/admin',
+    link: 'admin',
   },
 ]
 
