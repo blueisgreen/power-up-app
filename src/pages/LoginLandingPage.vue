@@ -13,12 +13,16 @@
         Session Token: {{ session }} <br />
         Go To Page: {{ goTo }} <br />
       </q-card-section>
+      <q-separator inset />
+      <q-card-section> Session Details: {{ sessionDetails }} </q-card-section>
     </q-card>
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
+import { useStore } from 'vuex'
+import jwtDecode from 'jwt-decode'
 
 // stash jwt for use in subsequent API calls
 // stash roles and preferences in local store
@@ -26,11 +30,33 @@ import { defineComponent } from 'vue'
 // or handle failure to log in
 
 export default defineComponent({
+  setup() {
+    const store = useStore()
+    const setUserInfo = (token, sessionInfo) => {
+      const { user, screenName, roles } = sessionInfo
+      store.commit('session/setSessionToken', { token })
+      store.commit('session/setUser', { user })
+      store.commit('session/setScreenName', { screenName })
+      store.commit('session/setRoles', { roles })
+    }
+    return {
+      setUserInfo,
+    }
+  },
   data() {
     const { session, goTo } = this.$route.query
+    const sessionDetails = jwtDecode(session)
+    this.setUserInfo(session, sessionDetails)
     return {
       session,
       goTo,
+      sessionDetails,
+    }
+  },
+  mounted() {
+    console.log('mounted: redirect to', this.goTo)
+    if (this.goTo) {
+      this.$router.push({ name: this.goTo })
     }
   },
 })
