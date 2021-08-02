@@ -1,13 +1,13 @@
 const state = {
-  sessionToken: null,
-  user: null,
+  token: null,
+  userId: null,
   screenName: null,
   roles: [],
 }
 
 const getters = {
-  isLoggedIn: (state) => {
-    return state.sessionToken !== null
+  isSignedIn: (state) => {
+    return state.token !== null
   },
   isGuest: (state) => {
     return state.roles.length === 0
@@ -21,9 +21,6 @@ const getters = {
   isEditor: (state) => {
     return state.roles.find((role) => role === 'editor') !== undefined
   },
-  isEditorInChief: (state) => {
-    return state.roles.find((role) => role === 'editorInChief') !== undefined
-  },
   isAdmin: (state) => {
     return state.roles.find((role) => role === 'admin') !== undefined
   },
@@ -32,8 +29,8 @@ const getters = {
 const actions = {}
 
 const mutations = {
-  setSessionToken(state, payload) {
-    state.sessionToken = payload.token
+  setToken(state, payload) {
+    state.token = payload.token
   },
 
   setUser(state, payload) {

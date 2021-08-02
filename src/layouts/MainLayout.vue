@@ -59,7 +59,7 @@ const linksList = [
     title: "What's New",
     caption: 'The latest headlines and articles',
     icon: 'home',
-    link: 'home',
+    link: '',
   },
   {
     title: 'Courses',
