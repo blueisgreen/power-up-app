@@ -10,11 +10,11 @@
       </q-card-section>
       <q-separator inset />
       <q-card-section>
-        Session Token: {{ session }} <br />
+        Session Token: {{ token }} <br />
         Go To Page: {{ goTo }} <br />
       </q-card-section>
       <q-separator inset />
-      <q-card-section> Session Details: {{ sessionDetails }} </q-card-section>
+      <q-card-section> Session Details: {{ authDetails }} </q-card-section>
     </q-card>
   </q-page>
 </template>
@@ -32,31 +32,36 @@ import jwtDecode from 'jwt-decode'
 export default defineComponent({
   setup() {
     const store = useStore()
-    const setUserInfo = (token, sessionInfo) => {
-      const { user, screenName, roles } = sessionInfo
-      store.commit('session/setSessionToken', { token })
-      store.commit('session/setUser', { user })
-      store.commit('session/setScreenName', { screenName })
-      store.commit('session/setRoles', { roles })
+    const setUserInfo = (token, authDetails) => {
+      const { userId, screenName, roles } = authDetails
+      store.commit('auth/setToken', { token })
+      store.commit('auth/setUserId', { userId })
+      store.commit('auth/setScreenName', { screenName })
+      store.commit('auth/setRoles', { roles })
     }
     return {
       setUserInfo,
     }
   },
   data() {
-    const { session, goTo } = this.$route.query
-    const sessionDetails = jwtDecode(session)
-    this.setUserInfo(session, sessionDetails)
+    const { token, goTo } = this.$route.query
+    const authDetails = jwtDecode(token)
+    this.setUserInfo(token, authDetails)
     return {
-      session,
+      token,
       goTo,
-      sessionDetails,
+      authDetails,
     }
   },
   mounted() {
     console.log('mounted: redirect to', this.goTo)
+    const navMap = {
+      home: 'FrontPage',
+      register: 'MemberRegisteration'
+    }
+    const destination = navMap[this.goTo]
     if (this.goTo) {
-      this.$router.push({ name: this.goTo })
+      this.$router.push({ name: destination })
     }
   },
 })

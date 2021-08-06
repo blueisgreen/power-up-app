@@ -33,8 +33,8 @@ const mutations = {
     state.token = payload.token
   },
 
-  setUser(state, payload) {
-    state.user = payload.user
+  setUserId(state, payload) {
+    state.userId = payload.userId
   },
 
   setScreenName(state, payload) {
