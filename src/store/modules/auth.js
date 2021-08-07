@@ -1,9 +1,12 @@
-const state = {
-  token: null,
-  userId: null,
-  screenName: null,
-  roles: [],
+const getInitialState = () => {
+  return {
+    token: null,
+    userId: null,
+    screenName: null,
+    roles: [],
+  }
 }
+const state = getInitialState()
 
 const getters = {
   isSignedIn: (state) => {
@@ -20,6 +23,9 @@ const getters = {
   },
   isEditor: (state) => {
     return state.roles.find((role) => role === 'editor') !== undefined
+  },
+  isEditorInChief: (state) => {
+    return state.roles.find((role) => role === 'editorInChief') !== undefined
   },
   isAdmin: (state) => {
     return state.roles.find((role) => role === 'admin') !== undefined
@@ -43,6 +49,15 @@ const mutations = {
 
   setRoles(state, payload) {
     state.roles = payload.roles
+  },
+
+  signOut(state) {
+    console.log('called signOut');
+    // state = getInitialState()
+    state.token = null
+    state.screenName = null
+    state.userId = null
+    state.roles = []
   },
 }
 
