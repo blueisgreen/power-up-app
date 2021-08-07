@@ -32,10 +32,10 @@ import jwtDecode from 'jwt-decode'
 export default defineComponent({
   setup() {
     const store = useStore()
-    const setUserInfo = (token, authDetails) => {
-      const { userId, screenName, roles } = authDetails
+    const setUserInfo = (token, { user }) => {
+      const { publicId, screenName, roles } = user
       store.commit('auth/setToken', { token })
-      store.commit('auth/setUserId', { userId })
+      store.commit('auth/setUserId', { userId: publicId })
       store.commit('auth/setScreenName', { screenName })
       store.commit('auth/setRoles', { roles })
     }
@@ -46,6 +46,7 @@ export default defineComponent({
   data() {
     const { token, goTo } = this.$route.query
     const authDetails = jwtDecode(token)
+    console.log('auth info:', authDetails);
     this.setUserInfo(token, authDetails)
     return {
       token,
