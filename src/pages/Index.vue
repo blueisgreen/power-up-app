@@ -11,7 +11,7 @@
             </q-card-section>
             <q-card-section class="q-pt-none">
               Everything you need to know about the parts of a nuclear power
-              plant.
+              plant. Find out now.
             </q-card-section>
           </q-card>
         </div>
