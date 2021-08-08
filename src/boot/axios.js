@@ -9,10 +9,14 @@ import axios from 'axios'
 // for each client)
 const api = axios.create({
   // baseURL: 'https://power-up-service-staging.herokuapp.com',
-  baseURL: process.env.API_URL_BASE,
+  baseURL:
+    process.env.API_URL_BASE ||
+    'https://power-up-service-staging.herokuapp.com',
 })
 const localAPI = axios.create({
-  baseURL: process.env.API_URL_BASE,
+  baseURL:
+    process.env.API_URL_BASE ||
+    'https://power-up-service-staging.herokuapp.com',
 })
 
 export default boot(({ app }) => {
