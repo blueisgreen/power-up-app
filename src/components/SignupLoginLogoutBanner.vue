@@ -35,7 +35,7 @@ import { useStore, mapState, mapGetters, mapMutations } from 'vuex'
 export default {
   setup() {
     return {
-      loginUrl: process.env.LOGIN_URL_BASE + '/login/github',
+      loginUrl: process.env.API_URL + '/login/github',
       store: useStore(),
     }
   },
