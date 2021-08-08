@@ -23,9 +23,7 @@
 
     <q-drawer v-model="leftDrawerOpen" side="left" bordered class="bg-grey-1">
       <q-list>
-        <q-item-label header class="text-grey-8">
-          Site Directory
-        </q-item-label>
+        <q-item-label header class="text-grey-8"> Site Directory </q-item-label>
 
         <EssentialLink
           v-for="link in essentialLinks"
@@ -59,55 +57,62 @@ const linksList = [
     title: "What's New",
     caption: 'The latest headlines and articles',
     icon: 'home',
-    link: '',
+    route: 'FrontPage',
+    exact: true,
   },
   {
     title: 'Courses',
     caption: 'Learn about nuclear',
     icon: 'school',
-    link: 'learn',
+    route: 'LearningCenter',
   },
   {
     title: 'Exchange Ideas',
     caption: 'Message boards',
     icon: 'chat',
-    link: 'boards',
+    route: 'DiscussionBoards',
   },
   {
     title: 'Simulation',
     caption: 'Play the simulation game',
     icon: 'precision_manufacturing',
-    link: 'simulation',
+    route: 'Simulations',
   },
   {
     title: 'Calculators',
     caption: 'Fun with numbers',
     icon: 'calculate',
-    link: 'calculators',
+    route: 'Calculators',
   },
   {
-    title: 'Account',
-    caption: 'Your profile and settings',
+    title: 'Registration',
+    caption: 'Become a member',
+    icon: 'app_registration',
+    route: 'MemberRegisteration',
+  },
+  {
+    title: 'Profile & Setting',
+    caption: 'Your account information',
     icon: 'manage_accounts',
-    link: 'account',
+    route: 'MemberProfile',
   },
   {
     title: 'Support',
     caption: 'Get help with Power Up',
     icon: 'support',
-    link: 'support',
+    route: 'SupportCenter',
   },
   {
     title: 'Course Composer',
     caption: 'Editors only area',
     icon: 'create',
-    link: 'composer',
+    route: 'Composer',
   },
   {
     title: 'Administration',
     caption: 'Administrators only',
     icon: 'admin_panel_settings',
-    link: 'admin',
+    route: 'AdminPanel',
   },
 ]
 
@@ -123,7 +128,7 @@ export default defineComponent({
   },
 
   setup() {
-    const leftDrawerOpen = ref(false)
+    const leftDrawerOpen = ref(true)
 
     return {
       essentialLinks: linksList,

@@ -1,7 +1,10 @@
+import MainLayout from '../layouts/MainLayout'
+import DiscussionBoardsPage from '../pages/big-ideas/DiscussionBoardsPage'
+
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: MainLayout,
     children: [
       {
         path: '',
@@ -19,7 +22,7 @@ const routes = [
         component: () => import('pages/membership/LoginLandingPage.vue'),
       },
       {
-        path: 'account',
+        path: 'profile',
         name: 'MemberProfile',
         component: () => import('pages/membership/MemberProfilePage.vue'),
         meta: {
@@ -34,11 +37,11 @@ const routes = [
       },
       {
         path: 'support',
-        name: 'Support',
+        name: 'SupportCenter',
         component: () => import('pages/SupportPage.vue'),
       },
       {
-        path: 'composer',
+        path: 'drafting',
         name: 'Composer',
         component: () => import('pages/admin/ContentComposerPage.vue'),
         meta: {
@@ -58,15 +61,15 @@ const routes = [
       {
         path: 'boards',
         name: 'DiscussionBoards',
-        component: () => import('pages/big-ideas/DiscussionBoardsPage.vue'),
+        component: DiscussionBoardsPage,
       },
       {
-        path: 'simulation',
+        path: 'sims',
         name: 'Simulations',
         component: () => import('pages/big-ideas/SimulationsPage.vue'),
       },
       {
-        path: 'calculators',
+        path: 'calcs',
         name: 'Calculators',
         component: () => import('pages/big-ideas/CalculatorsPage.vue'),
       },
