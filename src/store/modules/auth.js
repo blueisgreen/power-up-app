@@ -1,13 +1,16 @@
-const state = {
-  sessionToken: null,
-  user: null,
-  screenName: null,
-  roles: [],
+const getInitialState = () => {
+  return {
+    token: null,
+    userId: null,
+    screenName: null,
+    roles: [],
+  }
 }
+const state = getInitialState()
 
 const getters = {
-  isLoggedIn: (state) => {
-    return state.sessionToken !== null
+  isSignedIn: (state) => {
+    return state.token !== null
   },
   isGuest: (state) => {
     return state.roles.length === 0
@@ -32,12 +35,12 @@ const getters = {
 const actions = {}
 
 const mutations = {
-  setSessionToken(state, payload) {
-    state.sessionToken = payload.token
+  setToken(state, payload) {
+    state.token = payload.token
   },
 
-  setUser(state, payload) {
-    state.user = payload.user
+  setUserId(state, payload) {
+    state.userId = payload.userId
   },
 
   setScreenName(state, payload) {
@@ -46,6 +49,15 @@ const mutations = {
 
   setRoles(state, payload) {
     state.roles = payload.roles
+  },
+
+  signOut(state) {
+    console.log('called signOut');
+    // state = getInitialState()
+    state.token = null
+    state.screenName = null
+    state.userId = null
+    state.roles = []
   },
 }
 

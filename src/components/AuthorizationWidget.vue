@@ -1,37 +1,33 @@
 <template>
   <div>
-    <span>{{ this.screenName }}</span>
+    <span>{{ screenName }}</span>
     <q-btn
-      v-show="this.status !== 'loggedIn'"
-      @click="
-        () => {
-          this.status = 'loggedIn'
-          this.screenName = 'bubba'
-        }
-      "
-      >Login</q-btn
+      v-show="!isSignedIn"
+      >Sign In</q-btn
     >
     <q-btn
-      v-show="this.status === 'loggedIn'"
-      @click="
-        () => {
-          this.status = 'loggedOut'
-          this.screenName = 'anonymous'
-        }
-      "
-      >Logout</q-btn
+      v-show="isSignedIn"
+      >Sign Out</q-btn
     >
   </div>
 </template>
 
 <script>
+import { useStore } from 'vuex'
 export default {
-  data() {
+  setup() {
     return {
-      status: 'loggedOut',
-      screenName: 'anonymous',
+      store: useStore()
     }
   },
+  computed: {
+    screenName() {
+      return this.store.state.auth.screenName
+    },
+    isSignedIn() {
+      return this.store.getters['auth/isSignedIn']
+    },
+  }
 }
 </script>
 
