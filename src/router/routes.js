@@ -1,5 +1,5 @@
-import MainLayout from '../layouts/MainLayout'
-import DiscussionBoardsPage from '../pages/big-ideas/DiscussionBoardsPage'
+import MainLayout from 'layouts/MainLayout'
+import AccountCenterLayout from 'layouts/AccountCenterLayout'
 
 const routes = [
   {
@@ -12,23 +12,35 @@ const routes = [
         component: () => import('pages/Index.vue'),
       },
       {
-        path: 'register',
-        name: 'MemberRegisteration',
-        component: () => import('pages/membership/MemberRegistrationPage.vue'),
-      },
-      {
-        path: 'login/landing',
-        name: 'LoginLanding',
-        component: () => import('pages/membership/LoginLandingPage.vue'),
-      },
-      {
-        path: 'profile',
-        name: 'MemberProfile',
-        component: () => import('pages/membership/MemberProfilePage.vue'),
-        meta: {
-          requireAuth: true,
-          role: 'member',
-        },
+        path: 'account',
+        component: AccountCenterLayout,
+        children: [
+          {
+            path: '',
+            name: 'UserAccount',
+            component: () =>
+              import('src/pages/account/UserAccountOverviewPage.vue'),
+          },
+          {
+            path: '/login/landing',
+            name: 'LoginLanding',
+            component: () => import('pages/account/LoginLandingPage.vue'),
+          },
+          {
+            path: 'register',
+            name: 'MemberRegistration',
+            component: () => import('pages/account/MemberRegistrationPage.vue'),
+          },
+          {
+            path: 'profile',
+            name: 'MemberProfile',
+            component: () => import('pages/account/MemberProfilePage.vue'),
+            meta: {
+              requireAuth: true,
+              role: 'member',
+            },
+          },
+        ],
       },
       {
         path: 'learn',
@@ -61,7 +73,7 @@ const routes = [
       {
         path: 'boards',
         name: 'DiscussionBoards',
-        component: DiscussionBoardsPage,
+        component: () => import('pages/big-ideas/DiscussionBoardsPage.vue'),
       },
       {
         path: 'sims',
