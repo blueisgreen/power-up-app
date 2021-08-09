@@ -15,16 +15,13 @@
       <template v-slot:after>
         <q-tab-panels v-model="tab" vertical>
           <q-tab-panel name="overview">
-            <h4>Overview</h4>
             <member-account-view />
           </q-tab-panel>
           <q-tab-panel name="profile">
-            <h4>Member Profile</h4>
             <p>Hello, {{ screenName }}</p>
             <member-profile-form />
           </q-tab-panel>
           <q-tab-panel name="settings">
-            <h4>Preferences</h4>
             <member-settings-form />
           </q-tab-panel>
         </q-tab-panels>

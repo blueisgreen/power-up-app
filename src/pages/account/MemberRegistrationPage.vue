@@ -1,20 +1,19 @@
 <template>
   <div>
     <h4>Member Registration</h4>
-    <member-profile-form />
+    <p>*Choose a screen name - what do you want to be called.</p>
+    <p>What is your real name?</p>
+    <p>Do you agree to our terms of use?</p>
+    <p>May we use a cookie to give you a smooth experience?</p>
+    <p>May we send you email? Yes / No If yes, what is your email address? confirm if known.</p>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
-import MemberProfileForm from 'components/MemberProfileForm.vue'
+import { defineComponent, ref, computed } from 'vue'
 import { useStore } from 'vuex'
-import { computed } from 'vue'
 
 export default defineComponent({
-  components: {
-    MemberProfileForm,
-  },
   setup() {
     const store = useStore()
     return {
