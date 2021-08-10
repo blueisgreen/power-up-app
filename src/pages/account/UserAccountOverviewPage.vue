@@ -48,6 +48,7 @@ export default defineComponent({
     const store = useStore()
     return {
       screenName: computed(() => store.state.auth.screenName),
+      store,
     }
   },
   data() {
@@ -56,8 +57,15 @@ export default defineComponent({
       splitterModel: ref(20),
     }
   },
+  created() {
+    this.fetchData()
+  },
+  methods: {
+    fetchData() {
+      this.store.dispatch('profile/fetchUserProfile')
+    }
+  }
 })
 </script>
 
-<style>
-</style>
+<style></style>

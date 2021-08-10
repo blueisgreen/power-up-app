@@ -17,16 +17,16 @@ import { fetchUserProfile } from '../../api/PowerUpService'
 }
 */
 const state = {
-  public_id: null,
-  screen_name: null,
+  publicId: null,
+  screenName: null,
   email: null,
-  avatar_url: null,
-  created_at: null,
-  updated_at: null,
-  terms_accepted_at: null,
-  cookies_accepted_at: null,
-  email_comms_accepted_at: null,
-  account_status_id: null,
+  avatarUrl: null,
+  createdAt: null,
+  updatedAt: null,
+  termsAcceptedAt: null,
+  cookiesAcceptedAt: null,
+  emailCommsAcceptedAt: null,
+  accountStatusId: null,
 }
 
 const getters = {
@@ -49,16 +49,25 @@ const actions = {
 
 const mutations = {
   load(state, payload) {
-    state = payload
+    state.publicId = payload.public_id
+    state.screenName = payload.screen_name
+    state.email = payload.email
+    state.avatarUrl = payload.avatar_url
+    state.createdAt = payload.created_at
+    state.updatedAt = payload.updated_at
+    state.termsAcceptedAt = payload.terms_accepted_at
+    state.cookiesAcceptedAt = payload.cookies_accepted_at
+    state.emailCommsAcceptedAt = payload.email_comms_accepted_at
+    state.accountStatusId = payload.account_status_id
   },
   setScreenName(state, payload) {
-    state.screen_name = payload.screenName
+    state.screenName = payload.screenName
   },
   setEmail(state, payload) {
     state.email = payload.email
   },
   setAvatarUrl(state, payload) {
-    state.avatar_url = payload.avatarUrl
+    state.avatarUrl = payload.avatarUrl
   },
 }
 
