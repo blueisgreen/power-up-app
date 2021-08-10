@@ -78,6 +78,10 @@
 <script>
 export default {
   setup() {
+    // TODO call fetch method to get profile
+
+    // connect to store values
+    
     return {
       profile: {
         screenName: 'Bubba',

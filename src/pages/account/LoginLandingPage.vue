@@ -23,6 +23,7 @@
 import { defineComponent } from 'vue'
 import { useStore } from 'vuex'
 import jwtDecode from 'jwt-decode'
+import { setAuthHeader } from '../../boot/axios'
 
 // stash jwt for use in subsequent API calls
 // stash roles and preferences in local store
@@ -33,6 +34,7 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const setUserInfo = (token, { user }) => {
+      setAuthHeader(token)
       const { publicId, screenName, roles } = user
       store.commit('auth/setToken', { token })
       store.commit('auth/setUserId', { userId: publicId })
@@ -46,7 +48,7 @@ export default defineComponent({
   data() {
     const { token, goTo } = this.$route.query
     const authDetails = jwtDecode(token)
-    console.log('auth info:', authDetails);
+    console.log('auth info:', authDetails)
     this.setUserInfo(token, authDetails)
     return {
       token,
@@ -58,7 +60,7 @@ export default defineComponent({
     console.log('mounted: redirect to', this.goTo)
     const navMap = {
       home: 'FrontPage',
-      register: 'MemberRegisteration'
+      register: 'MemberRegisteration',
     }
     const destination = navMap[this.goTo]
     if (this.goTo) {
