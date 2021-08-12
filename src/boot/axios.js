@@ -28,11 +28,12 @@ export default boot(({ app }) => {
 })
 
 const setAuthHeader = (token) => {
-  axios.defaults.headers.common['Authorization'] = token
+  console.log('jwt:', token);
+  api.defaults.headers.common['Authorization'] = 'Bearer ' + token
 }
 
 const clearAuthHeader = () => {
-  axios.defaults.headers.common['Authorization'] = null
+  api.defaults.headers.common['Authorization'] = null
 }
 
 export { api, localAPI, setAuthHeader, clearAuthHeader }

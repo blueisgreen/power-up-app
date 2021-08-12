@@ -35,21 +35,13 @@ import { defineComponent, ref } from 'vue'
 import MemberAccountView from 'components/MemberAccountView.vue'
 import MemberProfileForm from 'components/MemberProfileForm.vue'
 import MemberSettingsForm from 'components/MemberSettingsForm.vue'
-import { useStore } from 'vuex'
-import { computed } from 'vue'
+import { mapState, mapActions } from 'vuex'
 
 export default defineComponent({
   components: {
     MemberAccountView,
     MemberProfileForm,
     MemberSettingsForm,
-  },
-  setup() {
-    const store = useStore()
-    return {
-      screenName: computed(() => store.state.auth.screenName),
-      store,
-    }
   },
   data() {
     return {
@@ -58,13 +50,10 @@ export default defineComponent({
     }
   },
   created() {
-    this.fetchData()
+    this.fetchUserProfile()
   },
-  methods: {
-    fetchData() {
-      this.store.dispatch('profile/fetchUserProfile')
-    }
-  }
+  computed: mapState('profile', ['screenName']),
+  methods: mapActions('profile', ['fetchUserProfile']),
 })
 </script>
 

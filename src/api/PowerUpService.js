@@ -10,6 +10,7 @@ export async function oauthLogin(authProvider, code, state) {
 
 export async function fetchUserProfile() {
   console.log('PowerUpService.fetchUserProfile')
+  console.log(api.defaults.headers.common['Authorization'])
   return await api.get('/my/profile')
 }
 

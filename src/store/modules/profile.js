@@ -31,19 +31,20 @@ const state = {
 
 const getters = {
   isTermsAccepted: (state) => {
-    return state.terms_accepted_at != null
+    return state.termsAcceptedAt != null
   },
   isCookiesOk: (state) => {
-    return state.cookies_accepted_at != null
+    return state.cookiesAcceptedAt != null
   },
   isEmailCommsAccepted: (state) => {
-    return state.email_comms_accepted_at != null
+    return state.emailCommsAcceptedAt != null
   },
 }
 
 const actions = {
   async fetchUserProfile({ commit }) {
-    commit('load', await fetchUserProfile())
+    const profile = await fetchUserProfile()
+    commit('load', profile.data)
   },
 }
 
