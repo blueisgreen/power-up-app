@@ -2,7 +2,7 @@
   <div class="q-pa-md">
     <h4>Member Registration</h4>
     <p>
-      Ready to become a member? You already have an account:
+      You already have an account:
       {{ this.accountId }} created on {{ this.createdAt }}
     </p>
     <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
@@ -209,6 +209,11 @@ export default {
       },
     }
   },
+  updated() {
+    if (this.desiredScreenName.value === null && this.screenName !== null) {
+      this.desiredScreenName = this.screenName
+    }
+  }
 }
 </script>
 

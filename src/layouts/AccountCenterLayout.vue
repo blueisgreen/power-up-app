@@ -1,6 +1,5 @@
 <template>
   <q-page class="q-pa-md">
-    <h3>Account Settings</h3>
     <div v-if="loading" class="loading">
       Loading...
     </div>
