@@ -8,7 +8,7 @@
     <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
       <q-input
         filled
-        v-model="screenName"
+        v-model="desiredScreenName"
         label="What shall we call you?"
         hint="This can be your real name or an alias."
         lazy-rules
@@ -16,18 +16,20 @@
       />
 
       <q-toggle v-model="okWithTerms" label="I accept the terms of use." />
+      <br />
       <q-toggle
         v-model="okWithCookies"
         label="I agree to accept cookies for a smooth experience."
       />
 
+      <br />
       <q-toggle
         v-model="okWithEmail"
         label="Please send me email about Power Up."
       />
       <q-input
         filled
-        disable="!okWithEmail"
+        :disable="!okWithEmail"
         type="email"
         v-model="unverifiedEmail"
         label="Your email"
@@ -194,7 +196,7 @@ export default {
             message: 'Submitted',
           })
           // TODO send updates via service API
-          console.log('IMPLEMENT ME');
+          console.log('IMPLEMENT ME')
         }
       },
 

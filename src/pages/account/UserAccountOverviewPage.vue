@@ -49,11 +49,11 @@ export default defineComponent({
       splitterModel: ref(20),
     }
   },
-  created() {
-    this.fetchUserProfile()
-  },
+  // created() {
+  //   this.fetchUserProfile()
+  // },
   computed: mapState('profile', ['screenName']),
-  methods: mapActions('profile', ['fetchUserProfile']),
+  // methods: mapActions('profile', ['fetchUserProfile']),
 })
 </script>
 
