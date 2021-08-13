@@ -12,19 +12,22 @@ const routes = [
         component: () => import('pages/Index.vue'),
       },
       {
+        path: '/login/landing',
+        name: 'LoginLanding',
+        component: () => import('pages/account/LoginLandingPage.vue'),
+      },
+      {
         path: 'account',
         component: AccountCenterLayout,
+        meta: {
+          requireAuth: true,
+        },
         children: [
           {
             path: '',
             name: 'UserAccount',
             component: () =>
               import('src/pages/account/UserAccountOverviewPage.vue'),
-          },
-          {
-            path: '/login/landing',
-            name: 'LoginLanding',
-            component: () => import('pages/account/LoginLandingPage.vue'),
           },
           {
             path: 'register',
