@@ -1,14 +1,13 @@
 <template>
   <div class="q-pa-md">
+    <h4>Member Profile</h4>
     <q-list bordered padding>
-      <q-item-label header>Member Profile</q-item-label>
-
       <q-item>
         <q-item-section side>
           <q-item-label>Account ID</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ this.publicId }}</q-item-label>
+          <q-item-label>{{ this.accountId }}</q-item-label>
         </q-item-section>
       </q-item>
 
@@ -32,10 +31,13 @@
 
       <q-item>
         <q-item-section side>
-          <q-item-label>Avatar URL</q-item-label>
+          <q-item-label>Avatar</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ this.avatarUrl }}</q-item-label>
+          <q-avatar v-if="this.avatarUrl">
+            <img :src="this.avatarUrl" />
+          </q-avatar>
+          <q-item-label v-if="this.avatarUrl === null">Unknown</q-item-label>
         </q-item-section>
       </q-item>
 
@@ -105,22 +107,31 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
-  computed: mapState([
-    'publicId',
-    'screenName',
-    'email',
-    'avatarUrl',
-    'createdAt',
-    'updatedAt',
-    'termsAcceptedAt',
-    'cookiesAcceptedAt',
-    'emailCommsAcceptedAt',
-    'accountStateId',
-  ]),
+  setup() {
+    const $store = useStore()
+    return {
+      accountId: computed(() => $store.state.profile.publicId),
+      screenName: computed(() => $store.state.profile.screenName),
+      email: computed(() => $store.state.profile.email),
+      avatarUrl: computed(() => $store.state.profile.avatarUrl),
+      createdAt: computed(() => $store.state.profile.createdAt),
+      updatedAt: computed(() => $store.state.profile.updatedAt),
+      termsAcceptedAt: computed(() => $store.state.profile.termsAcceptedAt),
+      cookiesAcceptedAt: computed(() => $store.state.profile.cookiesAcceptedAt),
+      emailCommsAcceptedAt: computed(() => $store.state.profile.emailCommsAcceptedAt),
+      accountStateId: computed(() => $store.state.profile.accountStateId),
+    }
+  },
 }
 </script>
 
-<style></style>
+<style>
+h4 {
+  margin-top: 0em;
+  margin-bottom: 0.5em;
+}
+</style>
