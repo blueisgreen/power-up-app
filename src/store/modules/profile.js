@@ -17,7 +17,7 @@ import { fetchUserProfile } from '../../api/PowerUpService'
 }
 */
 const state = {
-  publicId: null,
+  accountId: null,
   screenName: null,
   email: null,
   avatarUrl: null,
@@ -50,7 +50,7 @@ const actions = {
 
 const mutations = {
   load(state, payload) {
-    state.publicId = payload.public_id
+    state.accountId = payload.public_id
     state.screenName = payload.screen_name
     state.email = payload.email
     state.avatarUrl = payload.avatar_url
