@@ -23,7 +23,7 @@ export default defineComponent({
     }
   },
   created() {
-    this.fetchUserProfile()
+    this.fetchMyProfile()
   },
   computed: mapState('auth', ['screenName']),
   methods: mapActions('profile', ['fetchMyProfile']),

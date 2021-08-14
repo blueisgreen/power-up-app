@@ -23,30 +23,30 @@ export async function updateOwnProfile(updates) {
 }
 
 export async function agreeToTerms() {
-  console.log('PowerUpService.fetchUserProfile')
+  console.log('PowerUpService.agreeToTerms')
   return await api.put('/my/termsOK')
 }
 
 /**
- * Use after registration to toggle acceptance of cookies, 
+ * Use after registration to toggle acceptance of cookies,
  * on a preferences panel for example.
- * 
- * @param {*} updates 
- * @returns 
+ *
+ * @param {*} updates
+ * @returns
  */
 export async function agreeToCookies() {
-  console.log('PowerUpService.fetchUserProfile')
+  console.log('PowerUpService.agreeToCookies')
   return await api.put('/my/cookiesOK')
 }
 
 /**
  * Use after registration to toggle acceptance of email communication.
- * 
- * @param {*} updates 
- * @returns 
+ *
+ * @param {*} updates
+ * @returns
  */
  export async function agreeToEmailComms() {
-  console.log('PowerUpService.fetchUserProfile')
+  console.log('PowerUpService.agreeToEmailComms')
   return await api.put('/my/emailCommsOK')
 }
 

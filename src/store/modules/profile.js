@@ -1,4 +1,4 @@
-import { fetchUserProfile, updateUserProfile } from '../../api/PowerUpService'
+import { fetchOwnProfile, updateOwnProfile } from '../../api/PowerUpService'
 
 /*
 {
@@ -43,7 +43,7 @@ const getters = {
 
 const actions = {
   async fetchMyProfile({ commit }) {
-    const profile = await fetchOwnile()
+    const profile = await fetchOwnProile()
     commit('load', profile.data)
   },
   async updateMyProfile({ commit, state }, profileUpdates) {
