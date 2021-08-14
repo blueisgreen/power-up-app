@@ -55,8 +55,8 @@ const onReset = () => {
 export default {
   setup() {
     const store = useStore()
-    const screenName = computed(() => store.state.userSession.screenName)
-    const roles = computed(() => store.state.userSession.roles)
+    const screenName = computed(() => store.state.auth.screenName)
+    const roles = computed(() => store.state.auth.roles)
 
     return {
       onSubmit,

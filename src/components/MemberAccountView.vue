@@ -1,14 +1,22 @@
 <template>
   <div class="q-pa-md">
+    <h4>Member Profile</h4>
     <q-list bordered padding>
-      <q-item-label header>Member Profile</q-item-label>
+      <q-item>
+        <q-item-section side>
+          <q-item-label>Account ID</q-item-label>
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>{{ this.accountId }}</q-item-label>
+        </q-item-section>
+      </q-item>
 
       <q-item>
         <q-item-section side>
           <q-item-label>Screen Name</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ this.profile.screenName }}</q-item-label>
+          <q-item-label>{{ this.screenName }}</q-item-label>
         </q-item-section>
       </q-item>
 
@@ -17,27 +25,37 @@
           <q-item-label>Email</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ this.profile.email }}</q-item-label>
+          <q-item-label>{{ this.email }}</q-item-label>
         </q-item-section>
       </q-item>
 
       <q-item>
         <q-item-section side>
-          <q-item-label>Twitter Handle</q-item-label>
+          <q-item-label>Avatar</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>@ZanzibarNuclear</q-item-label>
+          <q-avatar v-if="this.avatarUrl">
+            <img :src="this.avatarUrl" />
+          </q-avatar>
+          <q-item-label v-if="this.avatarUrl === null">Unknown</q-item-label>
         </q-item-section>
       </q-item>
 
       <q-item>
-        <q-item-section side top>
-          <q-item-label>User Roles</q-item-label>
+        <q-item-section side>
+          <q-item-label>Created</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label v-for="role in this.profile.roles" :key="role">
-            {{ role }}
-          </q-item-label>
+          <q-item-label>{{ this.createdAt }}</q-item-label>
+        </q-item-section>
+      </q-item>
+
+      <q-item>
+        <q-item-section side>
+          <q-item-label>Last Updated</q-item-label>
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>{{ this.updatedAt }}</q-item-label>
         </q-item-section>
       </q-item>
 
@@ -46,21 +64,20 @@
 
       <q-item tag="label" v-ripple>
         <q-item-section side top>
-          <q-checkbox disable v-model="settings.allowEmailComms" />
+          <q-checkbox disable v-model="this.termsAcceptedAt" />
         </q-item-section>
 
         <q-item-section>
-          <q-item-label>Email Communication</q-item-label>
+          <q-item-label>Terms of Use</q-item-label>
           <q-item-label caption>
-            The Power Up team has permission to communicate with me via email
-            about my account.
+            I agree to the terms of use. Violation of these terms may lead to suspension of my account.
           </q-item-label>
         </q-item-section>
       </q-item>
 
       <q-item tag="label" v-ripple>
         <q-item-section side top>
-          <q-checkbox disable v-model="settings.allowCookies" />
+          <q-checkbox disable v-model="this.cookiesAcceptedAt" />
         </q-item-section>
 
         <q-item-section>
@@ -71,27 +88,50 @@
           </q-item-label>
         </q-item-section>
       </q-item>
+
+      <q-item tag="label" v-ripple>
+        <q-item-section side top>
+          <q-checkbox disable v-model="this.emailCommsAcceptedAt" />
+        </q-item-section>
+
+        <q-item-section>
+          <q-item-label>Email Communication</q-item-label>
+          <q-item-label caption>
+            The Power Up team has permission to communicate with me via email
+            about my account.
+          </q-item-label>
+        </q-item-section>
+      </q-item>
     </q-list>
   </div>
 </template>
 
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+
 export default {
   setup() {
+    const $store = useStore()
     return {
-      profile: {
-        screenName: 'Bubba',
-        email: 'bubba@happyspiritpublishing.com',
-        accessToken: '',
-        roles: ['member', 'author'],
-      },
-      settings: {
-        allowEmailComms: true,
-        allowCookies: true,
-      },
+      accountId: computed(() => $store.state.profile.accountId),
+      screenName: computed(() => $store.state.profile.screenName),
+      email: computed(() => $store.state.profile.email),
+      avatarUrl: computed(() => $store.state.profile.avatarUrl),
+      createdAt: computed(() => $store.state.profile.createdAt),
+      updatedAt: computed(() => $store.state.profile.updatedAt),
+      termsAcceptedAt: computed(() => $store.state.profile.termsAcceptedAt),
+      cookiesAcceptedAt: computed(() => $store.state.profile.cookiesAcceptedAt),
+      emailCommsAcceptedAt: computed(() => $store.state.profile.emailCommsAcceptedAt),
+      accountStateId: computed(() => $store.state.profile.accountStateId),
     }
   },
 }
 </script>
 
-<style></style>
+<style>
+h4 {
+  margin-top: 0em;
+  margin-bottom: 0.5em;
+}
+</style>

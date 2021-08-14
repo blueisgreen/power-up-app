@@ -9,12 +9,10 @@ import axios from 'axios'
 // for each client)
 const api = axios.create({
   // baseURL: 'https://power-up-service-staging.herokuapp.com',
-  baseURL:
-    process.env.API_URL
+  baseURL: process.env.API_URL,
 })
 const localAPI = axios.create({
-  baseURL:
-    process.env.API_URL
+  baseURL: process.env.API_URL,
 })
 
 export default boot(({ app }) => {
@@ -29,4 +27,13 @@ export default boot(({ app }) => {
   //       so you can easily perform requests against your app's API
 })
 
-export { api, localAPI }
+const setAuthHeader = (token) => {
+  console.log('jwt:', token);
+  api.defaults.headers.common['Authorization'] = 'Bearer ' + token
+}
+
+const clearAuthHeader = () => {
+  api.defaults.headers.common['Authorization'] = null
+}
+
+export { api, localAPI, setAuthHeader, clearAuthHeader }

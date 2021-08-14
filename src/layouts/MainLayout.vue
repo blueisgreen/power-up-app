@@ -73,7 +73,7 @@ const linksList = [
     route: 'DiscussionBoards',
   },
   {
-    title: 'Simulation',
+    title: 'Simulations',
     caption: 'Play the simulation game',
     icon: 'precision_manufacturing',
     route: 'Simulations',
@@ -85,16 +85,11 @@ const linksList = [
     route: 'Calculators',
   },
   {
-    title: 'Registration',
-    caption: 'Become a member',
-    icon: 'app_registration',
-    route: 'MemberRegisteration',
-  },
-  {
-    title: 'Profile & Setting',
+    title: 'Account',
     caption: 'Your account information',
     icon: 'manage_accounts',
-    route: 'MemberProfile',
+    route: 'UserAccount',
+    exact: true
   },
   {
     title: 'Support',
