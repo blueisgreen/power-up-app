@@ -120,6 +120,7 @@ import { useQuasar, date } from 'quasar'
 import InfoDialog from 'components/InfoDialog'
 import { displayAsYearMonthDay } from '../composables/powerUpUtils'
 
+
 export default {
   components: { InfoDialog },
   setup() {
@@ -153,6 +154,8 @@ export default {
       },
     }
     return {
+      $q,
+      $store,
       displayAsYearMonthDay,
       dialogValues,
 
@@ -176,40 +179,43 @@ export default {
         console.log(idea)
         desiredScreenName.value = $store.state.profile.screenName
       },
-      onSubmit() {
-        if (okWithTerms.value !== true) {
-          $q.notify({
-            color: 'red-5',
-            textColor: 'white',
-            icon: 'warning',
-            message: 'You need to accept the terms to become a member',
-          })
-        } else {
-          $q.notify({
-            color: 'green-4',
-            textColor: 'white',
-            icon: 'cloud_done',
-            message: 'Submitted',
-          })
-          $store.dispatch('profile/updateMyProfile', {
-            publicId: this.accountId,
-            screenName: this.desiredScreenName,
-            email: this.unverifiedEmail,
-            agreeToTerms: !!this.termsAcceptedAt || this.agreeToTerms,
-            agreeToCookies: !!this.cookiesAcceptedAt || this.agreeToCookies,
-            agreeToEmailComms:
-              !!this.emailCommsAcceptedAt || this.agreeToEmailComms,
-          })
-        }
-      },
-      onReset() {
-        desiredScreenName.value = this.screenName
-        unverifiedEmail.value = this.email
-        okWithTerms.value = false
-        okWithCookies.value = false
-        okWithEmail.value = false
-      },
     }
+  },
+  methods: {
+    onSubmit() {
+      console.log('submitting registration')
+      if (!this.okWithTerms) {
+        this.$q.notify({
+          color: 'red-5',
+          textColor: 'white',
+          icon: 'warning',
+          message: 'You need to accept the terms to become a member',
+        })
+      } else {
+        this.$q.notify({
+          color: 'green-4',
+          textColor: 'white',
+          icon: 'cloud_done',
+          message: 'Submitted',
+        })
+        console.log('about to dispatch registration action')
+        this.$store.dispatch('profile/updateMyProfile', {
+          publicId: this.accountId,
+          screenName: this.desiredScreenName,
+          email: this.unverifiedEmail,
+          agreeToTerms: !!this.termsAcceptedAt || this.okWithTerms,
+          agreeToCookies: !!this.cookiesAcceptedAt || this.okWithCookies,
+          agreeToEmailComms: !!this.emailCommsAcceptedAt || this.okWithEmail,
+        })
+      }
+    },
+    onReset() {
+      this.desiredScreenName.value = this.screenName
+      this.unverifiedEmail.value = this.email
+      this.okWithTerms.value = false
+      this.okWithCookies.value = false
+      this.okWithEmail.value = false
+    },
   },
   // computed: {
   //   termsAccepted: () => {

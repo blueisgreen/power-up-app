@@ -16,7 +16,7 @@ export async function fetchOwnProfile() {
 }
 
 export async function updateOwnProfile(updates) {
-  console.log('PowerUpService.updateOwnProfile')
+  console.log('PowerUpService.updateOwnProfile', updates)
   // TODO - verify jwt in header before sending
   console.log(api.defaults.headers.common['Authorization'])
   return await api.put('/my/profile', updates)
