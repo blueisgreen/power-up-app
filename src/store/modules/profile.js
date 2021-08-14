@@ -43,7 +43,7 @@ const getters = {
 
 const actions = {
   async fetchMyProfile({ commit }) {
-    const profile = await fetchOwnProile()
+    const profile = await fetchOwnProfile()
     commit('load', profile.data)
   },
   async updateMyProfile({ commit, state }, profileUpdates) {

@@ -3,7 +3,8 @@
     <h4>Member Registration</h4>
     <p>
       You already have an account:
-      {{ this.accountId }} created on {{ this.createdAt }}
+      {{ this.accountId }} created on
+      {{ displayAsYearMonthDay(this.createdAt) }}
     </p>
     <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
       <q-list separator padding bordered>
@@ -27,12 +28,13 @@
         <q-item>
           <q-item-section top>
             <q-toggle
-              v-if="!termsAccepted"
+              v-if="!this.termsAcceptedAt"
               v-model="okWithTerms"
               label="I accept the terms of use."
             />
-            <q-item-label v-if="termsAccepted"
-              >You agreed to terms of use on {{ termsAccepted }}</q-item-label
+            <q-item-label v-if="this.termsAcceptedAt"
+              >You agreed to terms of use on
+              {{ displayAsYearMonthDay(this.termsAcceptedAt) }}</q-item-label
             >
           </q-item-section>
           <q-item-section side top>
@@ -43,6 +45,8 @@
             />
           </q-item-section>
         </q-item>
+
+        <!--
         <q-item>
           <q-item-section top>
             <q-toggle
@@ -89,6 +93,8 @@
             />
           </q-section>
         </q-item>
+        -->
+
         <q-item>
           <q-section>
             <q-btn label="Submit" type="submit" color="primary" />
@@ -113,6 +119,7 @@ import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useQuasar, date } from 'quasar'
 import InfoDialog from 'components/InfoDialog'
+import { displayAsYearMonthDay } from '../composables/powerUpUtils'
 
 export default {
   components: { InfoDialog },
@@ -147,6 +154,7 @@ export default {
       },
     }
     return {
+      displayAsYearMonthDay,
       dialogValues,
 
       desiredScreenName,
@@ -164,23 +172,10 @@ export default {
       emailCommsAcceptedAt: computed(
         () => $store.state.profile.emailCommsAcceptedAt
       ),
-
       onSuggestScreenName() {
         const idea = $store.state.profile.screenName
         console.log(idea)
         desiredScreenName.value = $store.state.profile.screenName
-      },
-      onShowTerms() {
-        console.log('IMPLEMENT TERMS POPUP')
-        // show popup with terms
-      },
-      onShowCookies() {
-        console.log('IMPLEMENT COOKIE USE POPUP')
-        // show popup with terms
-      },
-      onShowEmailPromise() {
-        console.log('IMPLEMENT EMAIL PROMISE POPUP')
-        // show popup with terms
       },
       onSubmit() {
         if (okWithTerms.value !== true) {
@@ -215,26 +210,19 @@ export default {
         okWithCookies.value = false
         okWithEmail.value = false
       },
-      formatAgreementDate(agreedAt) {
-        if (agreedAt === null) {
-          return null
-        }
-        const agreementDate = date.extractDate(agreedAt)
-        return date.formatDate(agreementDate, 'YYYY-MMM-D')
-      },
     }
   },
-  computed: {
-    termsAccepted: () => {
-      return this.formatAgreementDate(this.termsAcceptedAt)
-    },
-    cookiesAccepted: () => {
-      return this.formatAgreementDate(this.cookiesAcceptedAt)
-    },
-    emailCommsAccepted: () => {
-      return this.formatAgreementDate(this.emailCommsAcceptedAt)
-    },
-  },
+  // computed: {
+  //   termsAccepted: () => {
+  //     return displayAsYearMonthDay(this.termsAcceptedAt)
+  //   },
+  //   cookiesAccepted: () => {
+  //     return displayAsYearMonthDay(this.cookiesAcceptedAt)
+  //   },
+  //   emailCommsAccepted: () => {
+  //     return displayAsYearMonthDay(this.emailCommsAcceptedAt)
+  //   },
+  // },
 }
 </script>
 
