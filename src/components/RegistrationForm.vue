@@ -14,6 +14,7 @@
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || 'Please type something']"
       />
+      <q-btn @click="onSuggestScreenName">Suggest a name</q-btn><br/>
 
       <q-toggle v-model="okWithTerms" label="I accept the terms of use." />
       <br />
@@ -46,101 +47,6 @@
         />
       </div>
     </q-form>
-
-    <q-list bordered padding>
-      <q-item>
-        <q-item-section side>
-          <q-item-label>Screen Name</q-item-label>
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{ this.screenName }}</q-item-label>
-        </q-item-section>
-      </q-item>
-
-      <q-item>
-        <q-item-section side>
-          <q-item-label>Email</q-item-label>
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{ this.email }}</q-item-label>
-        </q-item-section>
-      </q-item>
-
-      <q-item>
-        <q-item-section side>
-          <q-item-label>Avatar</q-item-label>
-        </q-item-section>
-        <q-item-section>
-          <q-avatar v-if="this.avatarUrl">
-            <img :src="this.avatarUrl" />
-          </q-avatar>
-          <q-item-label v-if="this.avatarUrl === null">Unknown</q-item-label>
-        </q-item-section>
-      </q-item>
-
-      <q-item>
-        <q-item-section side>
-          <q-item-label>Created</q-item-label>
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{ this.createdAt }}</q-item-label>
-        </q-item-section>
-      </q-item>
-
-      <q-item>
-        <q-item-section side>
-          <q-item-label>Last Updated</q-item-label>
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{ this.updatedAt }}</q-item-label>
-        </q-item-section>
-      </q-item>
-
-      <q-separator spaced />
-      <q-item-label header>Preferences</q-item-label>
-
-      <q-item tag="label" v-ripple>
-        <q-item-section side top>
-          <q-checkbox disable v-model="this.termsAcceptedAt" />
-        </q-item-section>
-
-        <q-item-section>
-          <q-item-label>Terms of Use</q-item-label>
-          <q-item-label caption>
-            I agree to the terms of use. Violation of these terms may lead to
-            suspension of my account.
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-
-      <q-item tag="label" v-ripple>
-        <q-item-section side top>
-          <q-checkbox disable v-model="this.cookiesAcceptedAt" />
-        </q-item-section>
-
-        <q-item-section>
-          <q-item-label>Cookies</q-item-label>
-          <q-item-label caption>
-            I understand that Power Up uses cookies to make the experience
-            great.
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-
-      <q-item tag="label" v-ripple>
-        <q-item-section side top>
-          <q-checkbox disable v-model="this.emailCommsAcceptedAt" />
-        </q-item-section>
-
-        <q-item-section>
-          <q-item-label>Email Communication</q-item-label>
-          <q-item-label caption>
-            The Power Up team has permission to communicate with me via email
-            about my account.
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-    </q-list>
   </div>
 </template>
 
@@ -154,7 +60,7 @@ export default {
     const $q = useQuasar()
     const $store = useStore()
 
-    const desiredScreenName = ref(null)
+    const desiredScreenName = ref($store.state.profile.screenName)
     const unverifiedEmail = ref(null)
     const okWithTerms = ref(false)
     const okWithCookies = ref(false)
@@ -170,16 +76,13 @@ export default {
       accountId: computed(() => $store.state.profile.accountId),
       screenName: computed(() => $store.state.profile.screenName),
       email: computed(() => $store.state.profile.email),
-      avatarUrl: computed(() => $store.state.profile.avatarUrl),
       createdAt: computed(() => $store.state.profile.createdAt),
-      updatedAt: computed(() => $store.state.profile.updatedAt),
-      termsAcceptedAt: computed(() => $store.state.profile.termsAcceptedAt),
-      cookiesAcceptedAt: computed(() => $store.state.profile.cookiesAcceptedAt),
-      emailCommsAcceptedAt: computed(
-        () => $store.state.profile.emailCommsAcceptedAt
-      ),
-      accountStateId: computed(() => $store.state.profile.accountStateId),
 
+      onSuggestScreenName() {
+        const idea = $store.state.profile.screenName
+        console.log(idea);
+        desiredScreenName.value = $store.state.profile.screenName
+      },
       onSubmit() {
         if (okWithTerms.value !== true) {
           $q.notify({
@@ -209,11 +112,6 @@ export default {
       },
     }
   },
-  updated() {
-    if (this.desiredScreenName.value === null && this.screenName !== null) {
-      this.desiredScreenName = this.screenName
-    }
-  }
 }
 </script>
 
