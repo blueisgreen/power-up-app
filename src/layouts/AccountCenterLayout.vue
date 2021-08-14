@@ -1,12 +1,8 @@
 <template>
   <q-page class="q-pa-md">
-    <div v-if="loading" class="loading">
-      Loading...
-    </div>
+    <div v-if="loading" class="loading">Loading...</div>
 
-    <div v-if="error" class="error">
-      Ooops, I did it again.
-    </div>
+    <div v-if="error" class="error">Ooops, I did it again.</div>
 
     <div v-if="!(loading || error)" class="content">
       <p>Hello, {{ screenName }}</p>
@@ -23,14 +19,14 @@ export default defineComponent({
   setup() {
     return {
       loading: false,
-      error: null
+      error: null,
     }
   },
   created() {
     this.fetchUserProfile()
   },
   computed: mapState('auth', ['screenName']),
-  methods: mapActions('profile', ['fetchUserProfile'])
+  methods: mapActions('profile', ['fetchMyProfile']),
 })
 </script>
 

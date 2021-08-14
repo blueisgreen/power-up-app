@@ -8,14 +8,14 @@ export async function oauthLogin(authProvider, code, state) {
   console.log(response)
 }
 
-export async function fetchUserProfile() {
-  console.log('PowerUpService.fetchUserProfile')
+export async function fetchOwnProfile() {
+  console.log('PowerUpService.fetchOwnProfile')
   console.log(api.defaults.headers.common['Authorization'])
   return await api.get('/my/profile')
 }
 
-export async function updateUserProfile(updates) {
-  console.log('PowerUpService.fetchUserProfile')
+export async function updateOwnProfile(updates) {
+  console.log('PowerUpService.fetchOwnProfile')
   return await api.put('/my/profile', updates)
 }
 
