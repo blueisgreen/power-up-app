@@ -46,17 +46,16 @@
           </q-item-section>
         </q-item>
 
-        <!--
         <q-item>
           <q-item-section top>
             <q-toggle
-              v-if="!cookiesAccepted"
+              v-if="!this.cookiesAcceptedAt"
               v-model="okWithCookies"
               label="I agree to accept cookies for a smooth experience."
             />
-            <q-item-label v-if="cookiesAccepted"
+            <q-item-label v-if="this.cookiesAcceptedAt"
               >You agreed to use of cookies on
-              {{ cookiesAccepted }}</q-item-label
+              {{ this.cookiesAcceptedAt }}</q-item-label
             >
           </q-item-section>
           <q-item-section side top>
@@ -67,6 +66,7 @@
             />
           </q-item-section>
         </q-item>
+
         <q-item>
           <q-item-section top>
             <q-toggle
@@ -74,7 +74,7 @@
               label="Please send me email about Power Up."
             />
           </q-item-section>
-          <q-item-section top>
+          <q-item-section side top>
             <info-dialog
               :prompt="dialogValues.emailComms.prompt"
               :title="dialogValues.emailComms.title"
@@ -93,7 +93,6 @@
             />
           </q-section>
         </q-item>
-        -->
 
         <q-item>
           <q-section>

@@ -8,7 +8,7 @@
 import { useQuasar } from 'quasar'
 
 export default {
-  properties: {
+  props: {
     prompt: {
       type: String,
       default: 'Click Me',
@@ -26,24 +26,26 @@ export default {
     const $q = useQuasar()
 
     return {
-      showDialog() {
-        $q.dialog({
-          title: $props.title,
-          message: $props.message,
-          html: true,
-        })
-          .onOk(() => {
-            // console.log('OK')
-          })
-          .onCancel(() => {
-            // console.log('Cancel')
-          })
-          .onDismiss(() => {
-            // console.log('I am triggered on both OK and Cancel')
-          })
-      },
-      prompt,
+      $q,
     }
+  },
+  methods: {
+    showDialog() {
+      this.$q.dialog({
+        title: this.title,
+        message: this.message,
+        html: true,
+      })
+        .onOk(() => {
+          // console.log('OK')
+        })
+        .onCancel(() => {
+          // console.log('Cancel')
+        })
+        .onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        })
+    },
   },
 }
 </script>
