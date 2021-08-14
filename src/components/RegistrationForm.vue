@@ -36,7 +36,11 @@
             >
           </q-item-section>
           <q-item-section side top>
-            <q-item-label @click="onShowTerms">Review terms</q-item-label>
+            <info-dialog
+              :prompt="dialogValues.terms.prompt"
+              :title="dialogValues.terms.title"
+              :message="dialogValues.terms.message"
+            />
           </q-item-section>
         </q-item>
         <q-item>
@@ -52,7 +56,11 @@
             >
           </q-item-section>
           <q-item-section side top>
-            <q-item-label @click="onShowCookies">Explain cookies</q-item-label>
+            <info-dialog
+              :prompt="dialogValues.cookies.prompt"
+              :title="dialogValues.cookies.title"
+              :message="dialogValues.cookies.message"
+            />
           </q-item-section>
         </q-item>
         <q-item>
@@ -63,9 +71,11 @@
             />
           </q-item-section>
           <q-item-section top>
-            <q-item-label @click="onShowEmailPromise"
-              >See our promise</q-item-label
-            >
+            <info-dialog
+              :prompt="dialogValues.emailComms.prompt"
+              :title="dialogValues.emailComms.title"
+              :message="dialogValues.emailComms.message"
+            />
           </q-item-section>
         </q-item>
         <q-item>
@@ -102,8 +112,10 @@
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useQuasar, date } from 'quasar'
+import InfoDialog from 'components/InfoDialog'
 
 export default {
+  components: { InfoDialog },
   setup() {
     const $q = useQuasar()
     const $store = useStore()
@@ -114,7 +126,29 @@ export default {
     const okWithCookies = ref(false)
     const okWithEmail = ref(false)
 
+    const dialogValues = {
+      terms: {
+        prompt: 'Review Terms',
+        title: 'Terms of Use',
+        message:
+          'Be civilized. Disagreement and skepticism are fine, even healthy. Refrain from abusive language. Illegal or illicit activities are not allowed. Not adhering to these rules may result in suspension or termination of your account. Trolls be gone.',
+      },
+      cookies: {
+        prompt: 'Explain Cookies',
+        title: 'How Cookies Help',
+        message:
+          'Power Up uses cookies to remember who you are. We can take your preferences into account, and you do not have to keep logging in unless you log out on purpose.',
+      },
+      emailComms: {
+        prompt: 'Email Pledge',
+        title: 'Only the Good Stuff',
+        message:
+          'We will only send you email about Power Up. We will not share your email address with anyone. Unsubscribe at any time.',
+      },
+    }
     return {
+      dialogValues,
+
       desiredScreenName,
       unverifiedEmail,
       okWithTerms,
@@ -167,13 +201,11 @@ export default {
             publicId: this.accountId,
             screenName: this.desiredScreenName,
             email: this.unverifiedEmail,
-            agreeToTerms: this.termsAcceptedAt || this.agreeToTerms,
-            agreeToCookies: this.cookiesAcceptedAt || this.agreeToCookies,
+            agreeToTerms: !!this.termsAcceptedAt || this.agreeToTerms,
+            agreeToCookies: !!this.cookiesAcceptedAt || this.agreeToCookies,
             agreeToEmailComms:
-              this.emailCommsAcceptedAt || this.agreeToEmailComms,
+              !!this.emailCommsAcceptedAt || this.agreeToEmailComms,
           })
-          // TODO send updates via service API
-          console.log('IMPLEMENT ME')
         }
       },
       onReset() {

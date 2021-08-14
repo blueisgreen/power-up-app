@@ -11,9 +11,6 @@ const api = axios.create({
   // baseURL: 'https://power-up-service-staging.herokuapp.com',
   baseURL: process.env.API_URL,
 })
-const localAPI = axios.create({
-  baseURL: process.env.API_URL,
-})
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
@@ -36,4 +33,4 @@ const clearAuthHeader = () => {
   api.defaults.headers.common['Authorization'] = null
 }
 
-export { api, localAPI, setAuthHeader, clearAuthHeader }
+export { api, api as authAPI, setAuthHeader, clearAuthHeader }

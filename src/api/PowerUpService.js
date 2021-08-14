@@ -1,8 +1,8 @@
-import { api, localAPI } from '../boot/axios'
+import { api, authAPI } from '../boot/axios'
 
 export async function oauthLogin(authProvider, code, state) {
   // use auth provider ID and given code to finish authenticating via Power Up API
-  const response = await localAPI.post(
+  const response = await authAPI.post(
     `/login/${authProvider}/callback?code=${code}&state=${state}`
   )
   console.log(response)
@@ -10,26 +10,42 @@ export async function oauthLogin(authProvider, code, state) {
 
 export async function fetchOwnProfile() {
   console.log('PowerUpService.fetchOwnProfile')
+  // TODO - verify jwt in header before sending
   console.log(api.defaults.headers.common['Authorization'])
   return await api.get('/my/profile')
 }
 
 export async function updateOwnProfile(updates) {
-  console.log('PowerUpService.fetchOwnProfile')
+  console.log('PowerUpService.updateOwnProfile')
+  // TODO - verify jwt in header before sending
+  console.log(api.defaults.headers.common['Authorization'])
   return await api.put('/my/profile', updates)
 }
 
-export async function agreeToTerms(updates) {
+export async function agreeToTerms() {
   console.log('PowerUpService.fetchUserProfile')
   return await api.put('/my/termsOK')
 }
 
-export async function agreeToCookies(updates) {
+/**
+ * Use after registration to toggle acceptance of cookies, 
+ * on a preferences panel for example.
+ * 
+ * @param {*} updates 
+ * @returns 
+ */
+export async function agreeToCookies() {
   console.log('PowerUpService.fetchUserProfile')
   return await api.put('/my/cookiesOK')
 }
 
-export async function agreeToEmailComms(updates) {
+/**
+ * Use after registration to toggle acceptance of email communication.
+ * 
+ * @param {*} updates 
+ * @returns 
+ */
+ export async function agreeToEmailComms() {
   console.log('PowerUpService.fetchUserProfile')
   return await api.put('/my/emailCommsOK')
 }
