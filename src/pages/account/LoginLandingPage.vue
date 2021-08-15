@@ -60,7 +60,7 @@ export default defineComponent({
     console.log('mounted: redirect to', this.goTo)
     const navMap = {
       // home: 'FrontPage',
-      home: 'MemberRegistration',
+      home: 'FrontPage',
       register: 'MemberRegistration',
     }
     const destination = navMap[this.goTo]
