@@ -50,7 +50,7 @@ module.exports = configure(function (ctx) {
           ? 'http://localhost:3000'
           : 'https://power-up-service-staging.herokuapp.com',
       },
-      
+
       // transpile: false,
 
       // Add dependencies for transpiling with Babel (Array of string/regex)
@@ -105,7 +105,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: [],
+      plugins: ['Dialog', 'Notify'],
     },
 
     // animations: 'all', // --- includes all animations

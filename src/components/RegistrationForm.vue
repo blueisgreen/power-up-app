@@ -3,49 +3,112 @@
     <h4>Member Registration</h4>
     <p>
       You already have an account:
-      {{ this.accountId }} created on {{ this.createdAt }}
+      {{ this.accountId }} created on
+      {{ displayAsYearMonthDay(this.createdAt) }}
     </p>
     <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
-      <q-input
-        filled
-        v-model="desiredScreenName"
-        label="What shall we call you?"
-        hint="This can be your real name or an alias."
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Please type something']"
-      />
-      <q-btn @click="onSuggestScreenName">Suggest a name</q-btn><br/>
+      <q-list separator padding bordered>
+        <q-item>
+          <q-item-section top>
+            <q-input
+              filled
+              v-model="desiredScreenName"
+              label="What shall we call you?"
+              hint="This can be your real name or an alias."
+              lazy-rules
+              :rules="[
+                (val) => (val && val.length > 0) || 'Please type something',
+              ]"
+            />
+          </q-item-section>
+          <q-item-section side top>
+            <q-btn @click="onSuggestScreenName">Suggest</q-btn><br />
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section top>
+            <q-toggle
+              v-if="!this.termsAcceptedAt"
+              v-model="okWithTerms"
+              label="I accept the terms of use."
+            />
+            <q-item-label v-if="this.termsAcceptedAt"
+              >You agreed to terms of use on
+              {{ displayAsYearMonthDay(this.termsAcceptedAt) }}</q-item-label
+            >
+          </q-item-section>
+          <q-item-section side top>
+            <info-dialog
+              :prompt="dialogValues.terms.prompt"
+              :title="dialogValues.terms.title"
+              :message="dialogValues.terms.message"
+            />
+          </q-item-section>
+        </q-item>
 
-      <q-toggle v-model="okWithTerms" label="I accept the terms of use." />
-      <br />
-      <q-toggle
-        v-model="okWithCookies"
-        label="I agree to accept cookies for a smooth experience."
-      />
+        <q-item>
+          <q-item-section top>
+            <q-toggle
+              v-if="!this.cookiesAcceptedAt"
+              v-model="okWithCookies"
+              label="I agree to accept cookies for a smooth experience."
+            />
+            <q-item-label v-if="this.cookiesAcceptedAt"
+              >You agreed to use of cookies on
+              {{ displayAsYearMonthDay(this.cookiesAcceptedAt) }}</q-item-label
+            >
+          </q-item-section>
+          <q-item-section side top>
+            <info-dialog
+              :prompt="dialogValues.cookies.prompt"
+              :title="dialogValues.cookies.title"
+              :message="dialogValues.cookies.message"
+            />
+          </q-item-section>
+        </q-item>
 
-      <br />
-      <q-toggle
-        v-model="okWithEmail"
-        label="Please send me email about Power Up."
-      />
-      <q-input
-        filled
-        :disable="!okWithEmail"
-        type="email"
-        v-model="unverifiedEmail"
-        label="Your email"
-      />
+        <q-item>
+          <q-item-section top>
+            <q-toggle
+              v-model="okWithEmail"
+              label="Please send me email about Power Up."
+            />
+          </q-item-section>
+          <q-item-section side top>
+            <info-dialog
+              :prompt="dialogValues.emailComms.prompt"
+              :title="dialogValues.emailComms.title"
+              :message="dialogValues.emailComms.message"
+            />
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-section>
+            <q-input
+              filled
+              :disable="!okWithEmail"
+              type="email"
+              v-model="unverifiedEmail"
+              label="Your email"
+            />
+          </q-section>
+        </q-item>
 
-      <div>
-        <q-btn label="Submit" type="submit" color="primary" />
-        <q-btn
-          label="Reset"
-          type="reset"
-          color="primary"
-          flat
-          class="q-ml-sm"
-        />
-      </div>
+        <q-item>
+          <q-section>
+            <q-btn label="Submit" type="submit" color="primary" />
+          </q-section>
+          <q-section>
+            <q-btn
+              label="Reset"
+              type="reset"
+              color="primary"
+              flat
+              class="q-ml-sm"
+            />
+          </q-section>
+        </q-item>
+      </q-list>
     </q-form>
   </div>
 </template>
@@ -53,9 +116,13 @@
 <script>
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
-import { useQuasar } from 'quasar'
+import { useQuasar, date } from 'quasar'
+import InfoDialog from 'components/InfoDialog'
+import { displayAsYearMonthDay } from '../composables/powerUpUtils'
+
 
 export default {
+  components: { InfoDialog },
   setup() {
     const $q = useQuasar()
     const $store = useStore()
@@ -66,7 +133,32 @@ export default {
     const okWithCookies = ref(false)
     const okWithEmail = ref(false)
 
+    const dialogValues = {
+      terms: {
+        prompt: 'Review Terms',
+        title: 'Terms of Use',
+        message:
+          'Be civilized. Disagreement and skepticism are fine, even healthy. Refrain from abusive language. Illegal or illicit activities are not allowed. Not adhering to these rules may result in suspension or termination of your account. Trolls be gone.',
+      },
+      cookies: {
+        prompt: 'Explain Cookies',
+        title: 'How Cookies Help',
+        message:
+          'Power Up uses cookies to remember who you are. We can take your preferences into account, and you do not have to keep logging in unless you log out on purpose.',
+      },
+      emailComms: {
+        prompt: 'Email Pledge',
+        title: 'Only the Good Stuff',
+        message:
+          'We will only send you email about Power Up. We will not share your email address with anyone. Unsubscribe at any time.',
+      },
+    }
     return {
+      $q,
+      $store,
+      displayAsYearMonthDay,
+      dialogValues,
+
       desiredScreenName,
       unverifiedEmail,
       okWithTerms,
@@ -77,41 +169,65 @@ export default {
       screenName: computed(() => $store.state.profile.screenName),
       email: computed(() => $store.state.profile.email),
       createdAt: computed(() => $store.state.profile.createdAt),
-
+      termsAcceptedAt: computed(() => $store.state.profile.termsAcceptedAt),
+      cookiesAcceptedAt: computed(() => $store.state.profile.cookiesAcceptedAt),
+      emailCommsAcceptedAt: computed(
+        () => $store.state.profile.emailCommsAcceptedAt
+      ),
       onSuggestScreenName() {
         const idea = $store.state.profile.screenName
-        console.log(idea);
+        console.log(idea)
         desiredScreenName.value = $store.state.profile.screenName
-      },
-      onSubmit() {
-        if (okWithTerms.value !== true) {
-          $q.notify({
-            color: 'red-5',
-            textColor: 'white',
-            icon: 'warning',
-            message: 'You need to accept the terms to become a member',
-          })
-        } else {
-          $q.notify({
-            color: 'green-4',
-            textColor: 'white',
-            icon: 'cloud_done',
-            message: 'Submitted',
-          })
-          // TODO send updates via service API
-          console.log('IMPLEMENT ME')
-        }
-      },
-
-      onReset() {
-        desiredScreenName.value = this.screenName
-        unverifiedEmail.value = this.email
-        okWithTerms.value = false
-        okWithCookies.value = false
-        okWithEmail.value = false
       },
     }
   },
+  methods: {
+    onSubmit() {
+      console.log('submitting registration')
+      if (!this.okWithTerms) {
+        this.$q.notify({
+          color: 'red-5',
+          textColor: 'white',
+          icon: 'warning',
+          message: 'You need to accept the terms to become a member',
+        })
+      } else {
+        this.$q.notify({
+          color: 'green-4',
+          textColor: 'white',
+          icon: 'cloud_done',
+          message: 'Submitted',
+        })
+        console.log('about to dispatch registration action')
+        this.$store.dispatch('profile/updateMyProfile', {
+          publicId: this.accountId,
+          screenName: this.desiredScreenName,
+          email: this.unverifiedEmail,
+          agreeToTerms: !!this.termsAcceptedAt || this.okWithTerms,
+          agreeToCookies: !!this.cookiesAcceptedAt || this.okWithCookies,
+          agreeToEmailComms: !!this.emailCommsAcceptedAt || this.okWithEmail,
+        })
+      }
+    },
+    onReset() {
+      this.desiredScreenName.value = this.screenName
+      this.unverifiedEmail.value = this.email
+      this.okWithTerms.value = false
+      this.okWithCookies.value = false
+      this.okWithEmail.value = false
+    },
+  },
+  // computed: {
+  //   termsAccepted: () => {
+  //     return displayAsYearMonthDay(this.termsAcceptedAt)
+  //   },
+  //   cookiesAccepted: () => {
+  //     return displayAsYearMonthDay(this.cookiesAcceptedAt)
+  //   },
+  //   emailCommsAccepted: () => {
+  //     return displayAsYearMonthDay(this.emailCommsAcceptedAt)
+  //   },
+  // },
 }
 </script>
 

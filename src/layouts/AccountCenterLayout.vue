@@ -1,17 +1,12 @@
 <template>
   <q-page class="q-pa-md">
-    <div v-if="loading" class="loading">
-      Loading...
-    </div>
+    <div v-if="loading" class="loading">Loading...</div>
 
-    <div v-if="error" class="error">
-      Ooops, I did it again.
-    </div>
+    <div v-if="error" class="error">Ooops, I did it again.</div>
 
     <div v-if="!(loading || error)" class="content">
-      <p>Hello, {{ screenName }}</p>
+      <router-view />
     </div>
-    <router-view />
   </q-page>
 </template>
 
@@ -22,15 +17,19 @@ import { mapState, mapActions } from 'vuex'
 export default defineComponent({
   setup() {
     return {
-      loading: false,
-      error: null
+      error: null,
     }
   },
   created() {
-    this.fetchUserProfile()
+    this.fetchMyProfile()
   },
-  computed: mapState('auth', ['screenName']),
-  methods: mapActions('profile', ['fetchUserProfile'])
+  computed: {
+    ...mapState('profile', ['accountId']),
+    loading() {
+      return this.accountId === null
+    },
+  },
+  methods: mapActions('profile', ['fetchMyProfile']),
 })
 </script>
 
