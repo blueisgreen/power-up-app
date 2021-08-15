@@ -55,7 +55,7 @@
             />
             <q-item-label v-if="this.cookiesAcceptedAt"
               >You agreed to use of cookies on
-              {{ this.cookiesAcceptedAt }}</q-item-label
+              {{ displayAsYearMonthDay(this.cookiesAcceptedAt) }}</q-item-label
             >
           </q-item-section>
           <q-item-section side top>
