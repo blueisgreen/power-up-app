@@ -66,24 +66,24 @@ const linksList = [
     icon: 'school',
     route: 'LearningCenter',
   },
-  {
-    title: 'Exchange Ideas',
-    caption: 'Message boards',
-    icon: 'chat',
-    route: 'DiscussionBoards',
-  },
-  {
-    title: 'Simulations',
-    caption: 'Play the simulation game',
-    icon: 'precision_manufacturing',
-    route: 'Simulations',
-  },
-  {
-    title: 'Calculators',
-    caption: 'Fun with numbers',
-    icon: 'calculate',
-    route: 'Calculators',
-  },
+  // {
+  //   title: 'Exchange Ideas',
+  //   caption: 'Message boards',
+  //   icon: 'chat',
+  //   route: 'DiscussionBoards',
+  // },
+  // {
+  //   title: 'Simulations',
+  //   caption: 'Play the simulation game',
+  //   icon: 'precision_manufacturing',
+  //   route: 'Simulations',
+  // },
+  // {
+  //   title: 'Calculators',
+  //   caption: 'Fun with numbers',
+  //   icon: 'calculate',
+  //   route: 'Calculators',
+  // },
   {
     title: 'Account',
     caption: 'Your account information',
@@ -102,6 +102,12 @@ const linksList = [
     caption: 'Editors only area',
     icon: 'create',
     route: 'Composer',
+  },
+  {
+    title: 'Article Management',
+    caption: 'For creating articles (editors only)',
+    icon: 'create',
+    route: 'ArticleManagement',
   },
   {
     title: 'Administration',
