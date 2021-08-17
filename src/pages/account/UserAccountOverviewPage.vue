@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-splitter v-model="splitterModel">
-      <template v-slot:before>
+      <template #before>
         <q-tabs v-model="tab" vertical align="left" indicator-color="teal-10">
           <q-tab
             name="overview"
@@ -12,7 +12,7 @@
           <q-tab name="settings" icon="settings" label="Preferences"></q-tab>
         </q-tabs>
       </template>
-      <template v-slot:after>
+      <template #after>
         <q-tab-panels v-model="tab" vertical>
           <q-tab-panel name="overview">
             <member-account-view />

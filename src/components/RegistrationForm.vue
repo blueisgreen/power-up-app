@@ -3,16 +3,16 @@
     <h4>Member Registration</h4>
     <p>
       You already have an account:
-      {{ this.accountId }} created on
-      {{ displayAsYearMonthDay(this.createdAt) }}
+      {{ accountId }} created on
+      {{ displayAsYearMonthDay(createdAt) }}
     </p>
-    <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+    <q-form class="q-gutter-md" @submit="onSubmit" @reset="onReset">
       <q-list separator padding bordered>
         <q-item>
           <q-item-section top>
             <q-input
-              filled
               v-model="desiredScreenName"
+              filled
               label="What shall we call you?"
               hint="This can be your real name or an alias."
               lazy-rules
@@ -28,13 +28,13 @@
         <q-item>
           <q-item-section top>
             <q-toggle
-              v-if="!this.termsAcceptedAt"
+              v-if="!termsAcceptedAt"
               v-model="okWithTerms"
               label="I accept the terms of use."
             />
-            <q-item-label v-if="this.termsAcceptedAt"
+            <q-item-label v-if="termsAcceptedAt"
               >You agreed to terms of use on
-              {{ displayAsYearMonthDay(this.termsAcceptedAt) }}</q-item-label
+              {{ displayAsYearMonthDay(termsAcceptedAt) }}</q-item-label
             >
           </q-item-section>
           <q-item-section side top>
@@ -49,13 +49,13 @@
         <q-item>
           <q-item-section top>
             <q-toggle
-              v-if="!this.cookiesAcceptedAt"
+              v-if="!cookiesAcceptedAt"
               v-model="okWithCookies"
               label="I agree to accept cookies for a smooth experience."
             />
-            <q-item-label v-if="this.cookiesAcceptedAt"
+            <q-item-label v-if="cookiesAcceptedAt"
               >You agreed to use of cookies on
-              {{ displayAsYearMonthDay(this.cookiesAcceptedAt) }}</q-item-label
+              {{ displayAsYearMonthDay(cookiesAcceptedAt) }}</q-item-label
             >
           </q-item-section>
           <q-item-section side top>
@@ -85,10 +85,10 @@
         <q-item>
           <q-section>
             <q-input
+              v-model="unverifiedEmail"
               filled
               :disable="!okWithEmail"
               type="email"
-              v-model="unverifiedEmail"
               label="Your email"
             />
           </q-section>
@@ -217,17 +217,6 @@ export default {
       this.okWithEmail.value = false
     },
   },
-  // computed: {
-  //   termsAccepted: () => {
-  //     return displayAsYearMonthDay(this.termsAcceptedAt)
-  //   },
-  //   cookiesAccepted: () => {
-  //     return displayAsYearMonthDay(this.cookiesAcceptedAt)
-  //   },
-  //   emailCommsAccepted: () => {
-  //     return displayAsYearMonthDay(this.emailCommsAcceptedAt)
-  //   },
-  // },
 }
 </script>
 

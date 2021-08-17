@@ -14,7 +14,7 @@
           <span v-show="isAdmin"> #a system administrator#</span>
         </span>
       </div>
-      <template v-slot:action>
+      <template #action>
         <a v-show="!isSignedIn" :href="loginUrl"
           >Login with GitHub via Power Up API</a
         >
