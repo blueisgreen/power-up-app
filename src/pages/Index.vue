@@ -34,7 +34,7 @@
 
 <script>
 import { defineComponent, onMounted, ref } from 'vue'
-import { fetchArticles } from '../api/PowerUpService'
+import { fetchArticles } from '../api/PowerUpApi'
 
 export default defineComponent({
   name: 'PageIndex',
