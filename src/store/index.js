@@ -1,8 +1,9 @@
 import { store } from 'quasar/wrappers'
 import { createStore, createLogger } from 'vuex'
 
-import auth from './modules/auth'
-import profile from './modules/profile'
+import auth from './auth'
+import profile from './profile'
+import support from './support'
 
 /*
  * If not building with SSR mode, you can
@@ -20,6 +21,7 @@ export default store(function (/* { ssrContext } */) {
     modules: {
       auth,
       profile,
+      support,
     },
 
     // enable strict mode (adds overhead!)
