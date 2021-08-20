@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { useStore, mapState, mapGetters, mapMutations } from 'vuex'
+import { useStore, mapState, mapGetters } from 'vuex'
 export default {
   setup() {
     return {

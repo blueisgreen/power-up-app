@@ -1,14 +1,8 @@
 <template>
   <div>
     <span>{{ screenName }}</span>
-    <q-btn
-      v-show="!isSignedIn"
-      >Sign In</q-btn
-    >
-    <q-btn
-      v-show="isSignedIn"
-      >Sign Out</q-btn
-    >
+    <q-btn v-show="!isSignedIn">Sign In</q-btn>
+    <q-btn v-show="isSignedIn" @click="handleSignOut">Sign Out</q-btn>
   </div>
 </template>
 
@@ -17,7 +11,7 @@ import { useStore } from 'vuex'
 export default {
   setup() {
     return {
-      store: useStore()
+      store: useStore(),
     }
   },
   computed: {
@@ -27,7 +21,12 @@ export default {
     isSignedIn() {
       return this.store.getters['auth/isSignedIn']
     },
-  }
+  },
+  methods: {
+    handleSignOut() {
+      this.store.commit('auth/signOut')
+    },
+  },
 }
 </script>
 

@@ -2,19 +2,6 @@
   <q-page class="flex">
     <div class="q-pa-md">
       <div class="row q-gutter-md">
-        <div class="col-sm">
-          <q-card class="my-card">
-            <img src="https://cdn.quasar.dev/img/mountains.jpg" />
-            <q-card-section>
-              <div class="text-h6">How It Works</div>
-              <div class="text-subtitle2">by Zanzibar</div>
-            </q-card-section>
-            <q-card-section class="q-pt-none">
-              Everything you need to know about the parts of a nuclear power
-              plant. Find out now.
-            </q-card-section>
-          </q-card>
-        </div>
         <div v-for="article in articles" :key="article.id" class="col-sm">
           <q-card class="my-card">
             <img src="https://cdn.quasar.dev/img/mountains.jpg" />

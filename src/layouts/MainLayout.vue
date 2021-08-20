@@ -15,10 +15,10 @@
           Power Up Magazine - Learn About Nuclear Power
         </q-toolbar-title>
 
+        <div class="edition-label">Summer 2021</div>
         <authorization-widget />
       </q-toolbar>
       <signup-login-logout-banner />
-      <div>Edition: <b>Summer 2021</b></div>
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" side="left" bordered class="bg-grey-1">
@@ -26,7 +26,7 @@
         <q-item-label header class="text-grey-8"> Site Directory </q-item-label>
 
         <EssentialLink
-          v-for="link in essentialLinks"
+          v-for="link in visibleMenuItems"
           :key="link.title"
           v-bind="link"
         />
@@ -51,6 +51,7 @@
 import EssentialLink from 'components/EssentialLink.vue'
 import AuthorizationWidget from 'components/AuthorizationWidget.vue'
 import SignupLoginLogoutBanner from 'components/SignupLoginLogoutBanner.vue'
+import { useStore, mapState, mapGetters } from 'vuex'
 
 const linksList = [
   {
@@ -89,7 +90,7 @@ const linksList = [
     caption: 'Your account information',
     icon: 'manage_accounts',
     route: 'UserAccount',
-    exact: true
+    exact: true,
   },
   {
     title: 'Support',
@@ -102,18 +103,21 @@ const linksList = [
     caption: 'Editors only area',
     icon: 'create',
     route: 'Composer',
+    rolesWithAccess: ['editor', 'editorInChief'],
   },
   {
     title: 'Article Management',
     caption: 'For creating articles (editors only)',
     icon: 'create',
     route: 'ArticleManagement',
+    rolesWithAccess: ['editor', 'editorInChief'],
   },
   {
     title: 'Administration',
     caption: 'Administrators only',
     icon: 'admin_panel_settings',
     route: 'AdminPanel',
+    rolesWithAccess: ['admin'],
   },
 ]
 
@@ -137,7 +141,25 @@ export default defineComponent({
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
+      store: useStore(),
     }
+  },
+  computed: {
+    visibleMenuItems() {
+      const visibleItems = this.essentialLinks.filter(
+        (item) =>
+          !item.rolesWithAccess || (item.rolesWithAccess && this.isSignedIn)
+      )
+      return visibleItems
+    },
+    ...mapGetters('auth', ['isSignedIn']),
   },
 })
 </script>
+<style scoped>
+.edition-label {
+  margin-right: 1em;
+  font-weight: bold;
+  color: gold;
+}
+</style>
