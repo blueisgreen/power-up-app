@@ -1,7 +1,2 @@
-import * as profile from './profile'
-import * as articles from './articles'
-
-export default {
-    profile,
-    articles
-}
+export * from './profile'
+export * from './articles'

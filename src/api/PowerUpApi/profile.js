@@ -1,4 +1,4 @@
-import { api, authAPI } from '../boot/axios'
+import { api, authAPI } from '../../boot/axios'
 
 export async function oauthLogin(authProvider, code, state) {
   // use auth provider ID and given code to finish authenticating via Power Up API
