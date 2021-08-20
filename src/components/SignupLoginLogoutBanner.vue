@@ -62,8 +62,9 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .user-message {
-  color: forestgreen;
+  color: $teal-8;
+  font-weight: bold;
 }
 </style>

@@ -78,13 +78,13 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .v-space {
   margin-bottom: 1.5em;
 }
 .greeting {
   font-size: large;
   font-weight: bold;
-  color: teal
+  color: $teal-8
 }
 </style>
