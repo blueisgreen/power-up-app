@@ -1,7 +1,9 @@
 <template>
   <q-page class="q-pa-md">
     <h3>What can we do for you?</h3>
-    <div v-if="isSignedIn" class="v-space greeting">Hello, {{ screenName }}.</div>
+    <div v-if="isSignedIn" class="v-space greeting">
+      Hello, {{ screenName }}.
+    </div>
     <p>
       Use this contact form to get help, ask a question, or give us feedback.
     </p>
@@ -12,7 +14,7 @@
       </template>
     </q-banner>
     <div class="p-pa-md" style="max-width: 500px">
-      <q-form>
+      <q-form @submit="onSubmit">
         <q-select
           v-model="purpose"
           rounded
@@ -32,7 +34,7 @@
               val.length <= 500 || 'Please summarize your comment or question.',
           ]"
         />
-        <q-btn color="blue-8">Submit Feedback</q-btn>
+        <q-btn type="submit" color="blue-8">Submit Feedback</q-btn>
       </q-form>
     </div>
   </q-page>
@@ -40,7 +42,7 @@
 
 <script>
 import { computed } from 'vue'
-import { useStore, mapGetters, mapState } from 'vuex'
+import { useStore, mapGetters, mapState, mapActions } from 'vuex'
 
 export default {
   setup() {
@@ -69,11 +71,18 @@ export default {
       purposeOfInquiryOptions,
       purpose,
       message,
+      $store,
     }
   },
   computed: {
     ...mapState('auth', ['screenName']),
     ...mapGetters('auth', ['isSignedIn']),
+  },
+  methods: {
+    onSubmit() {
+      console.log('clicked submit');
+      this.$store.dispatch('support/submitInquiry')
+    }
   },
 }
 </script>
@@ -85,6 +94,6 @@ export default {
 .greeting {
   font-size: large;
   font-weight: bold;
-  color: $teal-8
+  color: $teal-8;
 }
 </style>
