@@ -7,7 +7,7 @@
           <q-item-label>Account ID</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ this.accountId }}</q-item-label>
+          <q-item-label>{{ accountId }}</q-item-label>
         </q-item-section>
       </q-item>
 
@@ -16,7 +16,7 @@
           <q-item-label>Screen Name</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ this.screenName }}</q-item-label>
+          <q-item-label>{{ screenName }}</q-item-label>
         </q-item-section>
       </q-item>
 
@@ -25,7 +25,7 @@
           <q-item-label>Email</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ this.email }}</q-item-label>
+          <q-item-label>{{ email }}</q-item-label>
         </q-item-section>
       </q-item>
 
@@ -34,10 +34,10 @@
           <q-item-label>Avatar</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-avatar v-if="this.avatarUrl">
-            <img :src="this.avatarUrl" />
+          <q-avatar v-if="avatarUrl">
+            <img :src="avatarUrl" />
           </q-avatar>
-          <q-item-label v-if="this.avatarUrl === null">Unknown</q-item-label>
+          <q-item-label v-if="avatarUrl === null">Unknown</q-item-label>
         </q-item-section>
       </q-item>
 
@@ -46,7 +46,7 @@
           <q-item-label>Created</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ this.createdAt }}</q-item-label>
+          <q-item-label>{{ createdAt }}</q-item-label>
         </q-item-section>
       </q-item>
 
@@ -55,16 +55,16 @@
           <q-item-label>Last Updated</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ this.updatedAt }}</q-item-label>
+          <q-item-label>{{ updatedAt }}</q-item-label>
         </q-item-section>
       </q-item>
 
       <q-separator spaced />
       <q-item-label header>Preferences</q-item-label>
 
-      <q-item tag="label" v-ripple>
+      <q-item v-ripple tag="label">
         <q-item-section side top>
-          <q-checkbox disable v-model="this.termsAcceptedAt" />
+          <q-checkbox v-model="termsAcceptedAt" disable />
         </q-item-section>
 
         <q-item-section>
@@ -75,9 +75,9 @@
         </q-item-section>
       </q-item>
 
-      <q-item tag="label" v-ripple>
+      <q-item v-ripple tag="label">
         <q-item-section side top>
-          <q-checkbox disable v-model="this.cookiesAcceptedAt" />
+          <q-checkbox v-model="cookiesAcceptedAt" disable />
         </q-item-section>
 
         <q-item-section>
@@ -89,9 +89,9 @@
         </q-item-section>
       </q-item>
 
-      <q-item tag="label" v-ripple>
+      <q-item v-ripple tag="label">
         <q-item-section side top>
-          <q-checkbox disable v-model="this.emailCommsAcceptedAt" />
+          <q-checkbox v-model="emailCommsAcceptedAt" disable />
         </q-item-section>
 
         <q-item-section>

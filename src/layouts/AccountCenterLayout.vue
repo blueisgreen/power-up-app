@@ -1,9 +1,7 @@
 <template>
   <q-page class="q-pa-md">
     <div v-if="loading" class="loading">Loading...</div>
-
     <div v-if="error" class="error">Ooops, I did it again.</div>
-
     <div v-if="!(loading || error)" class="content">
       <router-view />
     </div>
@@ -20,14 +18,14 @@ export default defineComponent({
       error: null,
     }
   },
-  created() {
-    this.fetchMyProfile()
-  },
   computed: {
     ...mapState('profile', ['accountId']),
     loading() {
       return this.accountId === null
     },
+  },
+  created() {
+    this.fetchMyProfile()
   },
   methods: mapActions('profile', ['fetchMyProfile']),
 })

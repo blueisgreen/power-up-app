@@ -14,7 +14,7 @@
           <span v-show="isAdmin"> #a system administrator#</span>
         </span>
       </div>
-      <template v-slot:action>
+      <template #action>
         <a v-show="!isSignedIn" :href="loginUrl"
           >Login with GitHub via Power Up API</a
         >
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { useStore, mapState, mapGetters, mapMutations } from 'vuex'
+import { useStore, mapState, mapGetters } from 'vuex'
 export default {
   setup() {
     return {
@@ -62,8 +62,9 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .user-message {
-  color: forestgreen;
+  color: $teal-8;
+  font-weight: bold;
 }
 </style>

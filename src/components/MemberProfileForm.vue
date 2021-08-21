@@ -1,9 +1,9 @@
 <template>
   <div class="q-pa-md" style="max-width: 500px">
-    <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+    <q-form class="q-gutter-md" @submit="onSubmit" @reset="onReset">
       <q-input
-        filled
         v-model="profile.screenName"
+        filled
         label="Screen Name *"
         hint="Your moniker, your handle, how people will know it's you"
         lazy-rules
@@ -11,9 +11,9 @@
       />
 
       <q-input
+        v-model="profile.email"
         filled
         type="email"
-        v-model="profile.email"
         label="Email address *"
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || 'Please type something']"

@@ -1,21 +1,31 @@
 <template>
   <q-page class="q-pa-md">
-    <h3>Need Help? Want to Give Us Feedback?</h3>
+    <h3>What can we do for you?</h3>
+    <div v-if="isSignedIn" class="v-space greeting">
+      Hello, {{ screenName }}.
+    </div>
     <p>
-      Use this contact form to get help, ask questions, or tell us what you're
-      thinking. Earnest inquiries will be responded to. Constructive feedback
-      will be heard.
+      Use this contact form to get help, ask a question, or give us feedback.
     </p>
+    <q-banner v-if="!isSignedIn" class="bg-purple-8 text-white v-space">
+      You are anonymous. If you want a response, be sure to sign in first.
+      <template #action>
+        <q-btn flat color="white" label="Sign In" />
+      </template>
+    </q-banner>
     <div class="p-pa-md" style="max-width: 500px">
-      <q-form>
+      <q-form @submit="onSubmit">
         <q-select
-          v-model="typeOfInquiry"
-          filled
-          :options="typeOfInquiryOptions"
-          label="Filled"
+          v-model="purpose"
+          rounded
+          outlined
+          map-options
+          class="v-space"
+          :options="purposeOfInquiryOptions"
+          label="Purpose of Inquiry"
         />
         <q-input
-          v-model="inquiry"
+          v-model="message"
           filled
           type="textarea"
           label="Maximum 500 characters"
@@ -24,28 +34,66 @@
               val.length <= 500 || 'Please summarize your comment or question.',
           ]"
         />
-        <q-btn color="blue-4">Submit Feedback</q-btn>
+        <q-btn type="submit" color="blue-8">Submit Feedback</q-btn>
       </q-form>
     </div>
   </q-page>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { computed } from 'vue'
+import { useStore, mapGetters, mapState, mapActions } from 'vuex'
+
 export default {
   setup() {
+    const $store = useStore()
+    const purposeOfInquiryOptions = [
+      { label: 'Get Help', value: 'help' },
+      { label: 'Ask a Question', value: 'question' },
+      { label: 'Give Feedback', value: 'feedback' },
+      { label: 'Something Else', value: 'other' },
+    ]
+    const purpose = computed({
+      get: () => $store.state.support.inquiryToSend.purpose,
+      set: (val) => {
+        console.log('setting purpose', val.value)
+        $store.commit('support/setInquiryPurpose', { purpose: val.value })
+      },
+    })
+    const message = computed({
+      get: () => $store.state.support.inquiryToSend.message,
+      set: (val) => {
+        console.log('setting message', val)
+        $store.commit('support/setInquiryMessage', { message: val })
+      },
+    })
     return {
-      typeOfInquiry: ref(null),
-      typeOfInquiryOptions: [
-        'Giving Feedback',
-        'Asking For Help',
-        'Question',
-        'Something Else',
-      ],
-      inquiry: ref(''),
+      purposeOfInquiryOptions,
+      purpose,
+      message,
+      $store,
+    }
+  },
+  computed: {
+    ...mapState('auth', ['screenName']),
+    ...mapGetters('auth', ['isSignedIn']),
+  },
+  methods: {
+    onSubmit() {
+      console.log('clicked submit');
+      this.$store.dispatch('support/submitInquiry')
     }
   },
 }
 </script>
 
-<style></style>
+<style lang="scss">
+.v-space {
+  margin-bottom: 1.5em;
+}
+.greeting {
+  font-size: large;
+  font-weight: bold;
+  color: $teal-8;
+}
+</style>

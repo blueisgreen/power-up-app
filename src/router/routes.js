@@ -9,12 +9,12 @@ const routes = [
       {
         path: '',
         name: 'FrontPage',
-        component: () => import('pages/Index.vue'),
+        component: () => import('../pages/Index.vue'),
       },
       {
         path: '/login/landing',
         name: 'LoginLanding',
-        component: () => import('pages/account/LoginLandingPage.vue'),
+        component: () => import('../pages/account/LoginLandingPage.vue'),
       },
       {
         path: 'account',
@@ -27,17 +27,18 @@ const routes = [
             path: '',
             name: 'UserAccount',
             component: () =>
-              import('src/pages/account/UserAccountOverviewPage.vue'),
+              import('../pages/account/UserAccountOverviewPage.vue'),
           },
           {
             path: 'register',
             name: 'MemberRegistration',
-            component: () => import('pages/account/MemberRegistrationPage.vue'),
+            component: () =>
+              import('../pages/account/MemberRegistrationPage.vue'),
           },
           {
             path: 'profile',
             name: 'MemberProfile',
-            component: () => import('pages/account/MemberProfilePage.vue'),
+            component: () => import('../pages/account/MemberProfilePage.vue'),
             meta: {
               requireAuth: true,
               role: 'member',
@@ -48,17 +49,26 @@ const routes = [
       {
         path: 'learn',
         name: 'LearningCenter',
-        component: () => import('pages/lessons/LearningCenterPage.vue'),
+        component: () => import('../pages/lessons/LearningCenterPage.vue'),
       },
       {
         path: 'support',
         name: 'SupportCenter',
-        component: () => import('pages/SupportPage.vue'),
+        component: () => import('../pages/SupportPage.vue'),
       },
       {
-        path: 'drafting',
+        path: 'lessonMgmt',
         name: 'Composer',
-        component: () => import('pages/admin/ContentComposerPage.vue'),
+        component: () => import('../pages/authoring/LessonComposerPage.vue'),
+        meta: {
+          requireAuth: true,
+          role: 'editor',
+        },
+      },
+      {
+        path: 'articleMgmt',
+        name: 'ArticleManagement',
+        component: () => import('../pages/authoring/ArticleMgmtPage.vue'),
         meta: {
           requireAuth: true,
           role: 'editor',
@@ -67,7 +77,7 @@ const routes = [
       {
         path: 'admin',
         name: 'AdminPanel',
-        component: () => import('pages/admin/AdminPage.vue'),
+        component: () => import('../pages/admin/AdminPage.vue'),
         meta: {
           requireAuth: true,
           role: 'admin',
@@ -76,17 +86,17 @@ const routes = [
       {
         path: 'boards',
         name: 'DiscussionBoards',
-        component: () => import('pages/big-ideas/DiscussionBoardsPage.vue'),
+        component: () => import('../pages/big-ideas/DiscussionBoardsPage.vue'),
       },
       {
         path: 'sims',
         name: 'Simulations',
-        component: () => import('pages/big-ideas/SimulationsPage.vue'),
+        component: () => import('../pages/big-ideas/SimulationsPage.vue'),
       },
       {
         path: 'calcs',
         name: 'Calculators',
-        component: () => import('pages/big-ideas/CalculatorsPage.vue'),
+        component: () => import('../pages/big-ideas/CalculatorsPage.vue'),
       },
     ],
   },
@@ -95,7 +105,7 @@ const routes = [
   // but you can also remove it
   {
     path: '/:catchAll(.*)*',
-    component: () => import('pages/Error404.vue'),
+    component: () => import('../pages/Error404.vue'),
   },
 ]
 
