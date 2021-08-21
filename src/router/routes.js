@@ -84,6 +84,11 @@ const routes = [
         },
       },
       {
+        path: 'csr',
+        name: 'CustomerSupportRep',
+        component: () => import('../pages/csr/CustomerSupportCenter.vue'),
+      },
+      {
         path: 'boards',
         name: 'DiscussionBoards',
         component: () => import('../pages/big-ideas/DiscussionBoardsPage.vue'),

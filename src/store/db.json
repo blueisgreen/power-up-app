@@ -11,6 +11,29 @@
       "statusId": 3
     }
   ],
+  "inquiries": [
+    {
+      "id": 10,
+      "userId": 2,
+      "createdAt": "2020-04-02T01:23:45.678Z",
+      "relatesTo": null,
+      "purpose": "question",
+      "message": "What is the meaning of life?"
+    },
+    {
+      "id": 13,
+      "userId": 2,
+      "createdAt": "2020-04-02T01:23:45.678Z",
+      "relatesTo": null,
+      "purpose": "feedback",
+      "message": "I told my friends about this site, and they love it."
+    },
+    {
+      "purpose": "feedback",
+      "message": "I really love this website. Keep it going!",
+      "id": 14
+    }
+  ],
   "articles": [
     {
       "id": "blargy123",
