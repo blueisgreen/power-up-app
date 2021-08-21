@@ -1,7 +1,7 @@
 <template>
   <div>
     <span>{{ screenName }}</span>
-    <q-btn v-show="!isSignedIn">Sign In</q-btn>
+    <q-btn v-show="!isSignedIn" @click="handleSignIn">Sign In</q-btn>
     <q-btn v-show="isSignedIn" @click="handleSignOut">Sign Out</q-btn>
   </div>
 </template>
@@ -25,6 +25,9 @@ export default {
   methods: {
     handleSignOut() {
       this.store.commit('auth/signOut')
+    },
+    handleSignIn() {
+      window.location.href = process.env.API_URL + '/login/github'
     },
   },
 }
