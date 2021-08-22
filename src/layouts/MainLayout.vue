@@ -119,6 +119,13 @@ const linksList = [
     route: 'AdminPanel',
     rolesWithAccess: ['admin'],
   },
+  {
+    title: 'Customer Support',
+    caption: 'Administrators only',
+    icon: 'support',
+    route: 'CustomerSupportRep',
+    // rolesWithAccess: ['admin'],
+  },
 ]
 
 import { defineComponent, ref } from 'vue'
