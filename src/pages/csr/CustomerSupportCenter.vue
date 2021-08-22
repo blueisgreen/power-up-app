@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-md">
-    <h3>Customer Support Center</h3>
+    <h4>Customer Support Center</h4>
     <q-toolbar class="bg-primary text-white q-my-md shadow-2">
       <q-btn-dropdown stretch flat no-wrap label="Filter">
         <q-list>
