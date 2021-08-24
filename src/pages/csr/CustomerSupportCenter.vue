@@ -78,7 +78,7 @@
 
     <q-scroll-area class="inquiry-list">
       <q-list v-for="item in filteredInquires" :key="item.id">
-        <q-item clickable>
+        <q-item clickable @click="() => setSelected(item)">
           <q-item-section side>
             <q-item-label>{{ formatDate(item.createdAt) }}</q-item-label>
           </q-item-section>
@@ -108,7 +108,7 @@
       <q-separator />
       <q-tab-panels v-model="inquiryTab">
         <q-tab-panel name="read">
-          <div>{{ sampleMessage }}</div>
+          <div>{{ selectedMessage }}</div>
         </q-tab-panel>
       </q-tab-panels>
       <q-tab-panels v-model="inquiryTab">
@@ -152,11 +152,15 @@ export default defineComponent({
       showOnlyUnread: ref(false),
       searchQuery: ref(''),
       inquiryTab: ref('read'),
+      selected: ref(null),
       sampleMessage,
       sampleResponse: ref(sampleResponse),
     }
   },
   computed: {
+    selectedMessage() {
+      return !this.selected ? '--select an inquiry--' : this.selected.message
+    },
     ...mapGetters('csr', ['filteredInquires']),
   },
   methods: {
@@ -165,6 +169,9 @@ export default defineComponent({
     },
     mapPurposeToIcon(purpose) {
       return purposeIconMap[purpose]
+    },
+    setSelected(item) {
+      this.selected = item
     }
   },
 })
