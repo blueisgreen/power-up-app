@@ -1,7 +1,29 @@
 <template>
   <q-page class="q-pa-md">
-    <h3>Customer Support Center</h3>
+    <h4>Customer Support Center</h4>
     <q-toolbar class="bg-primary text-white q-my-md shadow-2">
+      <q-input
+        v-model="searchQuery"
+        dark
+        dense
+        standout
+        input-class="text-right"
+        class="q-ml-md"
+      >
+        <template #append>
+          <q-icon v-if="searchQuery === ''" name="search" />
+          <q-icon
+            v-else
+            name="clear"
+            class="cursor-pointer"
+            @click="searchQuery = ''"
+          />
+        </template>
+      </q-input>
+
+      <q-separator dark vertical />
+      <q-space />
+
       <q-btn-dropdown stretch flat no-wrap label="Filter">
         <q-list>
           <q-item-label header>By Purpose</q-item-label>
@@ -50,49 +72,29 @@
           </q-item>
         </q-list>
       </q-btn-dropdown>
-
-      <q-separator dark vertical />
-      <q-space />
-
-      <q-input
-        v-model="searchQuery"
-        dark
-        dense
-        standout
-        input-class="text-right"
-        class="q-ml-md"
-      >
-        <template #append>
-          <q-icon v-if="searchQuery === ''" name="search" />
-          <q-icon
-            v-else
-            name="clear"
-            class="cursor-pointer"
-            @click="searchQuery = ''"
-          />
-        </template>
-      </q-input>
       <q-separator dark vertical />
       <q-btn stretch flat label="Link" />
     </q-toolbar>
+
     <q-scroll-area class="inquiry-list">
-      <q-list>
-        <q-item clickable>
+      <q-list v-for="item in filteredInquires" :key="item.id">
+        <q-item clickable @click="() => setSelected(item)">
           <q-item-section side>
-            <q-item-label>20 Aug 2021</q-item-label>
+            <q-item-label>{{ formatDate(item.createdAt) }}</q-item-label>
           </q-item-section>
           <q-item-section side>
-            <q-item-label>Blargy Pants</q-item-label>
+            <q-item-label>{{ item.userId }}</q-item-label>
           </q-item-section>
           <q-item-section side>
-            <q-item-label><q-avatar icon="help" /></q-item-label>
+            <q-item-label><q-avatar :icon="mapPurposeToIcon(item.purpose)" /></q-item-label>
           </q-item-section>
           <q-item-section>
-            <q-item-label lines="3">{{ sampleMessage }}</q-item-label>
+            <q-item-label lines="3">{{ item.message }}</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
     </q-scroll-area>
+
     <q-card>
       <q-tabs
         v-model="inquiryTab"
@@ -106,7 +108,7 @@
       <q-separator />
       <q-tab-panels v-model="inquiryTab">
         <q-tab-panel name="read">
-          <div>{{ sampleMessage }}</div>
+          <div>{{ selectedMessage }}</div>
         </q-tab-panel>
       </q-tab-panels>
       <q-tab-panels v-model="inquiryTab">
@@ -125,7 +127,17 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
+import { useStore, mapGetters } from 'vuex'
+import { date } from 'quasar'
+
+const purposeIconMap = {
+  help: 'support',
+  question: 'help',
+  feedback: 'feedback',
+  other: 'person',
+}
+
 export default defineComponent({
   name: 'PageCustomerSupportCenter',
   setup() {
@@ -133,12 +145,33 @@ export default defineComponent({
       'If the birds and the bees are as smart as the tree, what color are the dandilions in the springtime under a full moon? Also, what is your favorite color? Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod <b>tempor</b> incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
     const sampleResponse =
       'Dear Blargy Pants, You will have to learn to deal with it, whatever your problem is. Sorry, life is hard.'
+
+    onMounted(() => useStore().dispatch('csr/fetchSupportInquiries'))
+
     return {
       showOnlyUnread: ref(false),
       searchQuery: ref(''),
       inquiryTab: ref('read'),
+      selected: ref(null),
       sampleMessage,
       sampleResponse: ref(sampleResponse),
+    }
+  },
+  computed: {
+    selectedMessage() {
+      return !this.selected ? '--select an inquiry--' : this.selected.message
+    },
+    ...mapGetters('csr', ['filteredInquires']),
+  },
+  methods: {
+    formatDate(ts) {
+      return date.formatDate(ts, 'D MMM YYYY')
+    },
+    mapPurposeToIcon(purpose) {
+      return purposeIconMap[purpose]
+    },
+    setSelected(item) {
+      this.selected = item
     }
   },
 })
