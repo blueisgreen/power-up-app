@@ -12,6 +12,11 @@ const routes = [
         component: () => import('../pages/Index.vue'),
       },
       {
+        path: 'article/:articleId',
+        name: 'ArticlePage',
+        component: () => import('../pages/ArticleReaderPage.vue'),
+      },
+      {
         path: '/login/landing',
         name: 'LoginLanding',
         component: () => import('../pages/account/LoginLandingPage.vue'),

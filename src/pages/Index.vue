@@ -7,6 +7,13 @@
           :key="article.id"
           clickable
           class="article-block"
+          @click="
+            () =>
+              $router.push({
+                name: 'ArticlePage',
+                params: { articleId: article.id },
+              })
+          "
         >
           <q-item-section>
             <q-item-label>{{ article.headline }}</q-item-label>
@@ -25,16 +32,18 @@
 <script>
 import { defineComponent, onMounted, ref } from 'vue'
 import { fetchArticles } from '../api/PowerUpApi'
-// import ArticleView from '../components/article/ArticleView.vue'
 
 export default defineComponent({
   name: 'PageIndex',
-  // components: { ArticleView },
   setup() {
     let articles = ref([])
+    let activeArticle = ref()
     const getArticles = async () => {
       const results = await fetchArticles()
       results.data.forEach((article) => articles.value.push(article))
+    }
+    const selectArticle = (article) => {
+      activeArticle = article
     }
 
     onMounted(getArticles)
@@ -44,6 +53,8 @@ export default defineComponent({
       lorem:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       getArticles,
+      selectArticle,
+      activeArticle,
     }
   },
 })
