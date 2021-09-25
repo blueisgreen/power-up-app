@@ -7,6 +7,7 @@
           :key="article.id"
           clickable
           class="article-block"
+          @click="() => viewArticle(article.id)"
         >
           <q-item-section>
             <q-item-label>{{ article.headline }}</q-item-label>
@@ -23,28 +24,28 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from 'vue'
-import { fetchArticles } from '../api/PowerUpApi'
-// import ArticleView from '../components/article/ArticleView.vue'
+import { defineComponent, onMounted } from 'vue'
+import { useStore, mapGetters } from 'vuex'
 
 export default defineComponent({
   name: 'PageIndex',
-  // components: { ArticleView },
   setup() {
-    let articles = ref([])
-    const getArticles = async () => {
-      const results = await fetchArticles()
-      results.data.forEach((article) => articles.value.push(article))
-    }
-
-    onMounted(getArticles)
-
+    const store = useStore()
+    onMounted(() => store.dispatch('articles/refreshArticles'))
     return {
-      articles,
-      lorem:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      getArticles,
+      store,
     }
+  },
+  computed: {
+    ...mapGetters('articles', ['articles']),
+  },
+  methods: {
+    viewArticle(id) {
+      this.$router.push({
+        name: 'ArticlePage',
+        params: { articleId: id },
+      })
+    },
   },
 })
 </script>
