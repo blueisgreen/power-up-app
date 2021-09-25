@@ -1,29 +1,23 @@
 <template>
   <q-page>
-    <h1>{{ article.title }}</h1>
-    <h2>{{ article.byline }}</h2>
-    <div>
-      <span v-html="article.content" />
+    <div v-if="article">
+      <h1>{{ article.headline }}</h1>
+      <h2>{{ article.byline }}</h2>
+      <div>
+        <span v-html="article.content" />
+      </div>
     </div>
+    <div v-if="!article">What are we trying to see here?</div>
   </q-page>
 </template>
 <script>
 import { useStore } from 'vuex'
 export default {
-  props: {
-    articleId: {
-      type: String,
-      required: true,
-    },
-  },
-  setup() {
-    $store = useStore()
-    return {
-      $store,
-    }
-  },
   computed: {
-    article: this.$store.articles.byId[articleId],
+    article() {
+      const articleToView = this.$route.params.articleId
+      return useStore().getters['articles/getArticle'](articleToView)
+    }
   },
 }
 </script>

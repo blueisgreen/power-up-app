@@ -1,4 +1,4 @@
-export function article(state, articleId) {
+export const getArticle = (state) => (articleId) => {
   return state.byId[articleId]
 }
 

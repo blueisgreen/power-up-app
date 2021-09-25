@@ -15,6 +15,7 @@ const routes = [
         path: 'article/:articleId',
         name: 'ArticlePage',
         component: () => import('../pages/ArticleReaderPage.vue'),
+        props: true,
       },
       {
         path: '/login/landing',

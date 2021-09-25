@@ -7,13 +7,7 @@
           :key="article.id"
           clickable
           class="article-block"
-          @click="
-            () =>
-              $router.push({
-                name: 'ArticlePage',
-                params: { articleId: article.id },
-              })
-          "
+          @click="() => viewArticle(article.id)"
         >
           <q-item-section>
             <q-item-label>{{ article.headline }}</q-item-label>
@@ -39,11 +33,19 @@ export default defineComponent({
     const store = useStore()
     onMounted(() => store.dispatch('articles/refreshArticles'))
     return {
-      store
+      store,
     }
   },
   computed: {
     ...mapGetters('articles', ['articles']),
+  },
+  methods: {
+    viewArticle(id) {
+      this.$router.push({
+        name: 'ArticlePage',
+        params: { articleId: id },
+      })
+    },
   },
 })
 </script>
