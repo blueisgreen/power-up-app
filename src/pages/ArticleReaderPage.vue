@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <div v-if="article">
+    <div v-if="article" class="reader-panel">
       <h1>{{ article.headline }}</h1>
       <h2>{{ article.byline }}</h2>
       <div>
@@ -21,5 +21,20 @@ export default {
   },
 }
 </script>
-
-<style></style>
+<style scoped>
+h1 {
+  font-size: 24pt;
+  font-weight: bold;
+  line-height: 2rem;
+}
+h2 {
+  font-size: 16pt;
+  color: orangered;
+  line-height: 2rem;
+}
+.reader-panel {
+  margin: 2em;
+  padding: 2em;
+  border: ridge 5px lightslategray;
+}
+</style>
