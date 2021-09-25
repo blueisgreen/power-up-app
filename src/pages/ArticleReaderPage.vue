@@ -8,12 +8,22 @@
   </q-page>
 </template>
 <script>
+import { useStore } from 'vuex'
 export default {
   props: {
-    article: {
-      type: Object,
+    articleId: {
+      type: String,
       required: true,
     },
+  },
+  setup() {
+    $store = useStore()
+    return {
+      $store,
+    }
+  },
+  computed: {
+    article: $store.articles.byId(articleId),
   },
 }
 </script>

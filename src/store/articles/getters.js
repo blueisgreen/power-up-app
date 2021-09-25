@@ -1,4 +1,3 @@
-/*
-export function someGetter (state) {
+export function getArticle(state, articleId) {
+  return state.byId[articleId]
 }
-*/
