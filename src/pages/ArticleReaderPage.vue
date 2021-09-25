@@ -1,13 +1,17 @@
 <template>
   <q-page>
-    <div v-if="article" class="reader-panel">
-      <h1>{{ article.headline }}</h1>
-      <h2>{{ article.byline }}</h2>
-      <div>
-        <span v-html="article.content" />
+    <div class="reader-panel">
+      <div v-if="article">
+        <h1>{{ article.headline }}</h1>
+        <h2>{{ article.byline }}</h2>
+        <div>
+          <span v-html="article.content" />
+        </div>
+      </div>
+      <div v-if="!article">
+        <h1>Now then, where did I leave that article?</h1>
       </div>
     </div>
-    <div v-if="!article">What are we trying to see here?</div>
   </q-page>
 </template>
 <script>
@@ -17,7 +21,7 @@ export default {
     article() {
       const articleToView = this.$route.params.articleId
       return useStore().getters['articles/getArticle'](articleToView)
-    }
+    },
   },
 }
 </script>
