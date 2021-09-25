@@ -23,7 +23,7 @@ export default {
     }
   },
   computed: {
-    article: $store.articles.byId(articleId),
+    article: this.$store.articles.byId[articleId],
   },
 }
 </script>

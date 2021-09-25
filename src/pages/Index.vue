@@ -30,32 +30,20 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from 'vue'
-import { fetchArticles } from '../api/PowerUpApi'
+import { defineComponent, onMounted } from 'vue'
+import { useStore, mapGetters } from 'vuex'
 
 export default defineComponent({
   name: 'PageIndex',
   setup() {
-    let articles = ref([])
-    let activeArticle = ref()
-    const getArticles = async () => {
-      const results = await fetchArticles()
-      results.data.forEach((article) => articles.value.push(article))
-    }
-    const selectArticle = (article) => {
-      activeArticle = article
-    }
-
-    onMounted(getArticles)
-
+    const store = useStore()
+    onMounted(() => store.dispatch('articles/refreshArticles'))
     return {
-      articles,
-      lorem:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      getArticles,
-      selectArticle,
-      activeArticle,
+      store
     }
+  },
+  computed: {
+    ...mapGetters('articles', ['articles']),
   },
 })
 </script>

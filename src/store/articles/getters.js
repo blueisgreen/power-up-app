@@ -1,3 +1,7 @@
-export function getArticle(state, articleId) {
+export function article(state, articleId) {
   return state.byId[articleId]
+}
+
+export function articles(state) {
+  return state.articleIds.map(id => state.byId[id])
 }
