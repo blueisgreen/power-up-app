@@ -15,10 +15,9 @@
           Power Up Magazine - Learn About Nuclear Power
         </q-toolbar-title>
 
-        <div class="edition-label">Summer 2021</div>
+        <div class="edition-label">Autumn 2021</div>
         <authorization-widget />
       </q-toolbar>
-      <signup-login-logout-banner />
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" side="left" bordered class="bg-grey-1">
@@ -50,8 +49,7 @@
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
 import AuthorizationWidget from 'components/AuthorizationWidget.vue'
-import SignupLoginLogoutBanner from 'components/SignupLoginLogoutBanner.vue'
-import { useStore, mapState, mapGetters } from 'vuex'
+import { useStore, mapGetters } from 'vuex'
 
 const linksList = [
   {
@@ -61,12 +59,12 @@ const linksList = [
     route: 'FrontPage',
     exact: true,
   },
-  {
-    title: 'Courses',
-    caption: 'Learn about nuclear',
-    icon: 'school',
-    route: 'LearningCenter',
-  },
+  // {
+  //   title: 'Courses',
+  //   caption: 'Learn about nuclear',
+  //   icon: 'school',
+  //   route: 'LearningCenter',
+  // },
   // {
   //   title: 'Exchange Ideas',
   //   caption: 'Message boards',
@@ -98,13 +96,13 @@ const linksList = [
     icon: 'support',
     route: 'SupportCenter',
   },
-  {
-    title: 'Course Composer',
-    caption: 'Editors only area',
-    icon: 'create',
-    route: 'Composer',
-    rolesWithAccess: ['editor', 'editorInChief'],
-  },
+  // {
+  //   title: 'Course Composer',
+  //   caption: 'Editors only area',
+  //   icon: 'create',
+  //   route: 'Composer',
+  //   rolesWithAccess: ['editor', 'editorInChief'],
+  // },
   {
     title: 'Article Management',
     caption: 'For creating articles (editors only)',
@@ -112,19 +110,19 @@ const linksList = [
     route: 'ArticleManagement',
     rolesWithAccess: ['editor', 'editorInChief'],
   },
-  {
-    title: 'Administration',
-    caption: 'Administrators only',
-    icon: 'admin_panel_settings',
-    route: 'AdminPanel',
-    rolesWithAccess: ['admin'],
-  },
+  // {
+  //   title: 'Administration',
+  //   caption: 'Administrators only',
+  //   icon: 'admin_panel_settings',
+  //   route: 'AdminPanel',
+  //   rolesWithAccess: ['admin'],
+  // },
   {
     title: 'Customer Support',
     caption: 'Administrators only',
     icon: 'support',
     route: 'CustomerSupportRep',
-    // rolesWithAccess: ['admin'],
+    rolesWithAccess: ['admin'],
   },
 ]
 
@@ -136,7 +134,6 @@ export default defineComponent({
   components: {
     EssentialLink,
     AuthorizationWidget,
-    SignupLoginLogoutBanner,
   },
 
   setup() {
