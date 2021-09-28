@@ -110,6 +110,13 @@ const linksList = [
     route: 'ArticleManagement',
     rolesWithAccess: ['editor', 'editorInChief'],
   },
+  {
+    title: 'Article Production',
+    caption: 'For creating articles (editors only)',
+    icon: 'article',
+    route: 'ArticleProduction',
+    // rolesWithAccess: ['editor', 'editorInChief'],
+  },
   // {
   //   title: 'Administration',
   //   caption: 'Administrators only',
@@ -137,7 +144,7 @@ export default defineComponent({
   },
 
   setup() {
-    const leftDrawerOpen = ref(true)
+    const leftDrawerOpen = ref(false)
 
     return {
       essentialLinks: linksList,

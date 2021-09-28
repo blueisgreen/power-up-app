@@ -40,7 +40,7 @@ import {
   unpublishArticle,
   archiveArticle,
   purgeArticle,
-} from '../../api/PowerUpService'
+} from '../../api/PowerUpApi'
 
 export default {
   components: { ArticleActionBar, ArticleList, ArticleView, ArticleEdit },
@@ -137,7 +137,6 @@ export default {
     },
     async archive(article) {
       const resp = await archiveArticle(article.id)
-      this.handler.remove(article.id)
       this.unselect()
     },
     async purge(article) {

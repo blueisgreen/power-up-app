@@ -81,6 +81,15 @@ const routes = [
         },
       },
       {
+        path: 'articleWriter',
+        name: 'ArticleProduction',
+        component: () => import('../pages/authoring/ArticleProductionPage.vue'),
+        // meta: {
+        //   requireAuth: true,
+        //   role: 'editor',
+        // },
+      },
+      {
         path: 'admin',
         name: 'AdminPanel',
         component: () => import('../pages/admin/AdminPage.vue'),
