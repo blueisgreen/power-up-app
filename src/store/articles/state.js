@@ -1,6 +1,7 @@
 export default function () {
   return {
     byId: {},
-    articleIds: []
+    articleIds: [],
+    activeDraft: null,
   }
 }

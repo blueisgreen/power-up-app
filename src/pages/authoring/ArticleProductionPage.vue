@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-md">
-    <h4>Article Production</h4>
+    <h4>Article Production Hub</h4>
     <div class="q-gutter-y-md column" style="max-width: 600px">
       <form autofocus @submit.prevent="createArticle">
         <q-input
