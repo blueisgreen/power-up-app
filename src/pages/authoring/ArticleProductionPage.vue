@@ -21,7 +21,10 @@
     <div style="max-width: 550px">
       <q-list v-if="articles.length" bordered separator>
         <q-item v-for="article in articles" :key="article" v-ripple clickable>
-          <q-item-section>{{ article }}</q-item-section>
+          <q-item-section>{{ article.headline }}</q-item-section>
+          <q-item-section>{{ article.byline }}</q-item-section>
+          <q-item-section>{{ article.createdAt }}</q-item-section>
+          <q-item-section>{{ article.publishedAt }}</q-item-section>
         </q-item>
       </q-list>
     </div>
@@ -29,18 +32,25 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
+import { useStore, mapGetters } from 'vuex'
+
 export default defineComponent({
   setup() {
+    const store = useStore()
+    onMounted(() => store.dispatch('articles/refreshArticles'))
     return {
       newHeadline: ref(''),
-      articles: ref([]),
+      store,
     }
+  },
+  computed: {
+    ...mapGetters('articles', ['articles']),
   },
   methods: {
     createArticle() {
       if (this.newHeadline != '') {
-        this.articles.push(this.newHeadline)
+        this.store.dispatch('articles/createNewArticle', this.newHeadline)
         this.newHeadline = ''
       }
     },
