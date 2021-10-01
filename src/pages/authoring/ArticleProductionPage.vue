@@ -12,35 +12,89 @@
         >
           <template #hint> Get attention without being clickbait. </template>
           <template #append>
-            <q-btn round dense flat icon="add_circle" @click="createArticle" />
+            <q-btn
+              round
+              dense
+              flat
+              size="lg"
+              icon="add_circle"
+              color="primary"
+              label="Add"
+              no-caps
+              @click="createArticle"
+            />
           </template>
         </q-input>
       </form>
     </div>
-    <hr/>
+    <hr />
     <h4>Articles</h4>
     <q-panel>
-      <q-list v-if="articles.length" bordered separator>
-        <q-item style="background-color: #0000FF; color: #FFFFFF;font-weight: bold">
-          <q-item-section>Headline</q-item-section>
-          <q-item-section>Byline</q-item-section>
-          <q-item-section>Changes</q-item-section>
-          <q-item-section>Actions</q-item-section>
+      <q-list v-if="articles.length" bordered separator dense>
+        <q-item>
+          <q-item-section>
+            <q-item-label header>Headline / Byline</q-item-label>
+          </q-item-section>
+          <q-item-section>
+            <q-item-label header>Status</q-item-label>
+          </q-item-section>
+          <q-item-section>
+            <q-item-label header>Actions</q-item-label>
+          </q-item-section>
         </q-item>
-        <q-item v-for="article in articles" :key="article" v-ripple>
+        <q-item v-for="article in articles" :key="article" v-ripple clickable>
           <q-item-section>
             <q-item-label>{{ article.headline }}</q-item-label>
+            <q-item-label caption>{{ article.byline }}</q-item-label>
           </q-item-section>
-          <q-item-section>{{ article.byline }}</q-item-section>
-          <q-item-section>Created: {{ article.createdAt }}<br />
-          Published: {{ article.archivedAt }}<br />
-          Archived: {{ article.publishedAt }}</q-item-section>
           <q-item-section>
-            <q-btn-group push>
-              <q-btn push label="Edit" icon="edit" />
-              <q-btn push label="Publish" icon="publish" />
-              <q-btn push label="Archive" icon="archive" />
-              <q-btn push label="Delete" icon="delete" />
+            <q-item-label
+              >Created:
+              {{ formatDayMonthYear(article.createdAt) }}</q-item-label
+            >
+            <q-item-label
+              >Published:
+              {{ formatDayMonthYear(article.archivedAt) }}</q-item-label
+            >
+            <q-item-label
+              >Archived:
+              {{ formatDayMonthYear(article.publishedAt) }}</q-item-label
+            >
+          </q-item-section>
+          <q-item-section>
+            <q-btn-group push spread>
+              <q-btn
+                push
+                size="sm"
+                padding="xs"
+                label="Edit"
+                color="primary"
+                icon="edit"
+              />
+              <q-btn
+                push
+                size="sm"
+                padding="xs"
+                label="Publish"
+                color="secondary"
+                icon="publish"
+              />
+              <q-btn
+                push
+                size="sm"
+                padding="xs"
+                label="Archive"
+                color="warning"
+                icon="archive"
+              />
+              <q-btn
+                push
+                size="sm"
+                padding="xs"
+                label="Delete"
+                color="negative"
+                icon="delete"
+              />
             </q-btn-group>
           </q-item-section>
         </q-item>
@@ -52,6 +106,7 @@
 <script>
 import { defineComponent, onMounted, ref } from 'vue'
 import { useStore, mapGetters } from 'vuex'
+import { formatDayMonthYear } from '../../composables/powerUpUtils'
 
 export default defineComponent({
   setup() {
@@ -60,6 +115,7 @@ export default defineComponent({
     return {
       newHeadline: ref(''),
       store,
+      formatDayMonthYear,
     }
   },
   computed: {
@@ -72,15 +128,9 @@ export default defineComponent({
         this.newHeadline = ''
       }
     },
-    editArticle(id) {
-
-    },
-    archiveArticle(id) {
-
-    },
-    deleteArticle(id) {
-
-    },
+    editArticle(id) {},
+    archiveArticle(id) {},
+    deleteArticle(id) {},
   },
 })
 </script>
