@@ -17,17 +17,35 @@
         </q-input>
       </form>
     </div>
-
-    <div style="max-width: 550px">
+    <hr/>
+    <h4>Articles</h4>
+    <q-panel>
       <q-list v-if="articles.length" bordered separator>
-        <q-item v-for="article in articles" :key="article" v-ripple clickable>
-          <q-item-section>{{ article.headline }}</q-item-section>
+        <q-item style="background-color: #0000FF; color: #FFFFFF;font-weight: bold">
+          <q-item-section>Headline</q-item-section>
+          <q-item-section>Byline</q-item-section>
+          <q-item-section>Changes</q-item-section>
+          <q-item-section>Actions</q-item-section>
+        </q-item>
+        <q-item v-for="article in articles" :key="article" v-ripple>
+          <q-item-section>
+            <q-item-label>{{ article.headline }}</q-item-label>
+          </q-item-section>
           <q-item-section>{{ article.byline }}</q-item-section>
-          <q-item-section>{{ article.createdAt }}</q-item-section>
-          <q-item-section>{{ article.publishedAt }}</q-item-section>
+          <q-item-section>Created: {{ article.createdAt }}<br />
+          Published: {{ article.archivedAt }}<br />
+          Archived: {{ article.publishedAt }}</q-item-section>
+          <q-item-section>
+            <q-btn-group push>
+              <q-btn push label="Edit" icon="edit" />
+              <q-btn push label="Publish" icon="publish" />
+              <q-btn push label="Archive" icon="archive" />
+              <q-btn push label="Delete" icon="delete" />
+            </q-btn-group>
+          </q-item-section>
         </q-item>
       </q-list>
-    </div>
+    </q-panel>
   </q-page>
 </template>
 
@@ -38,7 +56,7 @@ import { useStore, mapGetters } from 'vuex'
 export default defineComponent({
   setup() {
     const store = useStore()
-    onMounted(() => store.dispatch('articles/refreshArticles'))
+    onMounted(() => store.dispatch('articles/refreshArticleCache'))
     return {
       newHeadline: ref(''),
       store,
@@ -53,6 +71,15 @@ export default defineComponent({
         this.store.dispatch('articles/createNewArticle', this.newHeadline)
         this.newHeadline = ''
       }
+    },
+    editArticle(id) {
+
+    },
+    archiveArticle(id) {
+
+    },
+    deleteArticle(id) {
+
     },
   },
 })
