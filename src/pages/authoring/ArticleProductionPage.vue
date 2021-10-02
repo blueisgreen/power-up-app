@@ -45,8 +45,6 @@
           v-for="article in articles"
           :key="article"
           v-ripple
-          clickable
-          :to="{ name: 'ArticleEditor', params: { articleId: article.id } }"
         >
           <q-item-section>
             <q-item-label>{{ article.headline }}</q-item-label>
@@ -75,6 +73,7 @@
                 label="Edit"
                 color="primary"
                 icon="edit"
+                @click="() => editArticle(article.id)"
               />
               <q-btn
                 push
@@ -83,6 +82,7 @@
                 label="Publish"
                 color="positive"
                 icon="publish"
+                @click="() => publishArticle(article.id)"
               />
               <q-btn
                 push
@@ -91,6 +91,7 @@
                 label="Archive"
                 color="warning"
                 icon="archive"
+                @click="() => archiveArticle(article.id)"
               />
               <q-btn
                 push
@@ -99,6 +100,7 @@
                 label="Delete"
                 color="negative"
                 icon="delete"
+                @click="() => deleteArticle(article.id)"
               />
             </q-btn-group>
           </q-item-section>
@@ -116,7 +118,7 @@ import { formatDayMonthYear } from '../../composables/powerUpUtils'
 export default defineComponent({
   setup() {
     const store = useStore()
-    onMounted(() => store.dispatch('articles/refreshArticleCache'))
+    onMounted(() => store.dispatch('articles/loadCache'))
     return {
       newHeadline: ref(''),
       store,
@@ -134,7 +136,10 @@ export default defineComponent({
       }
     },
     editArticle(id) {
-      console.log('implement edit')
+      this.$router.push({ name: 'ArticleEditor', params: { articleId: id } })
+    },
+    publishArticle(id) {
+      console.log('implement publish')
     },
     archiveArticle(id) {
       console.log('implement archive')
