@@ -103,18 +103,18 @@ const linksList = [
   //   route: 'Composer',
   //   rolesWithAccess: ['editor', 'editorInChief'],
   // },
+  // {
+  //   title: 'Article Management',
+  //   caption: 'For creating articles (editors only)',
+  //   icon: 'create',
+  //   route: 'ArticleManagement',
+  //   rolesWithAccess: ['editor', 'editorInChief'],
+  // },
   {
-    title: 'Article Management',
-    caption: 'For creating articles (editors only)',
-    icon: 'create',
-    route: 'ArticleManagement',
-    rolesWithAccess: ['editor', 'editorInChief'],
-  },
-  {
-    title: 'Article Production',
+    title: 'Article Workbench',
     caption: 'For creating articles (editors only)',
     icon: 'article',
-    route: 'ArticleProduction',
+    route: 'ArticleWorkbench',
     // rolesWithAccess: ['editor', 'editorInChief'],
   },
   // {

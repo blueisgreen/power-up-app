@@ -29,77 +29,80 @@
     </div>
     <hr />
     <h4>Articles</h4>
-    <q-panel>
-      <q-list v-if="articles.length" bordered separator dense>
-        <q-item>
-          <q-item-section>
-            <q-item-label header>Headline / Byline</q-item-label>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label header>Status</q-item-label>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label header>Actions</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item v-for="article in articles" :key="article" v-ripple clickable>
-          <q-item-section>
-            <q-item-label>{{ article.headline }}</q-item-label>
-            <q-item-label caption>{{ article.byline }}</q-item-label>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label
-              >Created:
-              {{ formatDayMonthYear(article.createdAt) }}</q-item-label
-            >
-            <q-item-label
-              >Published:
-              {{ formatDayMonthYear(article.archivedAt) }}</q-item-label
-            >
-            <q-item-label
-              >Archived:
-              {{ formatDayMonthYear(article.publishedAt) }}</q-item-label
-            >
-          </q-item-section>
-          <q-item-section>
-            <q-btn-group push spread>
-              <q-btn
-                push
-                size="sm"
-                padding="xs"
-                label="Edit"
-                color="primary"
-                icon="edit"
-              />
-              <q-btn
-                push
-                size="sm"
-                padding="xs"
-                label="Publish"
-                color="secondary"
-                icon="publish"
-              />
-              <q-btn
-                push
-                size="sm"
-                padding="xs"
-                label="Archive"
-                color="warning"
-                icon="archive"
-              />
-              <q-btn
-                push
-                size="sm"
-                padding="xs"
-                label="Delete"
-                color="negative"
-                icon="delete"
-              />
-            </q-btn-group>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-panel>
+    <q-list v-if="articles.length" bordered separator dense>
+      <q-item>
+        <q-item-section>
+          <q-item-label header>Headline / Byline</q-item-label>
+        </q-item-section>
+        <q-item-section>
+          <q-item-label header>Status</q-item-label>
+        </q-item-section>
+        <q-item-section>
+          <q-item-label header>Actions</q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item
+        v-for="article in articles"
+        :key="article"
+        v-ripple
+        clickable
+        :to="{ name: 'ArticleEditor', params: { articleId: article.id } }"
+      >
+        <q-item-section>
+          <q-item-label>{{ article.headline }}</q-item-label>
+          <q-item-label caption>{{ article.byline }}</q-item-label>
+        </q-item-section>
+        <q-item-section>
+          <q-item-label
+            >Created: {{ formatDayMonthYear(article.createdAt) }}</q-item-label
+          >
+          <q-item-label
+            >Published:
+            {{ formatDayMonthYear(article.archivedAt) }}</q-item-label
+          >
+          <q-item-label
+            >Archived:
+            {{ formatDayMonthYear(article.publishedAt) }}</q-item-label
+          >
+        </q-item-section>
+        <q-item-section>
+          <q-btn-group push spread>
+            <q-btn
+              push
+              size="sm"
+              padding="xs"
+              label="Edit"
+              color="primary"
+              icon="edit"
+            />
+            <q-btn
+              push
+              size="sm"
+              padding="xs"
+              label="Publish"
+              color="secondary"
+              icon="publish"
+            />
+            <q-btn
+              push
+              size="sm"
+              padding="xs"
+              label="Archive"
+              color="warning"
+              icon="archive"
+            />
+            <q-btn
+              push
+              size="sm"
+              padding="xs"
+              label="Delete"
+              color="negative"
+              icon="delete"
+            />
+          </q-btn-group>
+        </q-item-section>
+      </q-item>
+    </q-list>
   </q-page>
 </template>
 
@@ -128,9 +131,15 @@ export default defineComponent({
         this.newHeadline = ''
       }
     },
-    editArticle(id) {},
-    archiveArticle(id) {},
-    deleteArticle(id) {},
+    editArticle(id) {
+      console.log('implement edit')
+    },
+    archiveArticle(id) {
+      console.log('implement archive')
+    },
+    deleteArticle(id) {
+      console.log('implement delete')
+    },
   },
 })
 </script>

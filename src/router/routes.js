@@ -1,5 +1,6 @@
 import MainLayout from 'layouts/MainLayout'
 import AccountCenterLayout from 'layouts/AccountCenterLayout'
+import WorkbenchLayout from 'layouts/WorkbenchLayout'
 
 const routes = [
   {
@@ -72,22 +73,25 @@ const routes = [
         },
       },
       {
-        path: 'articleMgmt',
-        name: 'ArticleManagement',
-        component: () => import('../pages/authoring/ArticleMgmtPage.vue'),
-        meta: {
-          requireAuth: true,
-          role: 'editor',
-        },
-      },
-      {
-        path: 'articleWriter',
-        name: 'ArticleProduction',
-        component: () => import('../pages/authoring/ArticleProductionPage.vue'),
+        path: 'workbench',
+        component: WorkbenchLayout,
         // meta: {
         //   requireAuth: true,
         //   role: 'editor',
         // },
+        children: [
+          {
+            path: 'articles',
+            name: 'ArticleWorkbench',
+            component: () =>
+              import('../pages/authoring/ArticleProductionPage.vue'),
+          },
+          {
+            path: 'articles/edit/:articleId',
+            name: 'ArticleEditor',
+            component: () => import('../pages/authoring/ArticleEditPage.vue'),
+          },
+        ],
       },
       {
         path: 'admin',
