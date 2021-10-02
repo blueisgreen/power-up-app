@@ -167,10 +167,23 @@ export default defineComponent({
   },
 })
 </script>
-<style scoped>
+<style>
 .edition-label {
   margin-right: 1em;
   font-weight: bold;
   color: gold;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  margin-left: 0.5em;
+}
+.section {
+  margin-top: 2em;
 }
 </style>
