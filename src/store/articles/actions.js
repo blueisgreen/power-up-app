@@ -37,6 +37,7 @@ export async function publish({ commit }, id) {
 
 export async function retract({ commit }, id) {
   const results = await retractArticle(id)
+  console.log('retracted article', results)
   commit('updateArticle', { article: results })
 }
 

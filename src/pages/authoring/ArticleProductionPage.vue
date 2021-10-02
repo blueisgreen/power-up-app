@@ -73,9 +73,11 @@
                 label="Edit"
                 color="primary"
                 icon="edit"
+                :disable="article.publishedAt !== null"
                 @click="() => editArticle(article.id)"
               />
               <q-btn
+                v-if="article.publishedAt === null"
                 push
                 size="sm"
                 padding="xs"
@@ -83,6 +85,16 @@
                 color="positive"
                 icon="publish"
                 @click="() => publishArticle(article.id)"
+              />
+              <q-btn
+                v-if="article.publishedAt !== null"
+                push
+                size="sm"
+                padding="xs"
+                label="Retract"
+                color="positive"
+                icon="unpublished"
+                @click="() => retractArticle(article.id)"
               />
               <q-btn
                 push
@@ -131,7 +143,7 @@ export default defineComponent({
   methods: {
     createArticle() {
       if (this.newHeadline != '') {
-        this.store.dispatch('articles/createNewArticle', this.newHeadline)
+        this.store.dispatch('articles/create', this.newHeadline)
         this.newHeadline = ''
       }
     },
@@ -139,14 +151,19 @@ export default defineComponent({
       this.$router.push({ name: 'ArticleEditor', params: { articleId: id } })
     },
     publishArticle(id) {
-      console.log('implement publish')
-      this.store.dispatch('articles/publishArticle', this.newHeadline)
+      this.store.dispatch('articles/publish', id)
+    },
+    retractArticle(id) {
+      this.store.dispatch('articles/retract', id)
     },
     archiveArticle(id) {
-      console.log('implement archive')
+      this.store.dispatch('articles/archive', id)
+    },
+    reviveArticle(id) {
+      this.store.dispatch('articles/revive', id)
     },
     deleteArticle(id) {
-      console.log('implement delete')
+      this.store.dispatch('articles/purge', id)
     },
   },
 })

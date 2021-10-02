@@ -1,7 +1,7 @@
-export function loadArticles(state, payload) {
+export function loadArticles(state, { articles }) {
   state.byId = {}
   state.articleIds = []
-  payload.articles.forEach((article) => {
+  articles.forEach((article) => {
     state.articleIds.push(article.id)
     state.byId[article.id] = article
   })
@@ -16,12 +16,12 @@ export function setActiveDraft(state, { articleId }) {
   state.activeDraft = articleId
 }
 
-export function clearActiveDraft(state, { articleId }) {
+export function clearActiveDraft(state) {
   state.activeDraft = null
 }
 
-export function updateArticle(state, { update }) {
-  state.byId[article.id] = update
+export function updateArticle(state, { article }) {
+  state.byId[article.id] = article
 }
 
 export function removeArticle(state, { id }) {
