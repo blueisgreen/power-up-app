@@ -97,6 +97,7 @@
                 @click="() => retractArticle(article.id)"
               />
               <q-btn
+                v-if="article.archivedAt === null"
                 push
                 size="sm"
                 padding="xs"
@@ -104,6 +105,16 @@
                 color="warning"
                 icon="archive"
                 @click="() => archiveArticle(article.id)"
+              />
+              <q-btn
+                v-if="article.archivedAt !== null"
+                push
+                size="sm"
+                padding="xs"
+                label="Revive"
+                color="warning"
+                icon="unarchive"
+                @click="() => reviveArticle(article.id)"
               />
               <q-btn
                 push
@@ -139,6 +150,8 @@ export default defineComponent({
   },
   computed: {
     ...mapGetters('articles', ['articles']),
+    // FIXME changes to articles are not seen since array is not changing?
+    // return array of ids and use lookup to get articles so that changes to article info flow to UI
   },
   methods: {
     createArticle() {
