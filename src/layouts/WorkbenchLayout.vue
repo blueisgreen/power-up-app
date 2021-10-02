@@ -1,6 +1,8 @@
 <template>
   <q-page class="q-pa-md">
-    <h1>Workbench Layout</h1>
+    <q-banner class="bg-purple-5 text-white text-center">
+      <span class="text-weight-bold text-uppercase">Workbench</span>
+    </q-banner>
     <router-view />
   </q-page>
 </template>
