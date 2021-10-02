@@ -6,6 +6,7 @@ import {
   publishArticle,
   retractArticle,
   archiveArticle,
+  reviveArticle,
   purgeArticle,
 } from '../../api/PowerUpApi'
 
@@ -21,30 +22,35 @@ export async function loadCache({ commit }) {
 
 export async function create({ commit }, headline) {
   const results = await createArticle({ headline })
-  commit('addArticle', { article: results.data })
+  commit('addArticle', { article: results })
 }
 
 export async function save({ commit }, update) {
   const results = await saveArticle(update)
-  commit('addArticle', { article: results.data })
+  commit('updateArticle', { article: results })
 }
 
 export async function publish({ commit }, id) {
   const results = await publishArticle(id)
-  commit('addArticle', { article: results.data })
+  commit('updateArticle', { article: results })
 }
 
 export async function retract({ commit }, id) {
   const results = await retractArticle(id)
-  commit('addArticle', { article: results.data })
+  commit('updateArticle', { article: results })
 }
 
 export async function archive({ commit }, id) {
   const results = await archiveArticle(id)
-  commit('addArticle', { article: results.data })
+  commit('updateArticle', { article: results })
+}
+
+export async function revive({ commit }, id) {
+  const results = await reviveArticle(id)
+  commit('updateArticle', { article: results })
 }
 
 export async function purge({ commit }, id) {
-  const results = await purgeArticle(id)
-  commit('addArticle', { article: results.data })
+  await purgeArticle(id)
+  commit('removeArticle', { id })
 }

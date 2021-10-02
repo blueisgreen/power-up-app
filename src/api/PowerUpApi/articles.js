@@ -27,32 +27,79 @@ export async function fetchArchivedArticles() {
 
 export async function fetchArticle(articleId) {
   console.log('PowerUpAPI.fetchArticle', articleId)
-  return await api.get(`/articles/${articleId}`)
+  try {
+    const results = await api.get(`/articles/${articleId}`)
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return null
+  }
 }
 
 export async function createArticle(update) {
   console.log('PowerUpAPI.createArticle', update)
-  return await api.post('/articles/', update)
+  try {
+    const results = await api.post('/articles/', update)
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return null
+  }
 }
 
 export async function saveArticle(update) {
   console.log('PowerUpAPI.saveArticle', update)
-  return await api.put(`/articles/${update.id}`, update)
+  try {
+    const results = await api.put(`/articles/${update.id}`, update)
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return null
+  }
 }
 
 export async function publishArticle(articleId) {
   console.log('PowerUpAPI.publishArticle', articleId)
-  return await api.put(`/articles/${articleId}/publish`)
+  try {
+    const results =  await api.put(`/articles/${articleId}/publish`)
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return null
+  }
 }
 
 export async function retractArticle(articleId) {
   console.log('PowerUpAPI.retractArticle', articleId)
-  return await api.put(`/articles/${articleId}/retract`)
+  try {
+    const results = await api.put(`/articles/${articleId}/retract`)
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return null
+  }
 }
 
 export async function archiveArticle(articleId) {
   console.log('PowerUpAPI.archiveArticle', articleId)
-  return await api.delete(`/articles/${articleId}`)
+  try {
+    const results = await api.delete(`/articles/${articleId}`)
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return null
+  }
+}
+
+export async function reviveArticle(articleId) {
+  console.log('PowerUpAPI.reviveArticle', articleId)
+  try {
+    const results = await api.put(`/articles/${articleId}/revive`)
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return null
+  }
 }
 
 export async function purgeArticle(articleId) {

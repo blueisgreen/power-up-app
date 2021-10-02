@@ -140,6 +140,7 @@ export default defineComponent({
     },
     publishArticle(id) {
       console.log('implement publish')
+      this.store.dispatch('articles/publishArticle', this.newHeadline)
     },
     archiveArticle(id) {
       console.log('implement archive')
