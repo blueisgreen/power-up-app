@@ -9,7 +9,7 @@ export function loadArticles(state, { articles }) {
 
 export function addArticle(state, { article }) {
   state.byId[article.id] = article
-  state.articleIds.push(article.id)
+  state.articleIds.unshift(article.id)
 }
 
 export function setActiveDraft(state, { articleId }) {

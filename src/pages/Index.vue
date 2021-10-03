@@ -12,6 +12,7 @@
           <q-item-section>
             <q-item-label>{{ article.headline }}</q-item-label>
             <q-item-label caption>by {{ article.byline }}</q-item-label>
+            <q-item-label>created on {{ formatDayMonthYear(article.createdAt) }}</q-item-label>
             <br />
             <q-item-label lines="3"
               ><span v-html="article.content"
@@ -26,6 +27,7 @@
 <script>
 import { defineComponent, onMounted } from 'vue'
 import { useStore, mapGetters } from 'vuex'
+import { formatDayMonthYear } from '../composables/powerUpUtils'
 
 export default defineComponent({
   name: 'PageIndex',
@@ -34,6 +36,7 @@ export default defineComponent({
     onMounted(() => store.dispatch('articles/refreshArticles'))
     return {
       store,
+      formatDayMonthYear,
     }
   },
   computed: {
