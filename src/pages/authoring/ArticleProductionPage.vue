@@ -57,11 +57,11 @@
             >
             <q-item-label
               >Published:
-              {{ formatDayMonthYear(article.archivedAt) }}</q-item-label
+              {{ formatDayMonthYear(article.publishedAt) }}</q-item-label
             >
             <q-item-label
               >Archived:
-              {{ formatDayMonthYear(article.publishedAt) }}</q-item-label
+              {{ formatDayMonthYear(article.archivedAt) }}</q-item-label
             >
           </q-item-section>
           <q-item-section>
@@ -149,9 +149,10 @@ export default defineComponent({
     }
   },
   computed: {
+    // articles() {
+    //   return this.store.getters['articles/articles']
+    // }
     ...mapGetters('articles', ['articles']),
-    // FIXME changes to articles are not seen since array is not changing?
-    // return array of ids and use lookup to get articles so that changes to article info flow to UI
   },
   methods: {
     createArticle() {
