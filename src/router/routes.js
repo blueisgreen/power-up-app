@@ -89,6 +89,7 @@ const routes = [
           {
             path: 'articles/edit/:articleId',
             name: 'ArticleEditor',
+            props: true,
             component: () => import('../pages/authoring/ArticleEditPage.vue'),
           },
         ],
