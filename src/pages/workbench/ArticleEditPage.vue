@@ -17,7 +17,7 @@
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || 'Please type something']"
         />
-        <q-editor v-model="draft.content" 
+        <q-editor v-model="draft.content"
           min-height="5rem"
           :toolbar="[
             ['left', 'center', 'right', 'justify'],
@@ -92,18 +92,24 @@ import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 
 export default {
+  props: {
+    articleId: {
+      type: String,
+      required: true,
+    }
+  },
   setup(props, context) {
-    const shell = { 
-        headline: '', 
-        byline: '', 
+    const shell = {
+        headline: '',
+        byline: '',
         content: ''
       }
     const draft = ref(shell)
     const store = useStore()
     const route = useRoute()
-    
+
     onMounted(() => {
-      const id = route.params.articleId
+      const id = this.articleId
       console.log('id', id)
       const lookup = store.getters['articles/getArticle'](id)
       console.log('article', lookup)
@@ -120,14 +126,14 @@ export default {
   methods: {
     loadArticleAsDraft() {
       const lookup = this.store.getters['articles/getArticle'](this.$route.params.articleId)
-      draft = lookup ? lookup : { 
-        headline: 'You are great', 
-        byline: 'the great one', 
+      draft = lookup ? lookup : {
+        headline: 'You are great',
+        byline: 'the great one',
         content: 'read this shtuff'
       }
     },
     save() {
-      this.store.dispatch('articles/save', Object.assign({}, this.draft)) // save a copy 
+      this.store.dispatch('articles/save', Object.assign({}, this.draft)) // save a copy
     }
   }
 }

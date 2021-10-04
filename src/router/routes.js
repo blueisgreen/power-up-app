@@ -66,7 +66,7 @@ const routes = [
       {
         path: 'lessonMgmt',
         name: 'Composer',
-        component: () => import('../pages/authoring/LessonComposerPage.vue'),
+        component: () => import('../pages/workbench/LessonComposerPage.vue'),
         meta: {
           requireAuth: true,
           role: 'editor',
@@ -84,13 +84,13 @@ const routes = [
             path: 'articles',
             name: 'ArticleWorkbench',
             component: () =>
-              import('../pages/authoring/ArticleProductionPage.vue'),
+              import('../pages/workbench/ArticleProductionPage.vue'),
           },
           {
             path: 'articles/edit/:articleId',
             name: 'ArticleEditor',
             props: true,
-            component: () => import('../pages/authoring/ArticleEditPage.vue'),
+            component: () => import('../pages/workbench/ArticleEditPage.vue'),
           },
         ],
       },
