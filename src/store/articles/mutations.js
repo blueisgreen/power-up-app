@@ -12,14 +12,6 @@ export function addArticle(state, { article }) {
   state.articleIds.unshift(article.id)
 }
 
-export function setActiveDraft(state, { articleId }) {
-  state.activeDraft = articleId
-}
-
-export function clearActiveDraft(state) {
-  state.activeDraft = null
-}
-
 export function updateArticle(state, { article }) {
   state.byId[article.id] = article
 }
