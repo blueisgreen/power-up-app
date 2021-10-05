@@ -119,8 +119,12 @@ export default {
   created() {
     const id = this.$route.params.articleId
     const lookup = this.store.state.articles.byId[id]
-    console.log('article id', id, lookup)
-    this.draft = Object.assign({}, lookup)
+    if (lookup !== null) {
+      this.draft = Object.assign(this.draft, lookup)
+      this.draft.headline = lookup.headline || ''
+      this.draft.byline = lookup.byline || ''
+      this.draft.content = lookup.content || ''
+    }
   },
   methods: {
     save() {
