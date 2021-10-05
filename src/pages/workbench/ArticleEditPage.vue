@@ -17,11 +17,19 @@
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || 'Please type something']"
         />
-        <q-editor v-model="draft.content"
+        <q-editor
+          v-model="draft.content"
           min-height="5rem"
           :toolbar="[
             ['left', 'center', 'right', 'justify'],
-            ['bold', 'italic', 'strike', 'underline', 'subscript', 'superscript'],
+            [
+              'bold',
+              'italic',
+              'strike',
+              'underline',
+              'subscript',
+              'superscript',
+            ],
             ['hr', 'link'],
             [
               {
@@ -82,60 +90,43 @@
         />
       </q-form>
     </div>
-    <q-btn :to="{ name: 'ArticleWorkbench' }" replace>Back to Workbench</q-btn>
+    <q-btn-group spread>
+      <q-btn color="primary" @click="save">Save</q-btn>
+      <q-btn color="warning" :to="{ name: 'ArticleWorkbench' }" replace
+        >Cancel</q-btn
+      >
+    </q-btn-group>
   </q-page>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useStore } from 'vuex'
-import { useRoute } from 'vue-router'
 
 export default {
-  props: {
-    articleId: {
-      type: String,
-      required: true,
+  setup() {
+    const draft = ref({
+      headline: '',
+      byline: '',
+      content: '',
+    })
+    const store = useStore()
+    return {
+      draft,
+      store,
     }
   },
-  setup(props, context) {
-    const shell = {
-        headline: '',
-        byline: '',
-        content: ''
-      }
-    const draft = ref(shell)
-    const store = useStore()
-    const route = useRoute()
-
-    onMounted(() => {
-      const id = this.articleId
-      console.log('id', id)
-      const lookup = store.getters['articles/getArticle'](id)
-      console.log('article', lookup)
-      if (lookup) {
-        this.draft = Object.assign({}, lookup)
-      }
-    })
-
-    return {
-      store,
-      draft,
-    }
+  created() {
+    const id = this.$route.params.articleId
+    const lookup = this.store.state.articles.byId[id]
+    console.log('article id', id, lookup)
+    this.draft = Object.assign({}, lookup)
   },
   methods: {
-    loadArticleAsDraft() {
-      const lookup = this.store.getters['articles/getArticle'](this.$route.params.articleId)
-      draft = lookup ? lookup : {
-        headline: 'You are great',
-        byline: 'the great one',
-        content: 'read this shtuff'
-      }
-    },
     save() {
-      this.store.dispatch('articles/save', Object.assign({}, this.draft)) // save a copy
-    }
-  }
+      this.store.dispatch('articles/save', Object.assign({}, this.draft))
+    },
+  },
 }
 </script>
 
