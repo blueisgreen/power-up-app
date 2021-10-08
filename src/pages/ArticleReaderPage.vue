@@ -26,6 +26,9 @@ export default {
 }
 </script>
 <style scoped>
+h1, h2, h3, h4, h5, h6 {
+  margin-left: 0;
+}
 h1 {
   font-size: 24pt;
   font-weight: bold;

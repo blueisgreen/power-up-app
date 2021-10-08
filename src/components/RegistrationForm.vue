@@ -4,7 +4,7 @@
     <p>
       You already have an account:
       {{ accountId }} created on
-      {{ displayAsYearMonthDay(createdAt) }}
+      {{ formatYearMonthDay(createdAt) }}
     </p>
     <q-form class="q-gutter-md" @submit="onSubmit" @reset="onReset">
       <q-list separator padding bordered>
@@ -34,7 +34,7 @@
             />
             <q-item-label v-if="termsAcceptedAt"
               >You agreed to terms of use on
-              {{ displayAsYearMonthDay(termsAcceptedAt) }}</q-item-label
+              {{ formatYearMonthDay(termsAcceptedAt) }}</q-item-label
             >
           </q-item-section>
           <q-item-section side top>
@@ -55,7 +55,7 @@
             />
             <q-item-label v-if="cookiesAcceptedAt"
               >You agreed to use of cookies on
-              {{ displayAsYearMonthDay(cookiesAcceptedAt) }}</q-item-label
+              {{ formatYearMonthDay(cookiesAcceptedAt) }}</q-item-label
             >
           </q-item-section>
           <q-item-section side top>
@@ -118,7 +118,7 @@ import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useQuasar, date } from 'quasar'
 import InfoDialog from 'components/InfoDialog'
-import { displayAsYearMonthDay } from '../composables/powerUpUtils'
+import { formatYearMonthDay } from '../composables/powerUpUtils'
 
 
 export default {
@@ -156,7 +156,7 @@ export default {
     return {
       $q,
       $store,
-      displayAsYearMonthDay,
+      formatYearMonthDay,
       dialogValues,
 
       desiredScreenName,

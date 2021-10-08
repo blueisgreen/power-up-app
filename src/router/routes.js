@@ -1,5 +1,6 @@
 import MainLayout from 'layouts/MainLayout'
 import AccountCenterLayout from 'layouts/AccountCenterLayout'
+import WorkbenchLayout from 'layouts/WorkbenchLayout'
 
 const routes = [
   {
@@ -63,22 +64,33 @@ const routes = [
         component: () => import('../pages/SupportPage.vue'),
       },
       {
-        path: 'lessonMgmt',
-        name: 'Composer',
-        component: () => import('../pages/authoring/LessonComposerPage.vue'),
-        meta: {
-          requireAuth: true,
-          role: 'editor',
-        },
-      },
-      {
-        path: 'articleMgmt',
-        name: 'ArticleManagement',
-        component: () => import('../pages/authoring/ArticleMgmtPage.vue'),
-        meta: {
-          requireAuth: true,
-          role: 'editor',
-        },
+        path: 'workbench',
+        component: WorkbenchLayout,
+        // meta: {
+        //   requireAuth: true,
+        //   role: 'editor',
+        // },
+        children: [
+          {
+            path: 'articles',
+            name: 'ArticleWorkbench',
+            component: () => import('../pages/workbench/ArticleWorkbench.vue'),
+          },
+          {
+            path: 'articles/edit/:articleId',
+            name: 'ArticleComposer',
+            component: () => import('../pages/workbench/ArticleComposer.vue'),
+          },
+          {
+            path: 'lessonMgmt',
+            name: 'LessonComposer',
+            component: () => import('../pages/workbench/LessonComposer.vue'),
+            meta: {
+              requireAuth: true,
+              role: 'editor',
+            },
+          },
+        ],
       },
       {
         path: 'admin',

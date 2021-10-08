@@ -15,10 +15,9 @@
           Power Up Magazine - Learn About Nuclear Power
         </q-toolbar-title>
 
-        <div class="edition-label">Summer 2021</div>
+        <div class="edition-label">Autumn 2021</div>
         <authorization-widget />
       </q-toolbar>
-      <signup-login-logout-banner />
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" side="left" bordered class="bg-grey-1">
@@ -50,8 +49,7 @@
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
 import AuthorizationWidget from 'components/AuthorizationWidget.vue'
-import SignupLoginLogoutBanner from 'components/SignupLoginLogoutBanner.vue'
-import { useStore, mapState, mapGetters } from 'vuex'
+import { useStore, mapGetters } from 'vuex'
 
 const linksList = [
   {
@@ -61,12 +59,12 @@ const linksList = [
     route: 'FrontPage',
     exact: true,
   },
-  {
-    title: 'Courses',
-    caption: 'Learn about nuclear',
-    icon: 'school',
-    route: 'LearningCenter',
-  },
+  // {
+  //   title: 'Courses',
+  //   caption: 'Learn about nuclear',
+  //   icon: 'school',
+  //   route: 'LearningCenter',
+  // },
   // {
   //   title: 'Exchange Ideas',
   //   caption: 'Message boards',
@@ -98,33 +96,40 @@ const linksList = [
     icon: 'support',
     route: 'SupportCenter',
   },
+  // {
+  //   title: 'Course Composer',
+  //   caption: 'Editors only area',
+  //   icon: 'create',
+  //   route: 'Composer',
+  //   rolesWithAccess: ['editor', 'editorInChief'],
+  // },
+  // {
+  //   title: 'Article Management',
+  //   caption: 'For creating articles (editors only)',
+  //   icon: 'create',
+  //   route: 'ArticleManagement',
+  //   rolesWithAccess: ['editor', 'editorInChief'],
+  // },
   {
-    title: 'Course Composer',
-    caption: 'Editors only area',
-    icon: 'create',
-    route: 'Composer',
-    rolesWithAccess: ['editor', 'editorInChief'],
-  },
-  {
-    title: 'Article Management',
+    title: 'Article Workbench',
     caption: 'For creating articles (editors only)',
-    icon: 'create',
-    route: 'ArticleManagement',
-    rolesWithAccess: ['editor', 'editorInChief'],
+    icon: 'article',
+    route: 'ArticleWorkbench',
+    // rolesWithAccess: ['editor', 'editorInChief'],
   },
-  {
-    title: 'Administration',
-    caption: 'Administrators only',
-    icon: 'admin_panel_settings',
-    route: 'AdminPanel',
-    rolesWithAccess: ['admin'],
-  },
+  // {
+  //   title: 'Administration',
+  //   caption: 'Administrators only',
+  //   icon: 'admin_panel_settings',
+  //   route: 'AdminPanel',
+  //   rolesWithAccess: ['admin'],
+  // },
   {
     title: 'Customer Support',
     caption: 'Administrators only',
     icon: 'support',
     route: 'CustomerSupportRep',
-    // rolesWithAccess: ['admin'],
+    rolesWithAccess: ['admin'],
   },
 ]
 
@@ -136,11 +141,10 @@ export default defineComponent({
   components: {
     EssentialLink,
     AuthorizationWidget,
-    SignupLoginLogoutBanner,
   },
 
   setup() {
-    const leftDrawerOpen = ref(true)
+    const leftDrawerOpen = ref(false)
 
     return {
       essentialLinks: linksList,
@@ -163,10 +167,23 @@ export default defineComponent({
   },
 })
 </script>
-<style scoped>
+<style>
 .edition-label {
   margin-right: 1em;
   font-weight: bold;
   color: gold;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  margin-left: 0.5em;
+}
+.section {
+  margin-top: 2em;
 }
 </style>

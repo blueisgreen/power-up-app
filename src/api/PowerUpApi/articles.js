@@ -1,56 +1,108 @@
 import { api } from '../../boot/axios'
 
-export async function fetchArticles() {
-  console.log('PowerUpService.fetchArticles')
-  return await api.get('/articles')
-}
-
-export async function fetchArchivedArticles() {
-  console.log('PowerUpService.fetchArchivedArticles')
-  return await api.get('/articles/archived')
-}
-
-export async function fetchPublishedArticles() {
-  console.log('PowerUpService.fetchPublishedArticles')
+async function fetchArticles(articleSet) {
   try {
-    return await api.get('/articles/published')
+    const results = await api.get(articleSet)
+    return results.data
   } catch (err) {
     console.error(err)
     return []
   }
 }
 
+export async function fetchAllArticles() {
+  console.log('PowerUpAPI.fetchAllArticles')
+  return await fetchArticles('/articles')
+}
+
+export async function fetchPublishedArticles() {
+  console.log('PowerUpAPI.fetchPublishedArticles')
+  return await fetchArticles('/articles/published')
+}
+
+export async function fetchArchivedArticles() {
+  console.log('PowerUpAPI.fetchArchivedArticles')
+  return await fetchArticles('/articles/archived')
+}
+
 export async function fetchArticle(articleId) {
-  console.log('PowerUpService.fetchArticle', articleId)
-  return await api.get(`/articles/${articleId}`)
+  console.log('PowerUpAPI.fetchArticle', articleId)
+  try {
+    const results = await api.get(`/articles/${articleId}`)
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return null
+  }
 }
 
 export async function createArticle(update) {
-  console.log('PowerUpService.createArticle', update)
-  return await api.post('/articles/', update)
+  console.log('PowerUpAPI.createArticle', update)
+  try {
+    const results = await api.post('/articles/', update)
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return null
+  }
 }
 
 export async function saveArticle(update) {
-  console.log('PowerUpService.saveArticle', update)
-  return await api.put(`/articles/${update.id}`, update)
+  console.log('PowerUpAPI.saveArticle', update)
+  try {
+    const results = await api.put(`/articles/${update.id}`, update)
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return null
+  }
 }
 
 export async function publishArticle(articleId) {
-  console.log('PowerUpService.publishArticle', articleId)
-  return await api.put(`/articles/${articleId}/publish`)
+  console.log('PowerUpAPI.publishArticle', articleId)
+  try {
+    const results =  await api.put(`/articles/${articleId}/publish`)
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return null
+  }
 }
 
-export async function unpublishArticle(articleId) {
-  console.log('PowerUpService.unpublishArticle', articleId)
-  return await api.put(`/articles/${articleId}/unpublish`)
+export async function retractArticle(articleId) {
+  console.log('PowerUpAPI.retractArticle', articleId)
+  try {
+    const results = await api.put(`/articles/${articleId}/retract`)
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return null
+  }
 }
 
 export async function archiveArticle(articleId) {
-  console.log('PowerUpService.archiveArticle', articleId)
-  return await api.delete(`/articles/${articleId}`)
+  console.log('PowerUpAPI.archiveArticle', articleId)
+  try {
+    const results = await api.delete(`/articles/${articleId}`)
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return null
+  }
+}
+
+export async function reviveArticle(articleId) {
+  console.log('PowerUpAPI.reviveArticle', articleId)
+  try {
+    const results = await api.put(`/articles/${articleId}/revive`)
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return null
+  }
 }
 
 export async function purgeArticle(articleId) {
-  console.log('PowerUpService.purgeArticle', articleId)
+  console.log('PowerUpAPI.purgeArticle', articleId)
   return await api.delete(`/articles/${articleId}/purge`)
 }
