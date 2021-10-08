@@ -19,7 +19,11 @@
         />
         <q-editor
           v-model="draft.content"
-          min-height="5rem"
+          max-height="25rem"
+          placeholder="--content goes here--"
+          paragraph-tag="p"
+          toolbar-push
+          dark
           :toolbar="[
             ['left', 'center', 'right', 'justify'],
             [
