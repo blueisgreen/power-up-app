@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-md">
-    <h4>Edit Article {{ $route.params.articleId }}</h4>
+    <h4>Article {{ $route.params.articleId }}: {{ draft.headline }}</h4>
     <div class="row">
       <q-form class="q-gutter-md">
         <q-input
@@ -95,7 +95,10 @@
       </q-form>
     </div>
     <q-btn-group spread>
-      <q-btn color="primary" @click="save">Save</q-btn>
+      <q-btn color="primary" :disable="!isDirty" @click="save">Save</q-btn>
+      <q-btn color="positive" @click="saveAndClose"
+        ><span v-if="isDirty">Save &amp; </span>Close</q-btn
+      >
       <q-btn color="warning" :to="{ name: 'ArticleWorkbench' }" replace
         >Cancel</q-btn
       >
@@ -120,6 +123,17 @@ export default {
       store,
     }
   },
+  computed: {
+    isDirty() {
+      const id = this.$route.params.articleId
+      const original = this.store.state.articles.byId[id]
+      return (
+        original.headline !== this.draft.headline ||
+        original.byline !== this.draft.byline ||
+        original.content !== this.draft.content
+      )
+    },
+  },
   created() {
     const id = this.$route.params.articleId
     const lookup = this.store.state.articles.byId[id]
@@ -132,7 +146,13 @@ export default {
   },
   methods: {
     save() {
-      this.store.dispatch('articles/save', Object.assign({}, this.draft))
+      if (this.isDirty) {
+        this.store.dispatch('articles/save', Object.assign({}, this.draft))
+      }
+    },
+    saveAndClose() {
+      this.save()
+      this.$router.push({ name: 'ArticleWorkbench' })
     },
   },
 }
