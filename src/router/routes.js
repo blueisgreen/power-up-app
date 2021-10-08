@@ -64,15 +64,6 @@ const routes = [
         component: () => import('../pages/SupportPage.vue'),
       },
       {
-        path: 'lessonMgmt',
-        name: 'Composer',
-        component: () => import('../pages/workbench/LessonComposerPage.vue'),
-        meta: {
-          requireAuth: true,
-          role: 'editor',
-        },
-      },
-      {
         path: 'workbench',
         component: WorkbenchLayout,
         // meta: {
@@ -83,13 +74,21 @@ const routes = [
           {
             path: 'articles',
             name: 'ArticleWorkbench',
-            component: () =>
-              import('../pages/workbench/ArticleProductionPage.vue'),
+            component: () => import('../pages/workbench/ArticleWorkbench.vue'),
           },
           {
             path: 'articles/edit/:articleId',
-            name: 'ArticleEditor',
-            component: () => import('../pages/workbench/ArticleEditPage.vue'),
+            name: 'ArticleComposer',
+            component: () => import('../pages/workbench/ArticleComposer.vue'),
+          },
+          {
+            path: 'lessonMgmt',
+            name: 'LessonComposer',
+            component: () => import('../pages/workbench/LessonComposer.vue'),
+            meta: {
+              requireAuth: true,
+              role: 'editor',
+            },
           },
         ],
       },

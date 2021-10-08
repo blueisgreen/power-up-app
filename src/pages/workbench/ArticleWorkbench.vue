@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-md">
-    <h4>Article Production Hub</h4>
+    <h4>Article Workbench</h4>
     <div class="q-gutter-y-md column" style="max-width: 600px">
       <form autofocus @submit.prevent="createArticle">
         <q-input
@@ -41,11 +41,7 @@
             <q-item-label header>Actions</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item
-          v-for="article in articles"
-          :key="article"
-          v-ripple
-        >
+        <q-item v-for="article in articles" :key="article" v-ripple>
           <q-item-section>
             <q-item-label>{{ article.headline }}</q-item-label>
             <q-item-label caption>{{ article.byline }}</q-item-label>
@@ -162,7 +158,7 @@ export default defineComponent({
       }
     },
     editArticle(id) {
-      this.$router.push({ name: 'ArticleEditor', params: { articleId: id } })
+      this.$router.push({ name: 'ArticleComposer', params: { articleId: id } })
     },
     publishArticle(id) {
       this.store.dispatch('articles/publish', id)
