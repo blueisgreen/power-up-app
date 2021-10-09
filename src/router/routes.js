@@ -68,7 +68,7 @@ const routes = [
         component: WorkbenchLayout,
         // meta: {
         //   requireAuth: true,
-        //   role: 'editor',
+        //   role: 'author',
         // },
         children: [
           {
