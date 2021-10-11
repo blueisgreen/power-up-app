@@ -17,11 +17,21 @@
 <script>
 import { useStore } from 'vuex'
 export default {
+  setup() {
+    const store = useStore()
+    return {
+      store
+    }
+  },
   computed: {
     article() {
       const articleToView = this.$route.params.articleId
-      return useStore().getters['articles/getArticle'](articleToView)
+      return this.store.getters['articles/getArticle'](articleToView)
     },
+  },
+  created() {
+    const id = this.$route.params.articleId
+    this.store.dispatch('articles/loadArticle', { id })
   },
 }
 </script>

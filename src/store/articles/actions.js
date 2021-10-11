@@ -20,6 +20,13 @@ export async function loadCache({ commit }) {
   commit('loadArticles', { articles: results })
 }
 
+export async function loadArticle({ commit, state }, id) {
+  if (state.byId[id] === null) {
+    const results = await fetchArticle(id)
+    commit('loadArticles', { articles: results })
+  }
+}
+
 export async function create({ commit }, headline) {
   const results = await createArticle({ headline })
   commit('addArticle', { article: results })
