@@ -33,6 +33,7 @@
     </q-drawer>
 
     <q-page-container>
+      <status-bar />
       <router-view />
     </q-page-container>
 
@@ -49,6 +50,7 @@
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
 import AuthorizationWidget from 'components/AuthorizationWidget.vue'
+import StatusBar from 'components/StatusBar.vue'
 import { useStore, mapGetters } from 'vuex'
 
 const linksList = [
@@ -141,6 +143,7 @@ export default defineComponent({
   components: {
     EssentialLink,
     AuthorizationWidget,
+    StatusBar,
   },
 
   setup() {

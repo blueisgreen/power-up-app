@@ -20,10 +20,12 @@ export async function loadCache({ commit }) {
   commit('loadArticles', { articles: results })
 }
 
-export async function loadArticle({ commit, state }, id) {
+export async function loadArticle({ dispatch, commit, state }, id) {
   if (state.byId[id] === null) {
+    dispatch('context/set')
     const results = await fetchArticle(id)
     commit('loadArticles', { articles: results })
+    dispatch('context/')
   }
 }
 
