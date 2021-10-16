@@ -1,5 +1,5 @@
 export const getArticle = (state) => (articleId) => {
-  console.log('get article called', articleId)
+  console.log('get article', articleId)
   return state.byId[articleId]
 }
 

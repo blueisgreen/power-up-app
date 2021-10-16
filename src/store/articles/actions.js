@@ -1,6 +1,7 @@
 import {
   fetchPublishedArticles,
   fetchAllArticles,
+  fetchArticle,
   createArticle,
   saveArticle,
   publishArticle,
@@ -20,12 +21,20 @@ export async function loadCache({ commit }) {
   commit('loadArticles', { articles: results })
 }
 
-export async function loadArticle({ dispatch, commit, state }, id) {
-  if (state.byId[id] === null) {
-    dispatch('context/set')
+export async function loadArticle({ dispatch, commit, state }, { id }) {
+  console.log('articles.loadArticle action ==>', id, state.byId[id], '<==')
+  if (!state.byId[id]) {
+    dispatch('context/notifyLoading', null, { root: true })
     const results = await fetchArticle(id)
-    commit('loadArticles', { articles: results })
-    dispatch('context/')
+    commit('addArticle', { article: results })
+    dispatch(
+      'context/setActiveArticle',
+      { article: state.byId[id] },
+      { root: true }
+    )
+    setTimeout(() => {
+      dispatch('context/stopNotifyLoading', null, { root: true })
+    }, 2000)
   }
 }
 
