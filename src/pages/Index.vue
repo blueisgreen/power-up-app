@@ -10,13 +10,7 @@
           @click="() => viewArticle(article.id)"
         >
           <q-item-section>
-            <q-item-label>{{ article.headline }}</q-item-label>
-            <q-item-label caption>by {{ article.byline }}</q-item-label>
-            <q-item-label>created on {{ formatDayMonthYear(article.createdAt) }}</q-item-label>
-            <br />
-            <q-item-label lines="3"
-              ><span v-html="article.content"
-            /></q-item-label>
+            <article-summary :summary="article" />
           </q-item-section>
         </q-item>
       </q-list>
@@ -28,9 +22,13 @@
 import { defineComponent, onMounted } from 'vue'
 import { useStore, mapGetters } from 'vuex'
 import { formatDayMonthYear } from '../composables/powerUpUtils'
+import ArticleSummary from '../components/ArticleSummary.vue'
 
 export default defineComponent({
   name: 'PageIndex',
+  components: {
+    ArticleSummary
+  },
   setup() {
     const store = useStore()
     onMounted(() => store.dispatch('articles/refreshArticles'))
@@ -55,7 +53,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .article-block {
-  border-bottom: $primary solid 3px;
   padding-top: 2em;
   padding-bottom: 2em;
 }
