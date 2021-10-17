@@ -27,15 +27,13 @@ export async function loadArticle({ dispatch, commit, state }, { id }) {
     dispatch('context/notifyLoading', null, { root: true })
     const results = await fetchArticle(id)
     commit('addArticle', { article: results })
-    dispatch(
-      'context/setActiveArticle',
-      { article: state.byId[id] },
-      { root: true }
-    )
-    setTimeout(() => {
-      dispatch('context/stopNotifyLoading', null, { root: true })
-    }, 2000)
+    dispatch('context/stopNotifyLoading', null, { root: true })
   }
+  dispatch(
+    'context/setActiveArticle',
+    { article: state.byId[id] },
+    { root: true }
+  )
 }
 
 export async function create({ commit }, headline) {

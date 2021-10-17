@@ -1,37 +1,45 @@
 <template>
-    <q-card
-      class="my-card text-white"
-      style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)"
-    >
-      <q-card-section>
-        <div class="text-h6">{{ summary.headline }}</div>
-        <div class="text-subtitle2">by {{ summary.byline }}</div>
-        <div class="text-blue-3">posted on {{ formatDayMonthYear(summary.publishedAt) }}</div>
-      </q-card-section>
+  <q-card class="summary-card">
+    <q-card-section>
+      <div class="text-h6">{{ summary.headline }}</div>
+      <div class="text-subtitle2">by {{ summary.byline }}</div>
+      <div class="subdued">
+        posted on {{ formatDayMonthYear(summary.publishedAt) }}
+      </div>
+    </q-card-section>
 
-      <q-card-section class="q-pt-none">
-        {{ summary.synopsis || summary.content }}
-      </q-card-section>
-    </q-card>
+    <q-separator dark inset />
+
+    <!-- <hr class="color: white" /> -->
+    <q-card-section class="text-body1">
+      <span v-if="summary.synopsis" v-html="summary.synopsis" />
+    </q-card-section>
+  </q-card>
 </template>
 
 <script>
-import { formatDayMonthYear } from '../composables/powerUpUtils.js'
+import { formatDayMonthYear, prettyTrunc } from '../composables/powerUpUtils.js'
 export default {
-    props: {
-        summary: {
-            type: Object,
-            required: true
-        }
+  props: {
+    summary: {
+      type: Object,
+      required: true,
     },
-    setup() {
-        return {
-            formatDayMonthYear
-        }
+  },
+  setup() {
+    return {
+      formatDayMonthYear,
+      prettyTrunc,
     }
+  },
 }
 </script>
 
-<style>
-
+<style lang="sass" scoped>
+.summary-card
+  width: 100%
+  background: #014a88
+  color: white
+.subdued
+  color: $blue-3
 </style>

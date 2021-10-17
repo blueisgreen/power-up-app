@@ -15,3 +15,10 @@ export function formatDayMonthYear(timestamp) {
   const theDate = qdate.extractDate(timestamp)
   return qdate.formatDate(theDate, 'D MMM YYYY')
 }
+
+export function prettyTrunc(text, maxLength) {
+  if (maxLength === 0 || text.length <= maxLength) {
+    return text
+  }
+  return text.slice(0, maxLength) + '…'
+}
