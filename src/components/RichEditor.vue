@@ -1,7 +1,7 @@
 <template>
   <q-btn color="primary" icon="save" label="Save Content" />
   <q-editor
-    v-model="content"
+    model-value="content"
     max-height="25rem"
     placeholder="--content goes here--"
     paragraph-tag="p"
