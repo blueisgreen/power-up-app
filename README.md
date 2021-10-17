@@ -4,8 +4,6 @@ Learn about nuclear power
 
 ## To Do
 
-1. Fetch articles not already in local cache.
-1. Add article synopsis
 1. Only show highlights in list
 1. Improve user profile - single page with instant saves
 1. Improve sign-up, sign-in flows
@@ -19,4 +17,3 @@ Learn about nuclear power
 1. Use correct domain name
 1. Clean up support form
 1. Improve conversations between user and Support
-
