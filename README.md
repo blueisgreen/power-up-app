@@ -4,7 +4,6 @@ Learn about nuclear power
 
 ## To Do
 
-1. Only show highlights in list
 1. Improve user profile - single page with instant saves
 1. Improve sign-up, sign-in flows
 1. Flow to confirm email address

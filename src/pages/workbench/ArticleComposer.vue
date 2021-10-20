@@ -139,7 +139,7 @@ export default {
       return (
         original.headline !== this.draft.headline ||
         original.byline !== this.draft.byline ||
-        original.synopsis !== this.draft.synposis ||
+        original.synopsis !== this.draft.synopsis ||
         original.content !== this.draft.content
       )
     },
@@ -151,7 +151,7 @@ export default {
       this.draft = Object.assign(this.draft, lookup)
       this.draft.headline = lookup.headline || ''
       this.draft.byline = lookup.byline || ''
-      this.draft.synopsis = lookup.synposis || ''
+      this.draft.synopsis = lookup.synopsis || ''
       this.draft.content = lookup.content || ''
     }
   },
