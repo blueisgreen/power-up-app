@@ -1,32 +1,47 @@
 <template>
   <q-page>
     <div class="reader-panel">
-      <div v-if="article">
-        <h1>{{ article.headline }}</h1>
-        <h2>{{ article.byline }}</h2>
+      <div v-if="activeArticle">
+        <h1>{{ activeArticle.headline }}</h1>
+        <h2>{{ activeArticle.byline }}</h2>
         <div>
-          <span v-html="article.content" />
+          <span v-html="activeArticle.content" />
         </div>
       </div>
-      <div v-if="!article">
+      <div v-if="!activeArticle">
         <h1>Now then, where did I leave that article?</h1>
       </div>
     </div>
   </q-page>
 </template>
 <script>
-import { useStore } from 'vuex'
+import { useStore, mapState } from 'vuex'
 export default {
+  setup() {
+    const store = useStore()
+    return {
+      store,
+    }
+  },
   computed: {
-    article() {
-      const articleToView = this.$route.params.articleId
-      return useStore().getters['articles/getArticle'](articleToView)
-    },
+    ...mapState('context', ['activeArticle'])
+  },
+  created() {
+    const id = this.$route.params.articleId
+    console.log('loading article', id)
+    this.store.dispatch('articles/loadArticle', { id })
+  },
+  methods: {
   },
 }
 </script>
 <style scoped>
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-left: 0;
 }
 h1 {

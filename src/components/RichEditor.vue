@@ -1,8 +1,7 @@
 <template>
-  <div>{{ docName }}</div>
   <q-btn color="primary" icon="save" label="Save Content" />
   <q-editor
-    v-model="editor"
+    model-value="content"
     max-height="25rem"
     placeholder="--content goes here--"
     paragraph-tag="p"
@@ -77,23 +76,13 @@ export default {
   props: {
     content: {
       type: String,
-      default: '',
-    },
-    docName: {
-      type: String,
-      default: 'Your passage',
-    },
-    onSave: {
-      type: Function,
-      default: () => console.log('implement me'),
+      required: true,
     },
   },
   setup() {
     const $q = useQuasar()
-  },
-  data() {
     return {
-      editor: 'What say you?',
+      $q,
     }
   },
 }

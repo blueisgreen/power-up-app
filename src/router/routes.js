@@ -66,10 +66,10 @@ const routes = [
       {
         path: 'workbench',
         component: WorkbenchLayout,
-        // meta: {
-        //   requireAuth: true,
-        //   role: 'editor',
-        // },
+        meta: {
+          requireAuth: true,
+          role: 'author',
+        },
         children: [
           {
             path: 'articles',

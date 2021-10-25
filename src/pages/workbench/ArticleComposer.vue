@@ -18,6 +18,14 @@
           :rules="[(val) => (val && val.length > 0) || 'Please type something']"
         />
         <q-editor
+          v-model="draft.synopsis"
+          max-height="25rem"
+          placeholder="--content goes here--"
+          paragraph-tag="p"
+          toolbar-push
+          dark
+        />
+        <q-editor
           v-model="draft.content"
           max-height="25rem"
           placeholder="--content goes here--"
@@ -115,6 +123,7 @@ export default {
     const draft = ref({
       headline: '',
       byline: '',
+      synopsis: '',
       content: '',
     })
     const store = useStore()
@@ -130,6 +139,7 @@ export default {
       return (
         original.headline !== this.draft.headline ||
         original.byline !== this.draft.byline ||
+        original.synopsis !== this.draft.synopsis ||
         original.content !== this.draft.content
       )
     },
@@ -141,6 +151,7 @@ export default {
       this.draft = Object.assign(this.draft, lookup)
       this.draft.headline = lookup.headline || ''
       this.draft.byline = lookup.byline || ''
+      this.draft.synopsis = lookup.synopsis || ''
       this.draft.content = lookup.content || ''
     }
   },

@@ -8,8 +8,11 @@ export function loadArticles(state, { articles }) {
 }
 
 export function addArticle(state, { article }) {
+  console.log('save article to local state')
   state.byId[article.id] = article
-  state.articleIds.unshift(article.id)
+  if (!state.articleIds.includes(article.id)) {
+    state.articleIds.unshift(article.id)
+  }
 }
 
 export function updateArticle(state, { article }) {
@@ -18,5 +21,5 @@ export function updateArticle(state, { article }) {
 
 export function removeArticle(state, { id }) {
   delete state.byId[article.id]
-  state.articleIds = state.articleIds.filter(item => item !== id)
+  state.articleIds = state.articleIds.filter((item) => item !== id)
 }

@@ -42,11 +42,11 @@
 
 <script>
 import { computed } from 'vue'
-import { useStore, mapGetters, mapState, mapActions } from 'vuex'
+import { useStore, mapGetters, mapState } from 'vuex'
 
 export default {
   setup() {
-    const $store = useStore()
+    const store = useStore()
     const purposeOfInquiryOptions = [
       { label: 'Get Help', value: 'help' },
       { label: 'Ask a Question', value: 'question' },
@@ -54,24 +54,24 @@ export default {
       { label: 'Something Else', value: 'other' },
     ]
     const purpose = computed({
-      get: () => $store.state.support.inquiryToSend.purpose,
+      get: () => store.state.support.inquiryToSend.purpose,
       set: (val) => {
         console.log('setting purpose', val.value)
         $store.commit('support/setInquiryPurpose', { purpose: val.value })
       },
     })
     const message = computed({
-      get: () => $store.state.support.inquiryToSend.message,
+      get: () => store.state.support.inquiryToSend.message,
       set: (val) => {
         console.log('setting message', val)
-        $store.commit('support/setInquiryMessage', { message: val })
+        store.commit('support/setInquiryMessage', { message: val })
       },
     })
     return {
       purposeOfInquiryOptions,
       purpose,
       message,
-      $store,
+      store,
     }
   },
   computed: {
@@ -81,7 +81,7 @@ export default {
   methods: {
     onSubmit() {
       console.log('clicked submit');
-      this.$store.dispatch('support/submitInquiry')
+      this.store.dispatch('support/submitInquiry')
     }
   },
 }

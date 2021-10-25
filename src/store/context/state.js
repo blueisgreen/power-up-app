@@ -1,5 +1,7 @@
 export default function () {
   return {
-    activeArticleId: null,
+    activeArticle: null,
+    isLoading: false,
+    statusMessage: 'You look marvelous.',
   }
 }

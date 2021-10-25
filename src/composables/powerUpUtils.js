@@ -1,17 +1,25 @@
 import { date as qdate } from 'quasar'
+import { useStore } from 'vuex'
 
 export function formatYearMonthDay(timestamp) {
   if (timestamp === null) {
     return null
   }
-  const agreementDate = qdate.extractDate(timestamp)
-  return qdate.formatDate(agreementDate, 'YYYY-MMM-D')
+  const theDate = qdate.extractDate(timestamp)
+  return qdate.formatDate(theDate, 'YYYY-MMM-D')
 }
 
 export function formatDayMonthYear(timestamp) {
   if (timestamp === null) {
     return null
   }
-  const agreementDate = qdate.extractDate(timestamp)
-  return qdate.formatDate(agreementDate, 'D-MMM-YYYY')
+  const theDate = qdate.extractDate(timestamp)
+  return qdate.formatDate(theDate, 'D MMM YYYY')
+}
+
+export function prettyTrunc(text, maxLength) {
+  if (maxLength === 0 || text.length <= maxLength) {
+    return text
+  }
+  return text.slice(0, maxLength) + '…'
 }

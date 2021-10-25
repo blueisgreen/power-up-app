@@ -19,3 +19,9 @@ export function isEditorInChief(state) {
 export function isAdmin(state) {
   return state.roles.find((role) => role === 'admin') !== undefined
 }
+export const hasRole = (state) => (permittedRoles) => {
+  console.log('looking for roles', permittedRoles)
+  return permittedRoles.some((permittedRole) =>
+    state.roles.includes(permittedRole)
+  )
+}
