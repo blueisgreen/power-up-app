@@ -48,10 +48,11 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink.vue'
-import AuthorizationWidget from 'components/AuthorizationWidget.vue'
-import StatusBar from 'components/StatusBar.vue'
+import { defineComponent, ref } from 'vue'
 import { useStore, mapGetters } from 'vuex'
+import AuthorizationWidget from 'components/AuthorizationWidget.vue'
+import EssentialLink from 'components/EssentialLink.vue'
+import StatusBar from 'components/StatusBar.vue'
 
 const linksList = [
   {
@@ -61,36 +62,13 @@ const linksList = [
     route: 'FrontPage',
     exact: true,
   },
-  // {
-  //   title: 'Courses',
-  //   caption: 'Learn about nuclear',
-  //   icon: 'school',
-  //   route: 'LearningCenter',
-  // },
-  // {
-  //   title: 'Exchange Ideas',
-  //   caption: 'Message boards',
-  //   icon: 'chat',
-  //   route: 'DiscussionBoards',
-  // },
-  // {
-  //   title: 'Simulations',
-  //   caption: 'Play the simulation game',
-  //   icon: 'precision_manufacturing',
-  //   route: 'Simulations',
-  // },
-  // {
-  //   title: 'Calculators',
-  //   caption: 'Fun with numbers',
-  //   icon: 'calculate',
-  //   route: 'Calculators',
-  // },
   {
     title: 'Account',
     caption: 'Your account information',
     icon: 'manage_accounts',
     route: 'UserAccount',
     exact: true,
+    rolesWithAccess: ['member'],
   },
   {
     title: 'Support',
@@ -98,34 +76,13 @@ const linksList = [
     icon: 'support',
     route: 'SupportCenter',
   },
-  // {
-  //   title: 'Course Composer',
-  //   caption: 'Editors only area',
-  //   icon: 'create',
-  //   route: 'Composer',
-  //   rolesWithAccess: ['editor', 'editorInChief'],
-  // },
-  // {
-  //   title: 'Article Management',
-  //   caption: 'For creating articles (editors only)',
-  //   icon: 'create',
-  //   route: 'ArticleManagement',
-  //   rolesWithAccess: ['editor', 'editorInChief'],
-  // },
   {
     title: 'Article Workbench',
     caption: 'For creating articles (editors only)',
     icon: 'article',
     route: 'ArticleWorkbench',
-    // rolesWithAccess: ['editor', 'editorInChief'],
+    rolesWithAccess: ['author', 'editor', 'editorInChief'],
   },
-  // {
-  //   title: 'Administration',
-  //   caption: 'Administrators only',
-  //   icon: 'admin_panel_settings',
-  //   route: 'AdminPanel',
-  //   rolesWithAccess: ['admin'],
-  // },
   {
     title: 'Customer Support',
     caption: 'Administrators only',
@@ -134,8 +91,6 @@ const linksList = [
     rolesWithAccess: ['admin'],
   },
 ]
-
-import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   name: 'MainLayout',
@@ -161,12 +116,13 @@ export default defineComponent({
   computed: {
     visibleMenuItems() {
       const visibleItems = this.essentialLinks.filter(
-        (item) =>
-          !item.rolesWithAccess || (item.rolesWithAccess && this.isSignedIn)
+        (menuItem) =>
+          !menuItem.rolesWithAccess ||
+          (this.isSignedIn && this.hasRole(menuItem.rolesWithAccess))
       )
       return visibleItems
     },
-    ...mapGetters('auth', ['isSignedIn']),
+    ...mapGetters('auth', ['isSignedIn', 'hasRole']),
   },
 })
 </script>
@@ -190,3 +146,18 @@ h6 {
   margin-top: 2em;
 }
 </style>
+
+// { // title: 'Courses', // caption: 'Learn about nuclear', // icon: 'school',
+// route: 'LearningCenter', // }, // { // title: 'Exchange Ideas', // caption:
+'Message boards', // icon: 'chat', // route: 'DiscussionBoards', // }, // { //
+title: 'Simulations', // caption: 'Play the simulation game', // icon:
+'precision_manufacturing', // route: 'Simulations', // }, // { // title:
+'Calculators', // caption: 'Fun with numbers', // icon: 'calculate', // route:
+'Calculators', // }, // { // title: 'Course Composer', // caption: 'Editors only
+area', // icon: 'create', // route: 'Composer', // rolesWithAccess: ['editor',
+'editorInChief'], // }, // { // title: 'Article Management', // caption: 'For
+creating articles (editors only)', // icon: 'create', // route:
+'ArticleManagement', // rolesWithAccess: ['editor', 'editorInChief'], // }, // {
+// title: 'Administration', // caption: 'Administrators only', // icon:
+'admin_panel_settings', // route: 'AdminPanel', // rolesWithAccess: ['admin'],
+// },
