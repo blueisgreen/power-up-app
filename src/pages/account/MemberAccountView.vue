@@ -1,6 +1,5 @@
 <template>
-  <div class="q-pa-md">
-    <h4>Member Profile</h4>
+  <div>
     <q-list bordered padding>
       <q-item>
         <q-item-section side>
@@ -60,7 +59,7 @@
       </q-item>
 
       <q-separator spaced />
-      <q-item-label header>Preferences</q-item-label>
+      <q-item-label header>Settings</q-item-label>
 
       <q-item v-ripple tag="label">
         <q-item-section side top>
@@ -120,9 +119,9 @@ export default {
       avatarUrl: computed(() => $store.state.profile.avatarUrl),
       createdAt: computed(() => $store.state.profile.createdAt),
       updatedAt: computed(() => $store.state.profile.updatedAt),
-      termsAcceptedAt: computed(() => $store.state.profile.termsAcceptedAt),
-      cookiesAcceptedAt: computed(() => $store.state.profile.cookiesAcceptedAt),
-      emailCommsAcceptedAt: computed(() => $store.state.profile.emailCommsAcceptedAt),
+      termsAcceptedAt: computed(() => !!$store.state.profile.termsAcceptedAt),
+      cookiesAcceptedAt: computed(() => !!$store.state.profile.cookiesAcceptedAt),
+      emailCommsAcceptedAt: computed(() => !!$store.state.profile.emailCommsAcceptedAt),
       accountStateId: computed(() => $store.state.profile.accountStateId),
     }
   },

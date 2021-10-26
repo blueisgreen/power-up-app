@@ -32,10 +32,10 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import MemberAccountView from 'components/MemberAccountView.vue'
-import MemberProfileForm from 'components/MemberProfileForm.vue'
-import MemberSettingsForm from 'components/MemberSettingsForm.vue'
-import { mapState, mapActions } from 'vuex'
+import MemberAccountView from './MemberAccountView.vue'
+import MemberProfileForm from './MemberProfileForm.vue'
+import MemberSettingsForm from './MemberSettingsForm.vue'
+import { mapState } from 'vuex'
 
 export default defineComponent({
   components: {

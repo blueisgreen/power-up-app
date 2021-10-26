@@ -38,9 +38,9 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import MemberAccountView from 'components/MemberAccountView.vue'
-import MemberProfileForm from 'components/MemberProfileForm.vue'
-import MemberSettingsForm from 'components/MemberSettingsForm.vue'
+import MemberAccountView from 'src/pages/account/MemberAccountView.vue'
+import MemberProfileForm from 'src/pages/account/MemberProfileForm.vue'
+import MemberSettingsForm from 'src/pages/account/MemberSettingsForm.vue'
 import { useStore } from 'vuex'
 import { computed } from 'vue'
 

@@ -34,7 +34,7 @@ const routes = [
             path: '',
             name: 'UserAccount',
             component: () =>
-              import('../pages/account/UserAccountOverviewPage.vue'),
+              import('../pages/account/UserAccountPage.vue'),
           },
           {
             path: 'register',
