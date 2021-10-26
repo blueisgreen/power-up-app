@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-md">
-    <q-tabs v-model="tab" align="left" indicator-color="teal-10">
+    <q-tabs v-model="tab" align="center" indicator-color="teal-10">
       <q-tab name="overview" icon="manage_accounts" label="Overview"></q-tab>
       <q-tab name="profile" icon="person" label="Profile"></q-tab>
       <q-tab name="settings" icon="settings" label="Settings"></q-tab>
