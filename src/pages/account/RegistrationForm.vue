@@ -1,13 +1,13 @@
 <template>
   <div class="q-pa-md">
-    <h4>Member Registration</h4>
+    <h4>Join Power Up</h4>
     <p>
-      You already have an account:
-      {{ accountId }} created on
-      {{ formatYearMonthDay(createdAt) }}
+      It's free and simple. Pick a screen name for yourself. Then read and check
+      each of the terms of use to show that you understand and agree.
     </p>
+    <p>{{ accountId }} created on {{ formatYearMonthDay(createdAt) }}</p>
     <q-form class="q-gutter-md" @submit="onSubmit" @reset="onReset">
-      <q-list separator padding bordered>
+      <q-list padding bordered>
         <q-item>
           <q-item-section top>
             <q-input
@@ -23,6 +23,18 @@
           </q-item-section>
           <q-item-section side top>
             <q-btn @click="onSuggestScreenName">Suggest</q-btn><br />
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section top>
+            Email address: {{ socialEmail }}
+          </q-item-section>
+          <q-item-section side top>
+            <info-dialog
+              :prompt="dialogValues.emailComms.prompt"
+              :title="dialogValues.emailComms.title"
+              :message="dialogValues.emailComms.message"
+            />
           </q-item-section>
         </q-item>
         <q-item>
@@ -45,6 +57,25 @@
             />
           </q-item-section>
         </q-item>
+        <q-item v-for="term in termsOfUse" :key="term.code">
+          <div class="q-gutter-sm">
+            <q-checkbox
+              v-model="term.accepted"
+              :label="term.explanation"
+              :disable="termsAcceptedAt"
+            />
+          </div>
+          <q-item-label v-if="termsAcceptedAt"
+            >You agreed to terms of use on
+            {{ formatDayMonthYear(termsAcceptedAt) }}</q-item-label
+          >
+        </q-item>
+        <q-item>
+          <q-item-label v-if="termsAcceptedAt"
+            >You agreed to terms of use on
+            {{ formatDayMonthYear(termsAcceptedAt) }}</q-item-label
+          >
+        </q-item>
 
         <q-item>
           <q-item-section top>
@@ -53,10 +84,6 @@
               v-model="okWithCookies"
               label="I agree to accept cookies for a smooth experience."
             />
-            <q-item-label v-if="cookiesAcceptedAt"
-              >You agreed to use of cookies on
-              {{ formatYearMonthDay(cookiesAcceptedAt) }}</q-item-label
-            >
           </q-item-section>
           <q-item-section side top>
             <info-dialog
@@ -81,17 +108,6 @@
               :message="dialogValues.emailComms.message"
             />
           </q-item-section>
-        </q-item>
-        <q-item>
-          <q-section>
-            <q-input
-              v-model="unverifiedEmail"
-              filled
-              :disable="!okWithEmail"
-              type="email"
-              label="Your email"
-            />
-          </q-section>
         </q-item>
 
         <q-item>
@@ -118,56 +134,84 @@ import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useQuasar, date } from 'quasar'
 import InfoDialog from 'components/InfoDialog'
-import { formatYearMonthDay } from '../composables/powerUpUtils'
-
+import {
+  formatYearMonthDay,
+  formatDayMonthYear,
+} from '../../composables/powerUpUtils'
 
 export default {
   components: { InfoDialog },
   setup() {
-    const $q = useQuasar()
+    const q = useQuasar()
     const $store = useStore()
 
     const desiredScreenName = ref($store.state.profile.screenName)
     const unverifiedEmail = ref(null)
-    const okWithTerms = ref(false)
     const okWithCookies = ref(false)
     const okWithEmail = ref(false)
 
+    const termsOfUse = ref([
+      {
+        code: 'term1',
+        explanation:
+          'Power Up Magazine is for learning about nuclear power and related subjects.',
+        accepted: false,
+      },
+      {
+        code: 'term2',
+        explanation:
+          "Be curious: Everyone is learning, even the experts. There will be errors and mistakes. Let's discuss, debate, and learn together.",
+        accepted: false,
+      },
+      {
+        code: 'term3',
+        explanation:
+          'Be polite: This is civilized social media. Mind your manners.',
+        accepted: false,
+      },
+      {
+        code: 'term4',
+        explanation:
+          'Be empowered: Membership is free. You may leave Power Up Magazine at any time.',
+        accepted: false,
+      },
+    ])
     const dialogValues = {
       terms: {
         prompt: 'Review Terms',
         title: 'Terms of Use',
         message:
-          'Be civilized. Disagreement and skepticism are fine, even healthy. Refrain from abusive language. Illegal or illicit activities are not allowed. Not adhering to these rules may result in suspension or termination of your account. Trolls be gone.',
+          "Power Up Magazine is for learning about nuclear power and related subjects. Everyone is learning, even the experts. There will be errors and mistakes. Let's discuss, debate, and learn together. This is civilized social media. Mind your manners. Be polite. Membership is free. You may leave Power Up Magazine at any time.",
       },
       cookies: {
         prompt: 'Explain Cookies',
         title: 'How Cookies Help',
         message:
-          'Power Up uses cookies to remember who you are. We can take your preferences into account, and you do not have to keep logging in unless you log out on purpose.',
+          'Power Up Magazine uses browser cookies to remember who you are. That saves you time and will give you a better experience. We do not share information about your activity on Power Up Magazine with others.',
       },
       emailComms: {
         prompt: 'Email Pledge',
         title: 'Only the Good Stuff',
         message:
-          'We will only send you email about Power Up. We will not share your email address with anyone. Unsubscribe at any time.',
+          'We will only send you email about Power Up Magazine. We will not share your email address with anyone.',
       },
     }
     return {
-      $q,
+      q,
       $store,
       formatYearMonthDay,
+      formatDayMonthYear,
       dialogValues,
+      termsOfUse,
 
       desiredScreenName,
       unverifiedEmail,
-      okWithTerms,
       okWithCookies,
       okWithEmail,
 
       accountId: computed(() => $store.state.profile.accountId),
       screenName: computed(() => $store.state.profile.screenName),
-      email: computed(() => $store.state.profile.email),
+      socialEmail: computed(() => $store.state.profile.email),
       createdAt: computed(() => $store.state.profile.createdAt),
       termsAcceptedAt: computed(() => $store.state.profile.termsAcceptedAt),
       cookiesAcceptedAt: computed(() => $store.state.profile.cookiesAcceptedAt),
@@ -182,17 +226,20 @@ export default {
     }
   },
   methods: {
+    okWithTerms() {
+      return !this.termsOfUse.find((term) => !term.accepted)
+    },
     onSubmit() {
       console.log('submitting registration')
-      if (!this.okWithTerms) {
-        this.$q.notify({
+      if (!this.okWithTerms()) {
+        this.q.notify({
           color: 'red-5',
           textColor: 'white',
           icon: 'warning',
           message: 'You need to accept the terms to become a member',
         })
       } else {
-        this.$q.notify({
+        this.q.notify({
           color: 'green-4',
           textColor: 'white',
           icon: 'cloud_done',
@@ -203,7 +250,7 @@ export default {
           publicId: this.accountId,
           screenName: this.desiredScreenName,
           email: this.unverifiedEmail,
-          agreeToTerms: !!this.termsAcceptedAt || this.okWithTerms,
+          agreeToTerms: !!this.termsAcceptedAt || this.okWithTerms(),
           agreeToCookies: !!this.cookiesAcceptedAt || this.okWithCookies,
           agreeToEmailComms: !!this.emailCommsAcceptedAt || this.okWithEmail,
         })
@@ -222,7 +269,7 @@ export default {
 
 <style>
 h4 {
-  margin-top: 0em;
+  margin: 0em;
   margin-bottom: 0.5em;
 }
 </style>
