@@ -5,7 +5,7 @@
       <q-checkbox
         v-model="term.accepted"
         :label="term.explanation"
-        :disable="acceptedAt"
+        :disable="!!acceptedAt"
       />
     </div>
   </q-item>
