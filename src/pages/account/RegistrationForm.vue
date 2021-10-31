@@ -17,7 +17,9 @@
               label="What shall we call you? This may be an alias."
               lazy-rules
               :rules="[
-                (val) => (val && val.length > 0) || 'You have to give us more than that.',
+                (val) =>
+                  (val && val.length > 0) ||
+                  'You have to give us more than that.',
               ]"
             />
           </q-item-section>
@@ -30,13 +32,18 @@
         <terms-of-use :terms="termsOfUse" :accepted-at="termsAcceptedAt" />
 
         <q-separator spaced />
+        <q-item-label header>Optional Settings</q-item-label>
         <q-item>
-          <q-item-section top>
-            <q-toggle
+          <q-item-section>
+            <q-checkbox
               v-if="!cookiesAcceptedAt"
               v-model="okWithCookies"
-              label="I agree to accept cookies for a smooth experience."
+              label="Cookies are OK"
             />
+            <q-item-label v-if="cookiesAcceptedAt">
+              On {{ formatDayMonthYear(cookiesAcceptedAt) }}, you said cookies
+              are OK.
+            </q-item-label>
           </q-item-section>
           <q-item-section side top>
             <info-dialog
@@ -47,18 +54,17 @@
           </q-item-section>
         </q-item>
 
-        <q-separator spaced />
         <q-item>
           <q-item-section top>
-            Email address: {{ socialEmail }}
-          </q-item-section>
-        </q-item>
-        <q-item>
-          <q-item-section top>
-            <q-toggle
+            <q-checkbox
+              v-if="!emailCommsAcceptedAt"
               v-model="okWithEmail"
-              label="Please send me email about Power Up."
+              label="I agree to receive email about Power Up Magazine"
             />
+            <q-item-label v-if="emailCommsAcceptedAt">
+              On {{ formatDayMonthYear(emailCommsAcceptedAt) }}, you said email
+              is OK.
+            </q-item-label>
           </q-item-section>
           <q-item-section side top>
             <info-dialog
@@ -68,14 +74,20 @@
             />
           </q-item-section>
         </q-item>
+        <q-item>
+          <q-item-section top>
+            <q-item-label><span class="text-bold">Email Address:</span> {{ socialEmail }}</q-item-label>
+          </q-item-section>
+        </q-item>
 
+        <q-separator spaced />
         <q-item>
           <q-section>
-            <q-btn label="Submit" type="submit" color="primary" />
+            <q-btn label="Sign Me Up" type="submit" color="primary" />
           </q-section>
           <q-section>
             <q-btn
-              label="Reset"
+              label="Clear Form"
               type="reset"
               color="primary"
               flat
@@ -147,7 +159,7 @@ export default {
         prompt: 'Explain Cookies',
         title: 'How Cookies Help',
         message:
-          'Power Up Magazine uses browser cookies to remember who you are. That saves you time and will give you a better experience. We do not share information about your activity on Power Up Magazine with others.',
+          'Power Up Magazine uses browser cookies to remember who you are, which saves you time and gives you a better experience. We do not share information about your activity on Power Up Magazine with others.',
       },
       emailComms: {
         prompt: 'Email Pledge',
@@ -196,7 +208,7 @@ export default {
           color: 'red-5',
           textColor: 'white',
           icon: 'warning',
-          message: 'You need to accept the terms to become a member',
+          message: 'You need to accept all of the terms to become a member.',
         })
       } else {
         this.q.notify({
