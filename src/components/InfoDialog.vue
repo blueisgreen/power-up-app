@@ -23,19 +23,20 @@ export default {
     },
   },
   setup() {
-    const $q = useQuasar()
+    const q = useQuasar()
 
     return {
-      $q,
+      q,
     }
   },
   methods: {
     showDialog() {
-      this.$q.dialog({
-        title: this.title,
-        message: this.message,
-        html: true,
-      })
+      this.q
+        .dialog({
+          title: this.title,
+          message: this.message,
+          html: true,
+        })
         .onOk(() => {
           // console.log('OK')
         })

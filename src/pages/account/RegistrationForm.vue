@@ -1,11 +1,10 @@
 <template>
   <div class="q-pa-md">
     <h4>Join Power Up</h4>
-    <p>
-      It's free and simple. Pick a screen name for yourself. Then read and check
-      each of the terms of use to show that you understand and agree.
-    </p>
-    <p>{{ accountId }} created on {{ formatYearMonthDay(createdAt) }}</p>
+    <div class="q-pb-md">
+      It's free and simple to join. Pick a screen name for yourself. Then read
+      and check each of the terms of use to show that you understand and agree.
+    </div>
     <q-form class="q-gutter-md" @submit="onSubmit" @reset="onReset">
       <q-list padding bordered>
         <q-item-label header>Screen Name</q-item-label>
@@ -76,16 +75,19 @@
         </q-item>
         <q-item>
           <q-item-section top>
-            <q-item-label><span class="text-bold">Email Address:</span> {{ socialEmail }}</q-item-label>
+            <q-item-label
+              ><span class="text-bold">Email Address:</span>
+              {{ socialEmail }}</q-item-label
+            >
           </q-item-section>
         </q-item>
 
         <q-separator spaced />
         <q-item>
-          <q-section>
+          <q-item-section>
             <q-btn label="Sign Me Up" type="submit" color="primary" />
-          </q-section>
-          <q-section>
+          </q-item-section>
+          <q-item-section>
             <q-btn
               label="Clear Form"
               type="reset"
@@ -93,7 +95,7 @@
               flat
               class="q-ml-sm"
             />
-          </q-section>
+          </q-item-section>
         </q-item>
       </q-list>
     </q-form>
@@ -103,7 +105,7 @@
 <script>
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
-import { useQuasar, date } from 'quasar'
+import { useQuasar } from 'quasar'
 import InfoDialog from 'components/InfoDialog'
 import {
   formatYearMonthDay,
@@ -115,9 +117,9 @@ export default {
   components: { InfoDialog, TermsOfUse },
   setup() {
     const q = useQuasar()
-    const $store = useStore()
+    const store = useStore()
 
-    const desiredScreenName = ref($store.state.profile.screenName)
+    const desiredScreenName = ref(store.state.profile.screenName)
     const unverifiedEmail = ref(null)
     const okWithCookies = ref(false)
     const okWithEmail = ref(false)
@@ -170,7 +172,7 @@ export default {
     }
     return {
       q,
-      $store,
+      store,
       formatYearMonthDay,
       formatDayMonthYear,
       dialogValues,
@@ -181,19 +183,19 @@ export default {
       okWithCookies,
       okWithEmail,
 
-      accountId: computed(() => $store.state.profile.accountId),
-      screenName: computed(() => $store.state.profile.screenName),
-      socialEmail: computed(() => $store.state.profile.email),
-      createdAt: computed(() => $store.state.profile.createdAt),
-      termsAcceptedAt: computed(() => $store.state.profile.termsAcceptedAt),
-      cookiesAcceptedAt: computed(() => $store.state.profile.cookiesAcceptedAt),
+      accountId: computed(() => store.state.profile.accountId),
+      screenName: computed(() => store.state.profile.screenName),
+      socialEmail: computed(() => store.state.profile.email),
+      createdAt: computed(() => store.state.profile.createdAt),
+      termsAcceptedAt: computed(() => store.state.profile.termsAcceptedAt),
+      cookiesAcceptedAt: computed(() => store.state.profile.cookiesAcceptedAt),
       emailCommsAcceptedAt: computed(
-        () => $store.state.profile.emailCommsAcceptedAt
+        () => store.state.profile.emailCommsAcceptedAt
       ),
       onSuggestScreenName() {
-        const idea = $store.state.profile.screenName
+        const idea = store.state.profile.screenName
         console.log(idea)
-        desiredScreenName.value = $store.state.profile.screenName
+        desiredScreenName.value = store.state.profile.screenName
       },
     }
   },
@@ -218,7 +220,7 @@ export default {
           message: 'Submitted',
         })
         console.log('about to dispatch registration action')
-        this.$store.dispatch('profile/updateMyProfile', {
+        this.store.dispatch('profile/updateMyProfile', {
           publicId: this.accountId,
           screenName: this.desiredScreenName,
           email: this.unverifiedEmail,
@@ -229,11 +231,11 @@ export default {
       }
     },
     onReset() {
-      this.desiredScreenName.value = this.screenName
-      this.unverifiedEmail.value = this.email
-      this.okWithTerms.value = false
-      this.okWithCookies.value = false
-      this.okWithEmail.value = false
+      this.desiredScreenName = this.screenName
+      this.termsOfUse.forEach((term) => (term.accepted = false))
+      this.okWithTerms = false
+      this.okWithCookies = false
+      this.okWithEmail = false
     },
   },
 }

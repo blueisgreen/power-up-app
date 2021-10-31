@@ -9,7 +9,7 @@
       />
     </div>
   </q-item>
-  <q-item-label v-if="termsAcceptedAt">
+  <q-item-label v-if="acceptedAt">
     You agreed to terms of use on {{ formatDayMonthYear(acceptedAt) }}
   </q-item-label>
 </template>
