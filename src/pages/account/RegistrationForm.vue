@@ -8,16 +8,16 @@
     <p>{{ accountId }} created on {{ formatYearMonthDay(createdAt) }}</p>
     <q-form class="q-gutter-md" @submit="onSubmit" @reset="onReset">
       <q-list padding bordered>
+        <q-item-label header>Screen Name</q-item-label>
         <q-item>
           <q-item-section top>
             <q-input
               v-model="desiredScreenName"
               filled
-              label="What shall we call you?"
-              hint="This can be your real name or an alias."
+              label="What shall we call you? This may be an alias."
               lazy-rules
               :rules="[
-                (val) => (val && val.length > 0) || 'Please type something',
+                (val) => (val && val.length > 0) || 'You have to give us more than that.',
               ]"
             />
           </q-item-section>
@@ -25,58 +25,11 @@
             <q-btn @click="onSuggestScreenName">Suggest</q-btn><br />
           </q-item-section>
         </q-item>
-        <q-item>
-          <q-item-section top>
-            Email address: {{ socialEmail }}
-          </q-item-section>
-          <q-item-section side top>
-            <info-dialog
-              :prompt="dialogValues.emailComms.prompt"
-              :title="dialogValues.emailComms.title"
-              :message="dialogValues.emailComms.message"
-            />
-          </q-item-section>
-        </q-item>
-        <q-item>
-          <q-item-section top>
-            <q-toggle
-              v-if="!termsAcceptedAt"
-              v-model="okWithTerms"
-              label="I accept the terms of use."
-            />
-            <q-item-label v-if="termsAcceptedAt"
-              >You agreed to terms of use on
-              {{ formatYearMonthDay(termsAcceptedAt) }}</q-item-label
-            >
-          </q-item-section>
-          <q-item-section side top>
-            <info-dialog
-              :prompt="dialogValues.terms.prompt"
-              :title="dialogValues.terms.title"
-              :message="dialogValues.terms.message"
-            />
-          </q-item-section>
-        </q-item>
-        <q-item v-for="term in termsOfUse" :key="term.code">
-          <div class="q-gutter-sm">
-            <q-checkbox
-              v-model="term.accepted"
-              :label="term.explanation"
-              :disable="termsAcceptedAt"
-            />
-          </div>
-          <q-item-label v-if="termsAcceptedAt"
-            >You agreed to terms of use on
-            {{ formatDayMonthYear(termsAcceptedAt) }}</q-item-label
-          >
-        </q-item>
-        <q-item>
-          <q-item-label v-if="termsAcceptedAt"
-            >You agreed to terms of use on
-            {{ formatDayMonthYear(termsAcceptedAt) }}</q-item-label
-          >
-        </q-item>
 
+        <q-separator spaced />
+        <terms-of-use :terms="termsOfUse" :accepted-at="termsAcceptedAt" />
+
+        <q-separator spaced />
         <q-item>
           <q-item-section top>
             <q-toggle
@@ -94,6 +47,12 @@
           </q-item-section>
         </q-item>
 
+        <q-separator spaced />
+        <q-item>
+          <q-item-section top>
+            Email address: {{ socialEmail }}
+          </q-item-section>
+        </q-item>
         <q-item>
           <q-item-section top>
             <q-toggle
@@ -138,9 +97,10 @@ import {
   formatYearMonthDay,
   formatDayMonthYear,
 } from '../../composables/powerUpUtils'
+import TermsOfUse from './TermsOfUse.vue'
 
 export default {
-  components: { InfoDialog },
+  components: { InfoDialog, TermsOfUse },
   setup() {
     const q = useQuasar()
     const $store = useStore()
