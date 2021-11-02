@@ -1,5 +1,12 @@
 <template>
   <q-item-label header>Terms of Use</q-item-label>
+
+  <q-item>
+    <q-item-label v-if="acceptedAt">
+      You agreed to the following terms of use on {{ formatDayMonthYear(acceptedAt) }}.
+    </q-item-label>
+  </q-item>
+
   <q-item v-for="term in terms" :key="term.code">
     <div class="q-gutter-sm">
       <q-checkbox
@@ -9,9 +16,6 @@
       />
     </div>
   </q-item>
-  <q-item-label v-if="acceptedAt">
-    You agreed to terms of use on {{ formatDayMonthYear(acceptedAt) }}
-  </q-item-label>
 </template>
 
 <script>

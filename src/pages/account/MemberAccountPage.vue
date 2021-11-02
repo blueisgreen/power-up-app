@@ -51,7 +51,7 @@
       <q-item-label header>Settings</q-item-label>
 
       <q-separator spaced />
-      <q-item-label header>Terms of Use</q-item-label>
+      <terms-of-use :terms="terms" :accepted-at="termsAcceptedAt" />
 
       <q-separator spaced />
       <q-item-label header>Technical Details</q-item-label>
@@ -90,12 +90,42 @@
 import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
 import { formatDayMonthYear } from '../../composables/powerUpUtils'
+import TermsOfUse from './TermsOfUse.vue'
 
 export default defineComponent({
-  components: {},
+  components: {
+    TermsOfUse,
+  },
   setup() {
+    const terms = [
+      {
+        code: 'term1',
+        explanation:
+          'Power Up Magazine is for learning about nuclear power and related subjects.',
+        accepted: true,
+      },
+      {
+        code: 'term2',
+        explanation:
+          "Be curious: Everyone is learning, even the experts. There will be errors and mistakes. Let's discuss, debate, and learn together.",
+        accepted: true,
+      },
+      {
+        code: 'term3',
+        explanation:
+          'Be polite: This is civilized social media. Mind your manners.',
+        accepted: true,
+      },
+      {
+        code: 'term4',
+        explanation:
+          'Be empowered: Membership is free. You may leave Power Up Magazine at any time.',
+        accepted: true,
+      },
+    ]
     return {
       formatDayMonthYear,
+      terms,
     }
   },
   computed: mapState('profile', [
