@@ -33,23 +33,13 @@ const routes = [
           {
             path: '',
             name: 'UserAccount',
-            component: () =>
-              import('../pages/account/UserAccountPage.vue'),
+            component: () => import('../pages/account/MemberAccountPage.vue'),
           },
           {
             path: 'register',
             name: 'MemberRegistration',
             component: () =>
               import('../pages/account/MemberRegistrationPage.vue'),
-          },
-          {
-            path: 'profile',
-            name: 'MemberProfile',
-            component: () => import('../pages/account/MemberProfilePage.vue'),
-            meta: {
-              requireAuth: true,
-              role: 'member',
-            },
           },
         ],
       },
