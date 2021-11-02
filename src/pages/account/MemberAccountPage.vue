@@ -50,6 +50,8 @@
       <q-separator spaced />
       <q-item-label header>Settings</q-item-label>
 
+      <!-- make component to view settings; share w/registration page -->
+
       <q-separator spaced />
       <terms-of-use :terms="terms" :accepted-at="termsAcceptedAt" />
 
@@ -70,7 +72,7 @@
           <q-item-label class="text-bold">Account Status</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ accountStateId }}</q-item-label>
+          <q-item-label>{{ accountStatusId }}</q-item-label>
         </q-item-section>
       </q-item>
 
@@ -82,6 +84,10 @@
           <q-item-label>{{ formatDayMonthYear(updatedAt) }}</q-item-label>
         </q-item-section>
       </q-item>
+
+      <q-separator spaced />
+      <q-item-label header>Info Shared by Social ID Providers</q-item-label>
+
     </q-list>
   </q-page>
 </template>
@@ -138,7 +144,7 @@ export default defineComponent({
     'termsAcceptedAt',
     'cookiesAcceptedAt',
     'emailCommsAcceptedAt',
-    'accountStateId',
+    'accountStatusId',
   ]),
 })
 </script>
