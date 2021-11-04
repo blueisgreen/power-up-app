@@ -129,8 +129,8 @@
         </q-item-section>
       </q-item>
 
-      <q-separator spaced />
-      <q-item-label header>Info Shared by Social ID Providers</q-item-label>
+      <!-- <q-separator spaced />
+      <q-item-label header>Info Shared by Social ID Providers</q-item-label> -->
     </q-list>
   </q-page>
 </template>
