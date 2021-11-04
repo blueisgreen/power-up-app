@@ -50,7 +50,51 @@
       <q-separator spaced />
       <q-item-label header>Settings</q-item-label>
 
-      <!-- make component to view settings; share w/registration page -->
+      <q-item v-ripple tag="label">
+        <q-item-section side>
+          <q-checkbox v-model="emailIsOkay" />
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>Email Communication</q-item-label>
+          <q-item-label v-if="!emailCommsAcceptedAt" caption>
+            I agree to receive email about Power Up Magazine.
+          </q-item-label>
+          <q-item-label v-if="!!emailCommsAcceptedAt" caption>
+            On {{ formatDayMonthYear(cookiesAcceptedAt) }}, you said cookies are
+            OK.
+          </q-item-label>
+        </q-item-section>
+        <q-item-section side top>
+          <info-dialog
+            :prompt="dialogValues.emailComms.prompt"
+            :title="dialogValues.emailComms.title"
+            :message="dialogValues.emailComms.message"
+          />
+        </q-item-section>
+      </q-item>
+
+      <q-item v-ripple tag="label">
+        <q-item-section side>
+          <q-checkbox v-model="cookiesAreOkay" :disable="!!cookiesAcceptedAt" />
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>Cookies</q-item-label>
+          <q-item-label v-if="!cookiesAcceptedAt" caption
+            >Check to allow cookies.</q-item-label
+          >
+          <q-item-label v-if="!!cookiesAcceptedAt" caption>
+            On {{ formatDayMonthYear(cookiesAcceptedAt) }}, you said cookies are
+            OK.
+          </q-item-label>
+        </q-item-section>
+        <q-item-section side top>
+          <info-dialog
+            :prompt="dialogValues.cookies.prompt"
+            :title="dialogValues.cookies.title"
+            :message="dialogValues.cookies.message"
+          />
+        </q-item-section>
+      </q-item>
 
       <q-separator spaced />
       <terms-of-use :terms="terms" :accepted-at="termsAcceptedAt" />
@@ -87,20 +131,21 @@
 
       <q-separator spaced />
       <q-item-label header>Info Shared by Social ID Providers</q-item-label>
-
     </q-list>
   </q-page>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { mapState } from 'vuex'
 import { formatDayMonthYear } from '../../composables/powerUpUtils'
 import TermsOfUse from './TermsOfUse.vue'
+import InfoDialog from '../../components/InfoDialog'
 
 export default defineComponent({
   components: {
     TermsOfUse,
+    InfoDialog,
   },
   setup() {
     const terms = [
@@ -129,9 +174,30 @@ export default defineComponent({
         accepted: true,
       },
     ]
+    const dialogValues = {
+      cookies: {
+        prompt: 'Explain Cookies',
+        title: 'How Cookies Help',
+        message:
+          'Power Up Magazine uses browser cookies to remember who you are, which saves you time and gives you a better experience. We do not share information about your activity on Power Up Magazine with others.',
+      },
+      emailComms: {
+        prompt: 'Email Pledge',
+        title: 'Only the Good Stuff',
+        message:
+          'We will only send you email about Power Up Magazine. We will not share your email address with anyone.',
+      },
+    }
+
+    const emailIsOkay = ref(false)
+    const cookiesAreOkay = ref(false)
+
     return {
       formatDayMonthYear,
       terms,
+      dialogValues,
+      emailIsOkay,
+      cookiesAreOkay,
     }
   },
   computed: mapState('profile', [

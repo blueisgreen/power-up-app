@@ -70,24 +70,22 @@ export default {
       type: String,
       default: null,
     },
-    options: {
-      type: Object,
-      default: () => {
-        return {
-          okayWithEmailComms: false,
-          okayWithCookies: false,
-        }
-      },
-    },
-    whenAccepted: {
-      type: Array,
-      default: () => [],
-    },
+    // options: {
+    //   type: Object,
+    //   default: () => {
+    //     return {
+    //       okayWithEmailComms: false,
+    //       okayWithCookies: false,
+    //     }
+    //   },
+    // },
   },
   setup() {
+    const options = ref({ okayWithEmailComms: false, okayWithCookies: false })
     return {
       dialogValues,
       formatDayMonthYear,
+      options,
     }
   },
 }
