@@ -25,14 +25,8 @@ import { formatDayMonthYear } from '../../composables/powerUpUtils'
 export default defineComponent({
   props: {
     terms: {
-      type: Object,
-      default() {
-        return {
-          code: '',
-          explanation: '',
-          accepted: false,
-        }
-      },
+      type: Array,
+      default: () => [],
     },
     acceptedAt: {
       type: String,
