@@ -1,5 +1,4 @@
 import { date as qdate } from 'quasar'
-import { useStore } from 'vuex'
 
 export function formatYearMonthDay(timestamp) {
   if (timestamp === null) {
@@ -14,7 +13,7 @@ export function formatDayMonthYear(timestamp) {
     return null
   }
   const theDate = qdate.extractDate(timestamp)
-  return qdate.formatDate(theDate, 'D MMM YYYY')
+  return qdate.formatDate(theDate, 'D MMMM YYYY')
 }
 
 export function prettyTrunc(text, maxLength) {

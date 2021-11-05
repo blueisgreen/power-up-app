@@ -5,7 +5,7 @@
         <h1>{{ activeArticle.headline }}</h1>
         <h2>by {{ activeArticle.byline }}</h2>
         <h3>
-          published on {{ formatDayMonthYear(activeArticle.published_at) }}
+          published on {{ formatDayMonthYear(activeArticle.publishedAt) }}
         </h3>
         <q-separator spaced />
         <div>
