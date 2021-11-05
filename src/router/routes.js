@@ -49,7 +49,7 @@ const routes = [
         component: () => import('../pages/lessons/LearningCenterPage.vue'),
       },
       {
-        path: 'support',
+        path: 'messages',
         name: 'SupportCenter',
         component: () => import('../pages/SupportPage.vue'),
       },

@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-md">
-    <h3>Support Center</h3>
+    <h3>User Support: Message Center</h3>
     <div class="greeting">
       Hello<span v-if="isSignedIn">, {{ screenName }}</span>. What can we do for you?
     </div>
