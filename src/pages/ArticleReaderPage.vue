@@ -1,14 +1,18 @@
 <template>
-  <q-page>
-    <div class="reader-panel">
+  <q-page class="flex">
+    <div class="q-pa-md reader-panel">
       <div v-if="activeArticle">
         <h1>{{ activeArticle.headline }}</h1>
-        <h2>{{ activeArticle.byline }}</h2>
+        <h2>by {{ activeArticle.byline }}</h2>
+        <h3>
+          published on {{ formatDayMonthYear(activeArticle.published_at) }}
+        </h3>
+        <q-separator spaced />
         <div>
           <span v-html="activeArticle.content" />
         </div>
       </div>
-      <div v-if="!activeArticle">
+      <div v-else class="q-pa-md">
         <h1>Now then, where did I leave that article?</h1>
       </div>
     </div>
@@ -16,23 +20,25 @@
 </template>
 <script>
 import { useStore, mapState } from 'vuex'
+import { formatDayMonthYear } from '../composables/powerUpUtils'
+
 export default {
   setup() {
     const store = useStore()
     return {
       store,
+      formatDayMonthYear,
     }
   },
   computed: {
-    ...mapState('context', ['activeArticle'])
+    ...mapState('context', ['activeArticle']),
   },
   created() {
     const id = this.$route.params.articleId
     console.log('loading article', id)
     this.store.dispatch('articles/loadArticle', { id })
   },
-  methods: {
-  },
+  methods: {},
 }
 </script>
 <style scoped>
@@ -50,13 +56,16 @@ h1 {
   line-height: 2rem;
 }
 h2 {
-  font-size: 16pt;
+  font-size: 18pt;
   color: orangered;
   line-height: 2rem;
 }
+h3 {
+  font-size: 14pt;
+  line-height: 2rem;
+}
 .reader-panel {
-  margin: 2em;
   padding: 2em;
-  border: ridge 5px lightslategray;
+  font-size: 12pt;
 }
 </style>
