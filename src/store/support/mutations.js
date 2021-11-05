@@ -11,6 +11,5 @@ export function loadMessages (state, payload) {
 }
 
 export function addMessage (state, payload) {
-  console.log('adding message', payload.message);
   state.priorMessages.push(payload.message)
 }

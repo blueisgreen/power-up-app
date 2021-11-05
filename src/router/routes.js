@@ -51,7 +51,7 @@ const routes = [
       {
         path: 'messages',
         name: 'SupportCenter',
-        component: () => import('../pages/SupportPage.vue'),
+        component: () => import('../pages/support/SupportPage.vue'),
       },
       {
         path: 'workbench',
