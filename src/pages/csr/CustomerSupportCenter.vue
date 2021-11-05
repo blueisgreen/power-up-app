@@ -53,7 +53,15 @@
           </q-item>
           <q-item>
             <q-item-section side>
-              <q-icon name="person" />
+              <q-icon name="bug_report" />
+            </q-item-section>
+            <q-item-section no-wrap>
+              <q-item-label>Bug Report</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section side>
+              <q-icon name="contact_support" />
             </q-item-section>
             <q-item-section no-wrap>
               <q-item-label>Something Else</q-item-label>
@@ -79,16 +87,14 @@
     <q-scroll-area class="inquiry-list">
       <q-list v-for="item in filteredInquires" :key="item.id">
         <q-item clickable @click="() => setSelected(item)">
-          <q-item-section side>
-            <q-item-label>{{ formatDate(item.createdAt) }}</q-item-label>
-          </q-item-section>
-          <q-item-section side>
-            <q-item-label>{{ item.userId }}</q-item-label>
-          </q-item-section>
-          <q-item-section side>
+          <q-item-section side top>
             <q-item-label><q-avatar :icon="mapPurposeToIcon(item.purpose)" /></q-item-label>
           </q-item-section>
-          <q-item-section>
+          <q-item-section side top>
+            <q-item-label>{{ item.userId || 'anonymous' }}</q-item-label>
+            <q-item-label>{{ formatDate(item.createdAt) }}</q-item-label>
+          </q-item-section>
+          <q-item-section top>
             <q-item-label lines="3">{{ item.message }}</q-item-label>
           </q-item-section>
         </q-item>
@@ -135,17 +141,13 @@ const purposeIconMap = {
   help: 'support',
   question: 'help',
   feedback: 'feedback',
+  bug: 'bug_report',
   other: 'person',
 }
 
 export default defineComponent({
   name: 'PageCustomerSupportCenter',
   setup() {
-    const sampleMessage =
-      'If the birds and the bees are as smart as the tree, what color are the dandilions in the springtime under a full moon? Also, what is your favorite color? Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod <b>tempor</b> incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-    const sampleResponse =
-      'Dear Blargy Pants, You will have to learn to deal with it, whatever your problem is. Sorry, life is hard.'
-
     onMounted(() => useStore().dispatch('csr/fetchSupportInquiries'))
 
     return {
@@ -153,8 +155,7 @@ export default defineComponent({
       searchQuery: ref(''),
       inquiryTab: ref('read'),
       selected: ref(null),
-      sampleMessage,
-      sampleResponse: ref(sampleResponse),
+      sampleResponse: ref('Gentle User, '),
     }
   },
   computed: {
