@@ -10,7 +10,7 @@
     <q-banner v-if="!isSignedIn" class="bg-purple-8 text-white v-space">
       You are anonymous. If you want a response, be sure to sign in first.
       <template #action>
-        <q-btn flat color="white" label="Sign In" />
+        <authorization-widget />
       </template>
     </q-banner>
     <div class="p-pa-md" style="max-width: 500px">
@@ -43,8 +43,12 @@
 <script>
 import { computed } from 'vue'
 import { useStore, mapGetters, mapState } from 'vuex'
+import AuthorizationWidget from 'components/AuthorizationWidget.vue'
 
 export default {
+  components: {
+    AuthorizationWidget
+  },
   setup() {
     const store = useStore()
     const purposeOfInquiryOptions = [

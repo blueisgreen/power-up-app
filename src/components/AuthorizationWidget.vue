@@ -1,6 +1,5 @@
 <template>
   <div>
-    <span>{{ screenName }}</span>
     <q-btn v-show="!isSignedIn" @click="handleSignIn">Sign In</q-btn>
     <q-btn v-show="isSignedIn" @click="handleSignOut">Sign Out</q-btn>
   </div>
