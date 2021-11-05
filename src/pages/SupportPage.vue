@@ -1,14 +1,11 @@
 <template>
   <q-page class="q-pa-md">
-    <h3>What can we do for you?</h3>
-    <div v-if="isSignedIn" class="v-space greeting">
-      Hello, {{ screenName }}.
+    <h3>Support Center</h3>
+    <div class="greeting">
+      Hello<span v-if="isSignedIn">, {{ screenName }}</span>. What can we do for you?
     </div>
-    <p>
-      Use this contact form to get help, ask a question, or give us feedback.
-    </p>
-    <q-banner v-if="!isSignedIn" class="bg-purple-8 text-white v-space">
-      You are anonymous. If you want a response, be sure to sign in first.
+    <q-banner v-if="!isSignedIn" class="bg-amber-2 text-black v-space" inline-actions>
+      You are not signed in, so we do not know who you are. We will still get your message. However, if you want a response, be sure to sign in first.
       <template #action>
         <authorization-widget />
       </template>
@@ -47,7 +44,7 @@ import AuthorizationWidget from 'components/AuthorizationWidget.vue'
 
 export default {
   components: {
-    AuthorizationWidget
+    AuthorizationWidget,
   },
   setup() {
     const store = useStore()
@@ -85,20 +82,29 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log('clicked submit');
+      console.log('clicked submit')
       this.store.dispatch('support/submitInquiry')
-    }
+    },
   },
 }
 </script>
 
 <style lang="scss">
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-left: 0;
+}
 .v-space {
   margin-bottom: 1.5em;
 }
 .greeting {
   font-size: large;
   font-weight: bold;
-  color: $teal-8;
+  color: $light-blue-10;
+  margin-bottom: 1.0em;
 }
 </style>
