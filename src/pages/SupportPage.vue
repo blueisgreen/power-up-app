@@ -55,13 +55,14 @@ export default {
       { label: 'Get Help', value: 'help' },
       { label: 'Ask a Question', value: 'question' },
       { label: 'Give Feedback', value: 'feedback' },
-      { label: 'Something Else', value: 'other' },
+      { label: 'Report a Bug', value: 'bug' },
+      { label: 'Something Else', value: 'misc' },
     ]
     const purpose = computed({
       get: () => store.state.support.inquiryToSend.purpose,
       set: (val) => {
         console.log('setting purpose', val.value)
-        $store.commit('support/setInquiryPurpose', { purpose: val.value })
+        store.commit('support/setInquiryPurpose', { purpose: val.value })
       },
     })
     const message = computed({

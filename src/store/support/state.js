@@ -2,8 +2,8 @@ export default function () {
   // would need to be logged in to see message history
   return {
     inquiryToSend: {
-      purpose: 'feedback',
-      message: 'I really love this website. Keep it going!',
+      purpose: 'help',
+      message: '',
     },
     priorMessages: [
       {
