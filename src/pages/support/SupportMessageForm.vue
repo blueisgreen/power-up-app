@@ -1,5 +1,5 @@
 <template>
-  <div class="p-pa-md" style="max-width: 600px">
+  <div class="p-pa-md">
     <q-form @submit="onSubmit">
       <q-select
         v-model="purpose"
