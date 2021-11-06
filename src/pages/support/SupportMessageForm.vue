@@ -1,5 +1,5 @@
 <template>
-  <div class="p-pa-md" style="max-width: 600px">
+  <div class="p-pa-md">
     <q-form @submit="onSubmit">
       <q-select
         v-model="purpose"
@@ -17,7 +17,7 @@
         label="Maximum 500 characters"
         :rules="[
           (val) =>
-            val.length <= 500 || 'Please shorten your comment or question.',
+            val.length <= 500 || 'Please shorten your message.',
           (val) => val.length > 0 || 'Is there something you want to tell us?',
         ]"
       />
