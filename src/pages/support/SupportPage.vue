@@ -17,23 +17,54 @@
       </template>
     </q-banner>
 
-    <support-message-form />
+    <q-card>
+      <q-tabs
+        v-model="tab"
+        dense
+        class="text-grey"
+        active-color="primary"
+        indicator-color="primary"
+        align="justify"
+        narrow-indicator
+      >
+        <q-tab name="messages" label="Messages" />
+        <q-tab name="contact" label="Contact Support" />
+      </q-tabs>
 
+      <q-separator />
+
+      <q-tab-panels v-model="tab" animated>
+        <q-tab-panel name="messages">
+          <h4>Message History</h4>
+          <div v-if="!isSignedIn" class="text-body1">Sign in to see your message history.</div>
+          <message-reader v-if="isSignedIn" />
+        </q-tab-panel>
+        <q-tab-panel name="contact">
+          <div class="text-h4">Contact Power Up Support</div>
+          <support-message-form />
+        </q-tab-panel>
+      </q-tab-panels>
+    </q-card>
   </q-page>
 </template>
 
 <script>
+import { ref } from 'vue'
 import { mapGetters, mapState } from 'vuex'
 import AuthorizationWidget from 'components/AuthorizationWidget.vue'
 import SupportMessageForm from './SupportMessageForm.vue'
+import MessageReader from './MessageReader.vue'
 
 export default {
   components: {
     AuthorizationWidget,
     SupportMessageForm,
+    MessageReader,
   },
   setup() {
+    const tab = ref('messages')
     return {
+      tab,
     }
   },
   computed: {

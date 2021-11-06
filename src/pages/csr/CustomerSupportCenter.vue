@@ -88,7 +88,9 @@
       <q-list v-for="item in filteredInquires" :key="item.id">
         <q-item clickable @click="() => setSelected(item)">
           <q-item-section side top>
-            <q-item-label><q-avatar :icon="mapPurposeToIcon(item.purpose)" /></q-item-label>
+            <q-item-label
+              ><q-avatar :icon="mapPurposeToIcon(item.purpose)"
+            /></q-item-label>
           </q-item-section>
           <q-item-section side top>
             <q-item-label>{{ item.userId || 'anonymous' }}</q-item-label>
@@ -135,7 +137,7 @@
 <script>
 import { defineComponent, onMounted, ref } from 'vue'
 import { useStore, mapGetters } from 'vuex'
-import { date } from 'quasar'
+import { formatDate } from '../../composables/powerUpUtils'
 
 const purposeIconMap = {
   help: 'support',
@@ -156,6 +158,7 @@ export default defineComponent({
       inquiryTab: ref('read'),
       selected: ref(null),
       sampleResponse: ref('Gentle User, '),
+      formatDate,
     }
   },
   computed: {
@@ -165,15 +168,12 @@ export default defineComponent({
     ...mapGetters('csr', ['filteredInquires']),
   },
   methods: {
-    formatDate(ts) {
-      return date.formatDate(ts, 'D MMM YYYY')
-    },
     mapPurposeToIcon(purpose) {
       return purposeIconMap[purpose]
     },
     setSelected(item) {
       this.selected = item
-    }
+    },
   },
 })
 </script>

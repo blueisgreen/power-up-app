@@ -22,3 +22,7 @@ export function prettyTrunc(text, maxLength) {
   }
   return text.slice(0, maxLength) + '…'
 }
+
+export function formatDate(ts) {
+  return qdate.formatDate(ts, 'D MMM YYYY')
+}
