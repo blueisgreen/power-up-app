@@ -10,10 +10,14 @@
           </tr>
         </thead>
         <tbody class="bg-grey-3">
-          <tr v-for="msg in messageHistory" :key="msg.id">
+          <tr
+            v-for="msg in messageHistory"
+            :key="msg.id"
+            @click="() => handleSelectMessage(msg.id)"
+          >
             <td>{{ formatDate(msg.createdAt) }}</td>
-            <td></td>
-            <td>{{ msg.message }}</td>
+            <td>{{ msg.purpose }}</td>
+            <td>{{ prettyTrunc(msg.message, 60) }}</td>
           </tr>
         </tbody>
       </q-markup-table>
@@ -30,7 +34,7 @@
 <script>
 import { ref, onMounted } from 'vue'
 import { mapState, useStore } from 'vuex'
-import { formatDate } from '../../composables/powerUpUtils'
+import { formatDate, prettyTrunc } from '../../composables/powerUpUtils'
 
 export default {
   setup() {
@@ -39,25 +43,18 @@ export default {
     return {
       activeMessageId,
       formatDate,
+      prettyTrunc,
     }
   },
   computed: {
     ...mapState('support', ['messageHistory']),
     activeMessage() {
-      return this.activeMessageId > -1
-        ? {
-            createdAt: new Date(),
-            purpose: 'Feedback',
-            message:
-              'I just wanted to let you know that something important. Your software is full of bugs. It is very frustrating to try to learn from your website. What the heck?!?',
-          }
-        : null
+      return this.messageHistory.find((msg) => msg.id === this.activeMessageId)
     },
   },
   methods: {
-    handleSelect(id) {
+    handleSelectMessage(id) {
       this.activeMessageId = id
-      console.log(this.activeMessageId, this.activeMessage)
     },
   },
 }

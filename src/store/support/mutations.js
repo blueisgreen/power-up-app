@@ -10,6 +10,12 @@ export function loadMessages (state, payload) {
   payload.messages.forEach((item) => state.messageHistory.push(item))
 }
 
+export function reloadMessages (state, payload) {
+  state.messageHistory.splice(0, state.messageHistory.length)
+  payload.messages.forEach((item) => state.messageHistory.push(item))
+  console.log('messages loaded:', state.messageHistory);
+}
+
 export function addMessage (state, payload) {
   state.messageHistory.push(payload.message)
 }
