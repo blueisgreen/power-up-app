@@ -7,10 +7,15 @@ export function setInquiryMessage (state, payload) {
 }
 
 export function loadMessages (state, payload) {
-  payload.messages.forEach((item) => state.priorMessages.push(item))
+  payload.messages.forEach((item) => state.messageHistory.push(item))
+}
+
+export function reloadMessages (state, payload) {
+  state.messageHistory.splice(0, state.messageHistory.length)
+  payload.messages.forEach((item) => state.messageHistory.push(item))
+  console.log('messages loaded:', state.messageHistory);
 }
 
 export function addMessage (state, payload) {
-  console.log('adding message', payload.message);
-  state.priorMessages.push(payload.message)
+  state.messageHistory.push(payload.message)
 }

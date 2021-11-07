@@ -33,23 +33,13 @@ const routes = [
           {
             path: '',
             name: 'UserAccount',
-            component: () =>
-              import('../pages/account/UserAccountOverviewPage.vue'),
+            component: () => import('../pages/account/MemberAccountPage.vue'),
           },
           {
             path: 'register',
             name: 'MemberRegistration',
             component: () =>
               import('../pages/account/MemberRegistrationPage.vue'),
-          },
-          {
-            path: 'profile',
-            name: 'MemberProfile',
-            component: () => import('../pages/account/MemberProfilePage.vue'),
-            meta: {
-              requireAuth: true,
-              role: 'member',
-            },
           },
         ],
       },
@@ -59,9 +49,9 @@ const routes = [
         component: () => import('../pages/lessons/LearningCenterPage.vue'),
       },
       {
-        path: 'support',
+        path: 'messages',
         name: 'SupportCenter',
-        component: () => import('../pages/SupportPage.vue'),
+        component: () => import('../pages/support/SupportPage.vue'),
       },
       {
         path: 'workbench',
