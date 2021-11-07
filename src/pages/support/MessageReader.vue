@@ -11,7 +11,7 @@
         </thead>
         <tbody class="bg-grey-3">
           <tr
-            v-for="msg in messageHistory"
+            v-for="msg in myMessages"
             :key="msg.id"
             @click="() => handleSelectMessage(msg.id)"
           >
@@ -35,13 +35,19 @@
 import { ref, onMounted } from 'vue'
 import { mapState, useStore } from 'vuex'
 import { formatDate, prettyTrunc } from '../../composables/powerUpUtils'
+import { fetchMyInquiries } from '../../api/PowerUpApi'
 
 export default {
   setup() {
-    onMounted(() => useStore().dispatch('support/refreshMyInquiries'))
     const activeMessageId = ref(-1)
+    const myMessages = ref([])
+    onMounted(async () => {
+      const msgs = await fetchMyInquiries()
+      msgs.forEach((msg) => myMessages.value.push(msg))
+    })
     return {
       activeMessageId,
+      myMessages,
       formatDate,
       prettyTrunc,
     }
