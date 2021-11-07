@@ -8,7 +8,6 @@ import context from './context'
 import csr from './csr'
 import messages from './messages'
 import profile from './profile'
-import support from './support'
 
 /*
  * If not building with SSR mode, you can
@@ -31,7 +30,6 @@ export default store(function (/* { ssrContext } */) {
       csr,
       messages,
       profile,
-      support,
     },
 
     // enable strict mode (adds overhead!)

@@ -1,13 +1,13 @@
 <template>
   <div class="p-pa-md">
-    <q-form @submit="onSubmit">
+    <q-form @submit="handleSend">
       <q-select
         v-model="purpose"
         rounded
         outlined
         map-options
         class="v-space"
-        :options="purposeOfInquiryOptions"
+        :options="purposeOptions"
         label="Purpose of Inquiry"
       />
       <q-input
@@ -16,8 +16,7 @@
         type="textarea"
         label="Maximum 500 characters"
         :rules="[
-          (val) =>
-            val.length <= 500 || 'Please shorten your message.',
+          (val) => val.length <= 500 || 'Please shorten your message.',
           (val) => val.length > 0 || 'Is there something you want to tell us?',
         ]"
       />
@@ -27,41 +26,34 @@
 </template>
 
 <script>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { ref } from 'vue'
+import { createInquiry } from '../../api/PowerUpApi'
 
 export default {
   setup() {
-    const store = useStore()
-    const purposeOfInquiryOptions = [
+    const purposeOptions = [
       { label: 'Get help', value: 'help' },
       { label: 'Ask a question', value: 'question' },
       { label: 'Give feedback', value: 'feedback' },
       { label: 'Report a bug', value: 'bug' },
       { label: 'Something else', value: 'misc' },
     ]
-    const purpose = computed({
-      get: () => store.state.support.inquiryToSend.purpose,
-      set: (val) => {
-        store.commit('support/setInquiryPurpose', { purpose: val.value })
-      },
-    })
-    const message = computed({
-      get: () => store.state.support.inquiryToSend.message,
-      set: (val) => {
-        store.commit('support/setInquiryMessage', { message: val })
-      },
-    })
     return {
-      purposeOfInquiryOptions,
-      purpose,
-      message,
-      store,
+      purposeOptions,
+      purpose: ref('feedback'),
+      message: ref(''),
     }
   },
   methods: {
-    onSubmit() {
-      this.store.dispatch('support/submitInquiry')
+    async handleSend() {
+      const confirmation = await createInquiry({
+        purpose: this.purpose,
+        message: this.message,
+      })
+      console.log('message sent', confirmation);
+      console.log('would be nice to tell the user')
+      this.purpose = 'help'
+      this.message = ''
     },
   },
 }

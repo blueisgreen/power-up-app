@@ -33,7 +33,6 @@
 
 <script>
 import { ref, onMounted } from 'vue'
-import { mapState, useStore } from 'vuex'
 import { formatDate, prettyTrunc } from '../../composables/powerUpUtils'
 import { fetchMyInquiries } from '../../api/PowerUpApi'
 
@@ -53,9 +52,8 @@ export default {
     }
   },
   computed: {
-    ...mapState('support', ['messageHistory']),
     activeMessage() {
-      return this.messageHistory.find((msg) => msg.id === this.activeMessageId)
+      return this.myMessages.find((msg) => msg.id === this.activeMessageId)
     },
   },
   methods: {
