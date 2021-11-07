@@ -45,7 +45,7 @@ export async function agreeToCookies() {
  * @param {*} updates
  * @returns
  */
- export async function agreeToEmailComms() {
+export async function agreeToEmailComms() {
   console.log('PowerUpService.agreeToEmailComms')
   return await api.put('/my/emailCommsOK')
 }

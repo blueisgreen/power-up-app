@@ -71,11 +71,6 @@ export default {
     ...mapState('auth', ['screenName']),
     ...mapGetters('auth', ['isSignedIn']),
   },
-  methods: {
-    onSelectMessage(caseID) {
-      this.store.dispatch('support/submitInquiry')
-    },
-  },
 }
 </script>
 

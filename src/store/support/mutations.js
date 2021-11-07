@@ -7,9 +7,9 @@ export function setInquiryMessage (state, payload) {
 }
 
 export function loadMessages (state, payload) {
-  payload.messages.forEach((item) => state.priorMessages.push(item))
+  payload.messages.forEach((item) => state.messageHistory.push(item))
 }
 
 export function addMessage (state, payload) {
-  state.priorMessages.push(payload.message)
+  state.messageHistory.push(payload.message)
 }

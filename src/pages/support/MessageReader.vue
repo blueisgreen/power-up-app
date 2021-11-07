@@ -10,30 +10,10 @@
           </tr>
         </thead>
         <tbody class="bg-grey-3">
-          <tr>
-            <td>8-Oct-2021</td>
-            <td>Feedback</td>
-            <td>This is the first time I have ever truly understood...</td>
-          </tr>
-          <tr @click="() => handleSelect(5)">
-            <td>6-Oct-2021</td>
-            <td>Bug report</td>
-            <td>I just wanted to let you know that something...</td>
-          </tr>
-          <tr>
-            <td>8-Sept-2021</td>
-            <td>Feedback</td>
-            <td>This is the first time I have ever truly understood...</td>
-          </tr>
-          <tr>
-            <td>8-Aug-2021</td>
-            <td>Feedback</td>
-            <td>This is the first time I have ever truly understood...</td>
-          </tr>
-          <tr>
-            <td>8-Feb-2021</td>
-            <td>Feedback</td>
-            <td>This is the first time I have ever truly understood...</td>
+          <tr v-for="msg in messageHistory" :key="msg.id">
+            <td>{{ formatDate(msg.createdAt) }}</td>
+            <td></td>
+            <td>{{ msg.message }}</td>
           </tr>
         </tbody>
       </q-markup-table>
@@ -48,11 +28,13 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { mapState, useStore } from 'vuex'
 import { formatDate } from '../../composables/powerUpUtils'
 
 export default {
   setup() {
+    onMounted(() => useStore().dispatch('support/refreshMyInquiries'))
     const activeMessageId = ref(-1)
     return {
       activeMessageId,
@@ -60,6 +42,7 @@ export default {
     }
   },
   computed: {
+    ...mapState('support', ['messageHistory']),
     activeMessage() {
       return this.activeMessageId > -1
         ? {
