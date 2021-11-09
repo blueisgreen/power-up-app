@@ -7,8 +7,19 @@
 
 <script>
 import { useStore } from 'vuex'
+import { useQuasar } from 'quasar'
+
 export default {
   setup() {
+    const q = useQuasar()
+    q.cookies.set('powerup_user', {
+      token: 'blargypant123',
+      screenName: 'Zanzibar',
+    })
+    const hasCookie = q.cookies.has('powerup_user')
+    if (hasCookie) {
+      console.log(q.cookies.getAll())
+    }
     return {
       store: useStore(),
     }
