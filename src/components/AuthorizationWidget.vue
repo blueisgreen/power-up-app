@@ -11,17 +11,23 @@ import { useQuasar } from 'quasar'
 
 export default {
   setup() {
-    const q = useQuasar()
-    q.cookies.set('powerup_user', {
-      token: 'blargypant123',
-      screenName: 'Zanzibar',
-    })
-    const hasCookie = q.cookies.has('powerup_user')
-    if (hasCookie) {
-      console.log(q.cookies.getAll())
-    }
+    // const q = useQuasar()
+    // q.cookies.set('powerup_user', {
+    //   token: 'blargypant123',
+    //   screenName: 'Zanzibar',
+    // }, {
+    //   expires: 10,
+    //   path: '/bah/',
+    //   domain: 'powerupmagazine.com',
+    //   sameSite: 'Strict'
+    // })
+    // const hasCookie = q.cookies.has('powerup_user')
+    // if (hasCookie) {
+    //   console.log(q.cookies.getAll())
+    // }
     return {
       store: useStore(),
+      q: useQuasar(),
     }
   },
   computed: {
@@ -29,7 +35,8 @@ export default {
       return this.store.state.auth.screenName
     },
     isSignedIn() {
-      return this.store.getters['auth/isSignedIn']
+      console.log('session cookie is', this.q.cookies.get('session'))
+      return this.store.getters['auth/isSignedIn'] || this.q.cookies.has('session')
     },
   },
   methods: {
