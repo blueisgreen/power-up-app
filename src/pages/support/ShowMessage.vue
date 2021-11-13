@@ -1,7 +1,8 @@
 <template>
   <div class="v-space">
     <div class="text-caption">
-      On {{ formatDate(message.createdAt) }}, {{ message.userId }} said:
+      On {{ formatDate(message.createdAt) }},
+      {{ isResponse ? 'Power Up' : 'you' }} said:
     </div>
     <div class="message-window text-body1">{{ message.message }}</div>
   </div>
@@ -17,6 +18,10 @@ export default {
       required: true,
     },
     selected: {
+      type: Boolean,
+      default: false,
+    },
+    isResponse: {
       type: Boolean,
       default: false,
     },

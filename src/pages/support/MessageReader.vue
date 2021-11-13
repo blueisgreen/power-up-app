@@ -24,7 +24,7 @@
       </q-markup-table>
     </q-scroll-area>
     <show-message v-if="!!activeMessage" :message="activeMessage" />
-    <show-message v-for="msg in activeRelatedMessages" :key="msg.id" :message="msg" />
+    <show-message v-for="msg in activeRelatedMessages" :key="msg.id" :message="msg" is-response />
   </div>
 </template>
 

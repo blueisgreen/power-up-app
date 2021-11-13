@@ -2,18 +2,6 @@
   <q-page class="q-pa-md">
     <h3>User Support: Message Center</h3>
 
-    <q-banner
-      v-if="!isSignedIn"
-      class="bg-amber-2 text-black v-space"
-      inline-actions
-    >
-      You are not signed in, so we do not know who you are. We will still get
-      your message. However, if you want a response, be sure to sign in first.
-      <template #action>
-        <authorization-widget />
-      </template>
-    </q-banner>
-
     <q-card>
       <q-tabs
         v-model="tab"
@@ -33,11 +21,26 @@
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel name="messages">
           <h4>Message History</h4>
-          <div v-if="!isSignedIn" class="text-body1">Sign in to see your message history.</div>
+          <div v-if="!isSignedIn" class="text-body1">
+            Sign in to see your message history.
+          </div>
           <message-reader v-if="isSignedIn" />
         </q-tab-panel>
+
         <q-tab-panel name="contact">
           <div class="text-h4">Contact Power Up Support</div>
+          <q-banner
+            v-if="!isSignedIn"
+            class="bg-amber-2 text-black v-space"
+            inline-actions
+          >
+            You are not signed in, so we do not know who you are. We will still
+            get your message. However, if you want a response, be sure to sign
+            in first.
+            <template #action>
+              <authorization-widget />
+            </template>
+          </q-banner>
           <support-message-form />
         </q-tab-panel>
       </q-tab-panels>
