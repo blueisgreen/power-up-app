@@ -15,6 +15,11 @@ export async function fetchInquiry(inquiryId) {
 export async function fetchMyInquiries() {
   // FIXME think through; block if not logged in
   const response = await api.get('/my/inquiries')
-  console.log('found inquiries', response);
+  console.log('found inquiries', response)
+  return response.data
+}
+
+export async function fetchRelatedMessages(inquiryId) {
+  const response = await api.get(`/my/inquiries/related/${inquiryId}`)
   return response.data
 }
