@@ -13,9 +13,10 @@
           <tr
             v-for="msg in myMessages"
             :key="msg.id"
+            :class="{ selected: (msg.id === activeMessageId) }"
             @click="() => handleSelectMessage(msg.id)"
           >
-            <td>{{ formatDate(msg.createdAt) }}</td>
+            <td>{{ msg.id === activeMessageId ? '* ' : '' }}{{ formatDate(msg.createdAt) }}</td>
             <td>{{ msg.purpose }}</td>
             <td>{{ prettyTrunc(msg.message, 60) }}</td>
           </tr>
@@ -83,5 +84,8 @@ export default {
 .message-window {
   border: solid black 1px;
   padding: 0.5em 2em;
+}
+.selected {
+  font-weight: bold;
 }
 </style>
