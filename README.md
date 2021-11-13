@@ -15,4 +15,3 @@ Learn about nuclear power
 1. Want to pass screen name for responses. Or just hard-code 'Customer Support'
 1. Need an easy way to see more articles from reader page.
 1. Sign in button should allow in-place sign-in (not redirect to home).
-1. Notify user when inquiry sent and clear form properly (do not show validation errors).

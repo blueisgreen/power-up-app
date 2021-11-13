@@ -1,6 +1,6 @@
 <template>
   <div class="p-pa-md">
-    <q-form @submit="handleSend">
+    <q-form class="q-gutter-md" @submit="handleSend" @reset="onReset">
       <q-select
         v-model="purpose"
         rounded
@@ -39,11 +39,21 @@ export default {
       { label: 'Report a bug', value: 'bug' },
       { label: 'Something else', value: 'misc' },
     ]
+    const purpose = ref('feedback')
+    const message = ref(' ')
+
+    const store = useStore()
+
     return {
       purposeOptions,
-      purpose: ref('feedback'),
-      message: ref(''),
-      store: useStore()
+      purpose,
+      message,
+      store,
+
+      onReset() {
+        purpose.value = 'feedback'
+        message.value = ' '
+      }
     }
   },
   methods: {
@@ -54,8 +64,7 @@ export default {
       }
       const confirmation = await createInquiry(inquiry)
       this.notifyUser('Hey, you just sent a message to Power Up. Thanks! We will take it from here.')
-      this.purpose = 'help'
-      this.message = ''
+      this.onReset()
     },
     notifyUser(msg) {
       this.store.commit('context/setStatusMessage', { message: msg })
