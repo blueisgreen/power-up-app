@@ -23,6 +23,7 @@
       </q-markup-table>
     </q-scroll-area>
     <show-message v-if="!!activeMessage" :message="activeMessage" />
+    <show-message v-for="msg in activeRelatedMessages" :key="msg.id" :message="msg" />
   </div>
 </template>
 
@@ -62,15 +63,12 @@ export default {
   methods: {
     async handleSelectMessage(id) {
       this.activeMessageId = id
-      console.log('see related', this.relatedMessages[id])
       if (!this.relatedMessages[id]) {
+        this.relatedMessages[id] = []
         const related = await this.fetchRelatedMessages(id)
-        if (related) {
-          console.log('found related messages', related)
-          this.relatedMessages[id] = related
-        } else {
-          console.log('no related messages')
-          this.relatedMessages[id] = []
+        if (related.length > 0) {
+          related.forEach((msg) => this.relatedMessages[id].push(msg))
+          console.log('related messages', related, this.relatedMessages[id]);
         }
       }
     },

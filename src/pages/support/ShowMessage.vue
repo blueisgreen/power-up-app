@@ -1,7 +1,7 @@
 <template>
   <div class="v-space">
     <div class="text-caption">
-      On {{ formatDate(message.createdAt) }}, you said:
+      On {{ formatDate(message.createdAt) }}, {{ message.userId }} said:
     </div>
     <div class="message-window text-body1">{{ message.message }}</div>
   </div>
