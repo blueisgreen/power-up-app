@@ -22,12 +22,7 @@
         </tbody>
       </q-markup-table>
     </q-scroll-area>
-    <div v-if="!!activeMessage" class="v-space">
-      <div class="text-caption">
-        On {{ formatDate(activeMessage.createdAt) }}, you said:
-      </div>
-      <div class="message-window text-body1">{{ activeMessage.message }}</div>
-    </div>
+    <show-message v-if="!!activeMessage" :message="activeMessage" />
   </div>
 </template>
 
@@ -35,8 +30,12 @@
 import { ref, onMounted, reactive } from 'vue'
 import { formatDate, prettyTrunc } from '../../composables/powerUpUtils'
 import { fetchMyInquiries, fetchRelatedMessages } from '../../api/PowerUpApi'
+import ShowMessage from './ShowMessage.vue'
 
 export default {
+  components: {
+    ShowMessage,
+  },
   setup() {
     const activeMessageId = ref(-1)
     const myMessages = ref([])
@@ -59,14 +58,20 @@ export default {
     },
     activeRelatedMessages() {
       return this.relatedMessages[this.activeMessageId]
-    }
+    },
   },
   methods: {
     async handleSelectMessage(id) {
       this.activeMessageId = id
-      if (relatedMessages[id] === null) {
+      if (this.relatedMessages[id] === null) {
         const related = await fetchRelatedMessages(id)
-        relatedMessages[id] = related
+        if (related) {
+          console.log('found related messages', related);
+          this.relatedMessages[id] = related
+        } else {
+          console.log('no related messages');
+          this.relatedMessage[id] = []
+        }
       }
     },
   },
