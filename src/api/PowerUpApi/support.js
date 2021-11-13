@@ -21,5 +21,6 @@ export async function fetchMyInquiries() {
 
 export async function fetchRelatedMessages(inquiryId) {
   const response = await api.get(`/my/inquiries/related/${inquiryId}`)
+  console.log('found related messages', response.data);
   return response.data
 }

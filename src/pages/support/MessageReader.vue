@@ -37,19 +37,18 @@ export default {
     ShowMessage,
   },
   setup() {
-    const activeMessageId = ref(-1)
     const myMessages = ref([])
-    const relatedMessages = reactive({})
     onMounted(async () => {
       const msgs = await fetchMyInquiries()
       msgs.forEach((msg) => myMessages.value.push(msg))
     })
     return {
-      activeMessageId,
+      activeMessageId: ref(-1),
       myMessages,
-      relatedMessages,
+      relatedMessages: reactive({}),
       formatDate,
       prettyTrunc,
+      fetchRelatedMessages,
     }
   },
   computed: {
@@ -63,14 +62,15 @@ export default {
   methods: {
     async handleSelectMessage(id) {
       this.activeMessageId = id
-      if (this.relatedMessages[id] === null) {
-        const related = await fetchRelatedMessages(id)
+      console.log('see related', this.relatedMessages[id])
+      if (!this.relatedMessages[id]) {
+        const related = await this.fetchRelatedMessages(id)
         if (related) {
-          console.log('found related messages', related);
+          console.log('found related messages', related)
           this.relatedMessages[id] = related
         } else {
-          console.log('no related messages');
-          this.relatedMessage[id] = []
+          console.log('no related messages')
+          this.relatedMessages[id] = []
         }
       }
     },
