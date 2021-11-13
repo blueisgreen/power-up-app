@@ -32,14 +32,15 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive } from 'vue'
 import { formatDate, prettyTrunc } from '../../composables/powerUpUtils'
-import { fetchMyInquiries } from '../../api/PowerUpApi'
+import { fetchMyInquiries, fetchRelatedMessages } from '../../api/PowerUpApi'
 
 export default {
   setup() {
     const activeMessageId = ref(-1)
     const myMessages = ref([])
+    const relatedMessages = reactive({})
     onMounted(async () => {
       const msgs = await fetchMyInquiries()
       msgs.forEach((msg) => myMessages.value.push(msg))
@@ -47,6 +48,7 @@ export default {
     return {
       activeMessageId,
       myMessages,
+      relatedMessages,
       formatDate,
       prettyTrunc,
     }
@@ -55,10 +57,17 @@ export default {
     activeMessage() {
       return this.myMessages.find((msg) => msg.id === this.activeMessageId)
     },
+    activeRelatedMessages() {
+      return this.relatedMessages[this.activeMessageId]
+    }
   },
   methods: {
-    handleSelectMessage(id) {
+    async handleSelectMessage(id) {
       this.activeMessageId = id
+      if (relatedMessages[id] === null) {
+        const related = await fetchRelatedMessages(id)
+        relatedMessages[id] = related
+      }
     },
   },
 }
