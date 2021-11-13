@@ -28,6 +28,7 @@
 <script>
 import { ref } from 'vue'
 import { createInquiry } from '../../api/PowerUpApi'
+import { useStore } from 'vuex'
 
 export default {
   setup() {
@@ -42,19 +43,23 @@ export default {
       purposeOptions,
       purpose: ref('feedback'),
       message: ref(''),
+      store: useStore()
     }
   },
   methods: {
     async handleSend() {
-      const confirmation = await createInquiry({
-        purpose: this.purpose,
+      const inquiry = {
+        purpose: this.purpose.value,
         message: this.message,
-      })
-      console.log('message sent', confirmation);
-      console.log('would be nice to tell the user')
+      }
+      const confirmation = await createInquiry(inquiry)
+      this.notifyUser('Hey, you just sent a message to Power Up. Thanks! We will take it from here.')
       this.purpose = 'help'
       this.message = ''
     },
+    notifyUser(msg) {
+      this.store.commit('context/setStatusMessage', { message: msg })
+    }
   },
 }
 </script>
