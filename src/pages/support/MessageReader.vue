@@ -11,50 +11,67 @@
         </thead>
         <tbody class="bg-grey-3">
           <tr
-            v-for="msg in messageHistory"
+            v-for="msg in myMessages"
             :key="msg.id"
+            :class="{ selected: (msg.id === activeMessageId) }"
             @click="() => handleSelectMessage(msg.id)"
           >
-            <td>{{ formatDate(msg.createdAt) }}</td>
+            <td>{{ msg.id === activeMessageId ? '* ' : '' }}{{ formatDate(msg.createdAt) }}</td>
             <td>{{ msg.purpose }}</td>
             <td>{{ prettyTrunc(msg.message, 60) }}</td>
           </tr>
         </tbody>
       </q-markup-table>
     </q-scroll-area>
-    <div v-if="!!activeMessage" class="v-space">
-      <div class="text-caption">
-        On {{ formatDate(activeMessage.createdAt) }}, you said:
-      </div>
-      <div class="message-window text-body1">{{ activeMessage.message }}</div>
-    </div>
+    <show-message v-if="!!activeMessage" :message="activeMessage" />
+    <show-message v-for="msg in activeRelatedMessages" :key="msg.id" :message="msg" />
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
-import { mapState, useStore } from 'vuex'
+import { ref, onMounted, reactive } from 'vue'
 import { formatDate, prettyTrunc } from '../../composables/powerUpUtils'
+import { fetchMyInquiries, fetchRelatedMessages } from '../../api/PowerUpApi'
+import ShowMessage from './ShowMessage.vue'
 
 export default {
+  components: {
+    ShowMessage,
+  },
   setup() {
-    onMounted(() => useStore().dispatch('support/refreshMyInquiries'))
-    const activeMessageId = ref(-1)
+    const myMessages = ref([])
+    onMounted(async () => {
+      const msgs = await fetchMyInquiries()
+      msgs.forEach((msg) => myMessages.value.push(msg))
+    })
     return {
-      activeMessageId,
+      activeMessageId: ref(-1),
+      myMessages,
+      relatedMessages: reactive({}),
       formatDate,
       prettyTrunc,
+      fetchRelatedMessages,
     }
   },
   computed: {
-    ...mapState('support', ['messageHistory']),
     activeMessage() {
-      return this.messageHistory.find((msg) => msg.id === this.activeMessageId)
+      return this.myMessages.find((msg) => msg.id === this.activeMessageId)
+    },
+    activeRelatedMessages() {
+      return this.relatedMessages[this.activeMessageId]
     },
   },
   methods: {
-    handleSelectMessage(id) {
+    async handleSelectMessage(id) {
       this.activeMessageId = id
+      if (!this.relatedMessages[id]) {
+        this.relatedMessages[id] = []
+        const related = await this.fetchRelatedMessages(id)
+        if (related.length > 0) {
+          related.forEach((msg) => this.relatedMessages[id].push(msg))
+          console.log('related messages', related, this.relatedMessages[id]);
+        }
+      }
     },
   },
 }
@@ -67,5 +84,8 @@ export default {
 .message-window {
   border: solid black 1px;
   padding: 0.5em 2em;
+}
+.selected {
+  font-weight: bold;
 }
 </style>

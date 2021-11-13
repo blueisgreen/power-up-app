@@ -1,10 +1,7 @@
 <template>
   <q-page class="q-pa-md">
     <h3>User Support: Message Center</h3>
-    <div class="greeting">
-      Hello<span v-if="isSignedIn">, {{ screenName }}</span
-      >. What can we do for you?
-    </div>
+
     <q-banner
       v-if="!isSignedIn"
       class="bg-amber-2 text-black v-space"
@@ -27,8 +24,8 @@
         align="justify"
         narrow-indicator
       >
-        <q-tab name="messages" label="Messages" />
         <q-tab name="contact" label="Contact Support" />
+        <q-tab name="messages" label="Messages" />
       </q-tabs>
 
       <q-separator />
@@ -62,7 +59,7 @@ export default {
     MessageReader,
   },
   setup() {
-    const tab = ref('messages')
+    const tab = ref('contact')
     return {
       tab,
     }

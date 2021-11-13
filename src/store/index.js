@@ -1,14 +1,11 @@
 import { store } from 'quasar/wrappers'
 import { createStore, createLogger } from 'vuex'
 
-import admin from './admin'
 import articles from './articles'
 import auth from './auth'
 import context from './context'
 import csr from './csr'
-import messages from './messages'
 import profile from './profile'
-import support from './support'
 
 /*
  * If not building with SSR mode, you can
@@ -24,14 +21,11 @@ const debug = process.env.DEBUGGING
 export default store(function (/* { ssrContext } */) {
   const Store = createStore({
     modules: {
-      admin,
       articles,
       auth,
       context,
       csr,
-      messages,
       profile,
-      support,
     },
 
     // enable strict mode (adds overhead!)
