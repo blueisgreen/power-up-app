@@ -121,8 +121,8 @@
       </q-tab-panels>
       <q-tab-panels v-model="inquiryTab">
         <q-tab-panel name="respond">
-          <q-input v-model="sampleResponse" type="textarea"></q-input>
-          <q-btn color="primary">Submit Response</q-btn>
+          <q-input v-model="response" type="textarea"></q-input>
+          <q-btn color="primary" @submit="handleSend">Submit Response</q-btn>
         </q-tab-panel>
       </q-tab-panels>
       <q-tab-panels v-model="inquiryTab">
@@ -138,6 +138,7 @@
 import { defineComponent, onMounted, ref } from 'vue'
 import { useStore, mapGetters } from 'vuex'
 import { formatDate } from '../../composables/powerUpUtils'
+import { createInquiry } from '../../api/PowerUpApi'
 
 const purposeIconMap = {
   help: 'support',
@@ -157,8 +158,9 @@ export default defineComponent({
       searchQuery: ref(''),
       inquiryTab: ref('read'),
       selected: ref(null),
-      sampleResponse: ref('Gentle User, '),
+      response: ref('Gentle User, '),
       formatDate,
+      store: useStore(),
     }
   },
   computed: {
@@ -174,6 +176,18 @@ export default defineComponent({
     setSelected(item) {
       this.selected = item
     },
+    async handleSend() {
+      const replyToInquiry = {
+        purpose: 'response',
+        message: this.message,
+        relatedTo: this.selected.id,
+      }
+      const confirmation = await createInquiry(replyToInquiry)
+      this.notifyUser('Nice work!')
+    },
+    notifyUser(msg) {
+      this.store.commit('context/setStatusMessage', { message: msg })
+    }
   },
 })
 </script>
