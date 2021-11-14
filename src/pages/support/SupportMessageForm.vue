@@ -1,6 +1,6 @@
 <template>
   <div class="p-pa-md">
-    <q-form @submit="handleSend">
+    <q-form class="q-gutter-md" @submit="handleSend" @reset="onReset">
       <q-select
         v-model="purpose"
         rounded
@@ -28,6 +28,7 @@
 <script>
 import { ref } from 'vue'
 import { createInquiry } from '../../api/PowerUpApi'
+import { useStore } from 'vuex'
 
 export default {
   setup() {
@@ -38,23 +39,36 @@ export default {
       { label: 'Report a bug', value: 'bug' },
       { label: 'Something else', value: 'misc' },
     ]
+    const purpose = ref('feedback')
+    const message = ref(' ')
+
+    const store = useStore()
+
     return {
       purposeOptions,
-      purpose: ref('feedback'),
-      message: ref(''),
+      purpose,
+      message,
+      store,
+
+      onReset() {
+        purpose.value = 'feedback'
+        message.value = ' '
+      }
     }
   },
   methods: {
     async handleSend() {
-      const confirmation = await createInquiry({
-        purpose: this.purpose,
+      const inquiry = {
+        purpose: this.purpose.value,
         message: this.message,
-      })
-      console.log('message sent', confirmation);
-      console.log('would be nice to tell the user')
-      this.purpose = 'help'
-      this.message = ''
+      }
+      const confirmation = await createInquiry(inquiry)
+      this.notifyUser('Hey, you just sent a message to Power Up. Thanks! We will take it from here.')
+      this.onReset()
     },
+    notifyUser(msg) {
+      this.store.commit('context/setStatusMessage', { message: msg })
+    }
   },
 }
 </script>

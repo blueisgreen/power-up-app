@@ -15,6 +15,7 @@
       <div v-else class="q-pa-md">
         <h1>Now then, where did I leave that article?</h1>
       </div>
+      <q-btn color="primary" to="/" label="Pick Another Article" />
     </div>
   </q-page>
 </template>
