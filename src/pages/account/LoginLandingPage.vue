@@ -65,7 +65,6 @@ export default defineComponent({
     const { token, goTo } = this.$route.query
     const authDetails = jwtDecode(token)
     this.setUserInfo(token, authDetails.user)
-    this.setCookies(token, authDetails.user)
     return {
       token,
       goTo,
@@ -75,7 +74,6 @@ export default defineComponent({
   mounted() {
     console.log('mounted: redirect to', this.goTo)
     const navMap = {
-      // home: 'FrontPage',
       home: 'FrontPage',
       register: 'MemberRegistration',
     }

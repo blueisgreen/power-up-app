@@ -28,6 +28,10 @@ export default {
     return {
       store: useStore(),
       q: useQuasar(),
+      cookieOptions: {
+        domain: 'localhost',
+        path: '/',
+      },
     }
   },
   computed: {
@@ -35,13 +39,16 @@ export default {
       return this.store.state.auth.screenName
     },
     isSignedIn() {
-      console.log('session cookie is', this.q.cookies.get('session'))
-      return this.store.getters['auth/isSignedIn'] || this.q.cookies.has('session')
+      console.log('cookies:', this.q.cookies.getAll())
+      return this.store.getters['auth/isSignedIn'] // || this.q.cookies.has('token')
     },
   },
   methods: {
     handleSignOut() {
       this.store.commit('auth/signOut')
+      this.q.cookies.remove('token', this.cookieOptions)
+      this.q.cookies.remove('user_id', this.cookieOptions)
+      this.q.cookies.remove('userID', this.cookieOptions)
     },
     handleSignIn() {
       window.location.href = process.env.API_URL + '/login/github'
