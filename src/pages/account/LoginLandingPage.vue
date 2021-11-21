@@ -22,7 +22,6 @@
 <script>
 import { defineComponent } from 'vue'
 import { useStore } from 'vuex'
-import { useQuasar } from 'quasar'
 import jwtDecode from 'jwt-decode'
 import { setAuthHeader } from '../../boot/axios'
 
@@ -42,23 +41,8 @@ export default defineComponent({
       store.commit('auth/setScreenName', { screenName })
       store.commit('auth/setRoles', { roles })
     }
-    const setCookies = (token, user) => {
-      const q = useQuasar()
-      q.cookies.set('session', { token, user }, {
-        expires: 30,
-        domain: 'powerupmagazine.com',
-        sameSite: 'Lax',
-      })
-      // q.cookies.set('user', user, {
-      //   expires: 30,
-      //   domain: 'powerupmagazine.com',
-      //   sameSite: 'Strict',
-      // })
-      console.log(q.cookies.getAll())
-    }
     return {
       setUserInfo,
-      setCookies,
     }
   },
   data() {
