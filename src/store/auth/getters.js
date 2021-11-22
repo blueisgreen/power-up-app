@@ -1,5 +1,5 @@
 export function isSignedIn(state) {
-  return state.token !== null
+  return state.signedIn
 }
 export function isGuest(state) {
   return state.roles.length === 0

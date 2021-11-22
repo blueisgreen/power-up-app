@@ -1,6 +1,6 @@
 export default function () {
   return {
-    token: null,
+    signedIn: false,
     userId: null,
     screenName: null,
     roles: [],

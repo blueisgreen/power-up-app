@@ -35,11 +35,7 @@ export default defineComponent({
     const store = useStore()
     const setUserInfo = (token, user) => {
       setAuthHeader(token)
-      const { publicId, screenName, roles } = user
-      store.commit('auth/setToken', { token })
-      store.commit('auth/setUserId', { userId: publicId })
-      store.commit('auth/setScreenName', { screenName })
-      store.commit('auth/setRoles', { roles })
+      store.dispatch('auth/signInUser', { user })
     }
     return {
       setUserInfo,
