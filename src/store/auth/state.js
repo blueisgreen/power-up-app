@@ -2,7 +2,7 @@ export default function () {
   return {
     signedIn: false,
     userId: null,
-    screenName: null,
+    alias: null,
     roles: [],
   }
 }

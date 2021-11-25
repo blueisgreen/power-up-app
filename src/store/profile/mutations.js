@@ -1,6 +1,6 @@
 export function load(state, payload) {
   state.accountId = payload.public_id
-  state.screenName = payload.screen_name
+  state.alias = payload.alias
   state.email = payload.email
   state.avatarUrl = payload.avatar_url
   state.createdAt = payload.created_at
@@ -11,8 +11,8 @@ export function load(state, payload) {
   state.accountStatusId = payload.account_status_id
 }
 
-export function setScreenName(state, payload) {
-  state.screenName = payload.screenName
+export function setAlias(state, payload) {
+  state.alias = payload.alias
 }
 
 export function setEmail(state, payload) {

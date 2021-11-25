@@ -1,7 +1,7 @@
 export default function () {
   return {
     accountId: null,
-    screenName: null,
+    alias: null,
     email: null,
     avatarUrl: null,
     createdAt: null,
@@ -17,7 +17,7 @@ export default function () {
 {
     "id": 1,
     "public_id": "1bc305c2-0a87-4786-9171-2145bb1dedfe",
-    "screen_name": "Dave Mount",
+    "alias": "Dave Mount",
     "email": null,
     "avatar_url": "https://avatars.githubusercontent.com/u/74470787?v=4",
     "session_token": null,

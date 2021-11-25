@@ -68,7 +68,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('auth', ['screenName']),
+    ...mapState('auth', ['alias']),
     ...mapGetters('auth', ['isSignedIn']),
   },
 }
