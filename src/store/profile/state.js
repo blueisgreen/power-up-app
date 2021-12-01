@@ -20,7 +20,6 @@ export default function () {
     "alias": "Dave Mount",
     "email": null,
     "avatar_url": "https://avatars.githubusercontent.com/u/74470787?v=4",
-    "session_token": null,
     "created_at": "2021-08-08T02:02:26.760Z",
     "updated_at": "2021-08-08T02:02:26.760Z",
     "terms_accepted_at": null,
