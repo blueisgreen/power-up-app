@@ -1,3 +1,7 @@
 export function getActiveArticle (state, getters) {
-  return getters.articles.byId[state.activeArticleId]
+  if (state.activeArticleId) {
+    return getters.articles.byId[state.activeArticleId]
+  } else {
+    return {}
+  }
 }

@@ -1,7 +1,5 @@
 <template>
   <q-page class="q-pa-md">
-    <h3>User Support: Message Center</h3>
-
     <q-card>
       <q-tabs
         v-model="tab"
@@ -19,14 +17,6 @@
       <q-separator />
 
       <q-tab-panels v-model="tab" animated>
-        <q-tab-panel name="messages">
-          <h4>Message History</h4>
-          <div v-if="!isSignedIn" class="text-body1">
-            Sign in to see your message history.
-          </div>
-          <message-reader v-if="isSignedIn" />
-        </q-tab-panel>
-
         <q-tab-panel name="contact">
           <div class="text-h4">Contact Power Up Support</div>
           <q-banner
@@ -42,6 +32,13 @@
             </template>
           </q-banner>
           <support-message-form />
+        </q-tab-panel>
+        <q-tab-panel name="messages">
+          <h4>Message History</h4>
+          <div v-if="!isSignedIn" class="text-body1">
+            Sign in to see your message history.
+          </div>
+          <message-reader v-if="isSignedIn" />
         </q-tab-panel>
       </q-tab-panels>
     </q-card>
