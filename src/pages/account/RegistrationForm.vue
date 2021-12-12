@@ -199,13 +199,15 @@ export default {
       },
     }
   },
-  methods: {
+  computed: {
     okWithTerms() {
       return !this.termsOfUse.find((term) => !term.accepted)
-    },
+    }
+  },
+  methods: {
     onSubmit() {
       console.log('submitting registration')
-      if (!this.okWithTerms()) {
+      if (!this.okWithTerms) {
         this.q.notify({
           color: 'red-5',
           textColor: 'white',
@@ -224,7 +226,7 @@ export default {
           publicId: this.accountId,
           alias: this.desiredAlias,
           email: this.unverifiedEmail,
-          agreeToTerms: !!this.termsAcceptedAt || this.okWithTerms(),
+          agreeToTerms: !!this.termsAcceptedAt || this.okWithTerms,
           agreeToCookies: !!this.cookiesAcceptedAt || this.okWithCookies,
           agreeToEmailComms: !!this.emailCommsAcceptedAt || this.okWithEmail,
         })
@@ -233,7 +235,6 @@ export default {
     onReset() {
       this.desiredAlias = this.alias
       this.termsOfUse.forEach((term) => (term.accepted = false))
-      this.okWithTerms = false
       this.okWithCookies = false
       this.okWithEmail = false
     },
