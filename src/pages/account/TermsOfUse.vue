@@ -1,8 +1,8 @@
 <template>
   <q-item-label header>Terms of Use</q-item-label>
 
-  <q-item>
-    <q-item-label v-if="acceptedAt">
+  <q-item v-if="acceptedAt">
+    <q-item-label>
       You agreed to the following terms of use on {{ formatDayMonthYear(acceptedAt) }}.
     </q-item-label>
   </q-item>

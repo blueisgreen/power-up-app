@@ -11,7 +11,7 @@
         <q-item>
           <q-item-section top>
             <q-input
-              v-model="desiredScreenName"
+              v-model="desiredAlias"
               filled
               label="What shall we call you? This may be an alias."
               lazy-rules
@@ -23,7 +23,7 @@
             />
           </q-item-section>
           <q-item-section side top>
-            <q-btn @click="onSuggestScreenName">Suggest</q-btn><br />
+            <q-btn @click="onSuggestAlias">Suggest</q-btn><br />
           </q-item-section>
         </q-item>
 
@@ -119,7 +119,7 @@ export default {
     const q = useQuasar()
     const store = useStore()
 
-    const desiredScreenName = ref(store.state.profile.screenName)
+    const desiredAlias = ref(store.state.profile.alias)
     const unverifiedEmail = ref(null)
     const okWithCookies = ref(false)
     const okWithEmail = ref(false)
@@ -178,13 +178,13 @@ export default {
       dialogValues,
       termsOfUse,
 
-      desiredScreenName,
+      desiredAlias,
       unverifiedEmail,
       okWithCookies,
       okWithEmail,
 
       accountId: computed(() => store.state.profile.accountId),
-      screenName: computed(() => store.state.profile.screenName),
+      alias: computed(() => store.state.profile.alias),
       socialEmail: computed(() => store.state.profile.email),
       createdAt: computed(() => store.state.profile.createdAt),
       termsAcceptedAt: computed(() => store.state.profile.termsAcceptedAt),
@@ -192,20 +192,22 @@ export default {
       emailCommsAcceptedAt: computed(
         () => store.state.profile.emailCommsAcceptedAt
       ),
-      onSuggestScreenName() {
-        const idea = store.state.profile.screenName
+      onSuggestAlias() {
+        const idea = store.state.profile.alias
         console.log(idea)
-        desiredScreenName.value = store.state.profile.screenName
+        desiredAlias.value = store.state.profile.alias
       },
     }
   },
-  methods: {
+  computed: {
     okWithTerms() {
       return !this.termsOfUse.find((term) => !term.accepted)
-    },
+    }
+  },
+  methods: {
     onSubmit() {
       console.log('submitting registration')
-      if (!this.okWithTerms()) {
+      if (!this.okWithTerms) {
         this.q.notify({
           color: 'red-5',
           textColor: 'white',
@@ -222,18 +224,17 @@ export default {
         console.log('about to dispatch registration action')
         this.store.dispatch('profile/updateMyProfile', {
           publicId: this.accountId,
-          screenName: this.desiredScreenName,
+          alias: this.desiredAlias,
           email: this.unverifiedEmail,
-          agreeToTerms: !!this.termsAcceptedAt || this.okWithTerms(),
+          agreeToTerms: !!this.termsAcceptedAt || this.okWithTerms,
           agreeToCookies: !!this.cookiesAcceptedAt || this.okWithCookies,
           agreeToEmailComms: !!this.emailCommsAcceptedAt || this.okWithEmail,
         })
       }
     },
     onReset() {
-      this.desiredScreenName = this.screenName
+      this.desiredAlias = this.alias
       this.termsOfUse.forEach((term) => (term.accepted = false))
-      this.okWithTerms = false
       this.okWithCookies = false
       this.okWithEmail = false
     },

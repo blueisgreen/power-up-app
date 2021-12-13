@@ -1,22 +1,14 @@
-export function setToken(state, payload) {
-  state.token = payload.token
+export function setSignedIn(state, { user }) {
+  console.log('mutating signedIn and user properties', user)
+  state.signedIn = true
+  state.userId = user.who
+  state.alias = user.alias
+  state.roles = user.roles
 }
 
-export function setUserId(state, payload) {
-  state.userId = payload.userId
-}
-
-export function setScreenName(state, payload) {
-  state.screenName = payload.screenName
-}
-
-export function setRoles(state, payload) {
-  state.roles = payload.roles
-}
-
-export function signOut(state) {
-  state.token = null
-  state.screenName = null
+export function setSignedOut(state) {
+  state.signedIn = false
+  state.alias = null
   state.userId = null
   state.roles = []
 }

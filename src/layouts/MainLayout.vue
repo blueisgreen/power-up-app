@@ -114,7 +114,7 @@ export default defineComponent({
     }
   },
   computed: {
-    visibleMenuItems() {
+    visibleMenuItems() {  // FIXME: get this to watch user roles
       const visibleItems = this.essentialLinks.filter(
         (menuItem) =>
           !menuItem.rolesWithAccess ||
@@ -146,18 +146,3 @@ h6 {
   margin-top: 2em;
 }
 </style>
-
-// { // title: 'Courses', // caption: 'Learn about nuclear', // icon: 'school',
-// route: 'LearningCenter', // }, // { // title: 'Exchange Ideas', // caption:
-'Message boards', // icon: 'chat', // route: 'DiscussionBoards', // }, // { //
-title: 'Simulations', // caption: 'Play the simulation game', // icon:
-'precision_manufacturing', // route: 'Simulations', // }, // { // title:
-'Calculators', // caption: 'Fun with numbers', // icon: 'calculate', // route:
-'Calculators', // }, // { // title: 'Course Composer', // caption: 'Editors only
-area', // icon: 'create', // route: 'Composer', // rolesWithAccess: ['editor',
-'editorInChief'], // }, // { // title: 'Article Management', // caption: 'For
-creating articles (editors only)', // icon: 'create', // route:
-'ArticleManagement', // rolesWithAccess: ['editor', 'editorInChief'], // }, // {
-// title: 'Administration', // caption: 'Administrators only', // icon:
-'admin_panel_settings', // route: 'AdminPanel', // rolesWithAccess: ['admin'],
-// },

@@ -21,7 +21,7 @@
           <q-item-label class="text-bold">Screen name:</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ screenName }}</q-item-label>
+          <q-item-label>{{ alias }}</q-item-label>
         </q-item-section>
       </q-item>
 
@@ -202,7 +202,7 @@ export default defineComponent({
   },
   computed: mapState('profile', [
     'accountId',
-    'screenName',
+    'alias',
     'email',
     'avatarUrl',
     'createdAt',
