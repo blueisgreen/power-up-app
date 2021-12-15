@@ -1,1 +1,38 @@
 // app global css in SCSS form
+@font-face {
+  font-family: merriweather;
+  src: url(./fonts/Merriweather-Light.ttf);
+  font-weight: normal;
+}
+@font-face {
+  font-family: merriweather;
+  src: url(./fonts/Merriweather-Light.ttf);
+  font-stretch: expanded;
+}
+@font-face {
+  font-family: merriweather;
+  src: url(./fonts/Merriweather-LightItalic.ttf);
+  font-style: italic;
+}
+@font-face {
+  font-family: merriweather;
+  src: url(./fonts/Merriweather-Bold.ttf);
+  font-weight: bold;
+}
+@font-face {
+  font-family: merriweather;
+  src: url(./fonts/Merriweather-BoldItalic.ttf);
+  font-weight: bold;
+  font-style: italic;
+}
+
+.headline-font {
+  font-family: 'merriweather';
+  font-weight: bold;
+  font-style: italic;
+}
+
+.banner-font {
+  font-family: 'merriweather';
+  font-stretch: ultra-expanded;
+}
