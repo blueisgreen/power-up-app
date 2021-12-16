@@ -3,20 +3,34 @@
     <!-- <q-btn v-show="!isSignedIn" @click="() => handleSignIn('github')">Sign In</q-btn> -->
     <q-btn-dropdown v-show="!isSignedIn" color="primary" label="Sign In">
       <q-list>
+        <q-item v-close-popup clickable @click="() => handleSignIn('bypass')">
+          <q-item-section avatar
+            ><q-icon color="gray-6" name="fas fa-sign-in-alt"
+          /></q-item-section>
+          <q-item-section>
+            <q-item-label>Bypass</q-item-label>
+          </q-item-section>
+        </q-item>
         <q-item v-close-popup clickable @click="() => handleSignIn('github')">
-          <q-item-section avatar><q-icon color="gray-6" name="fab fa-github" /></q-item-section>
+          <q-item-section avatar
+            ><q-icon color="gray-6" name="fab fa-github"
+          /></q-item-section>
           <q-item-section>
             <q-item-label>GitHub</q-item-label>
           </q-item-section>
         </q-item>
         <q-item v-close-popup clickable @click="() => handleSignIn('google')">
-          <q-item-section avatar><q-icon color="red-8" name="fab fa-google" /></q-item-section>
+          <q-item-section avatar
+            ><q-icon color="red-8" name="fab fa-google"
+          /></q-item-section>
           <q-item-section>
             <q-item-label>Google</q-item-label>
           </q-item-section>
         </q-item>
         <q-item v-close-popup clickable @click="() => handleSignIn('linkedin')">
-          <q-item-section avatar><q-icon color="blue-9" name="fab fa-linkedin" /></q-item-section>
+          <q-item-section avatar
+            ><q-icon color="blue-9" name="fab fa-linkedin"
+          /></q-item-section>
           <q-item-section>
             <q-item-label>LinkedIn</q-item-label>
           </q-item-section>
