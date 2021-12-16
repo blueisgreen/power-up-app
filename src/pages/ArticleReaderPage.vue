@@ -2,7 +2,7 @@
   <q-page class="flex">
     <div class="q-pa-md reader-panel">
       <div v-if="activeArticle">
-        <h1>{{ activeArticle.headline }}</h1>
+        <h4 class="headline-font">{{ activeArticle.headline }}</h4>
         <h2>by {{ activeArticle.byline }}</h2>
         <h3>
           published on {{ formatDayMonthYear(activeArticle.publishedAt) }}
