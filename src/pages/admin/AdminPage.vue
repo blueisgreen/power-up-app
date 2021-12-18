@@ -1,29 +1,62 @@
 <template>
-  <q-page class="q-pa-md">
-    <h3>Power Up Administration</h3>
-    <p>
-      This area is for Power Up app administrators. If you have the right
-      permissions, you can manage:
-    </p>
-    <ul>
-      <li>Support functions: responding to inquiries</li>
-      <li>
-        Member status - suspensions, deleting accounts, unsubscribing (as
-        requested)
-      </li>
-      <li>
-        Content overrides - broadcast messages; hiding suspicous content and
-        notifying editor-in-chief, et al.
-      </li>
-      <li>Discussion boards moderation</li>
-      <li>System status dashboard</li>
-      <li>Restarts, maintenance windows, etc.</li>
-    </ul>
-  </q-page>
+  <div>
+    <q-splitter
+      v-model="splitterModel"
+      style="height: 250px"
+    >
+
+      <template #before>
+        <q-tabs
+          v-model="tab"
+          vertical
+          class="text-teal"
+        >
+          <q-tab name="welcome" icon="mail" label="Welcome" />
+          <q-tab name="members" icon="account" label="Members" />
+          <q-tab name="system" icon="settings" label="System" />
+        </q-tabs>
+      </template>
+
+      <template #after>
+        <q-tab-panels
+          v-model="tab"
+          animated
+          swipeable
+          vertical
+          transition-prev="jump-up"
+          transition-next="jump-up"
+        >
+          <q-tab-panel name="welcome">
+            <welcome-panel />
+          </q-tab-panel>
+
+          <q-tab-panel name="members">
+            <member-panel />
+          </q-tab-panel>
+
+          <q-tab-panel name="system">
+            <system-panel />
+          </q-tab-panel>
+        </q-tab-panels>
+      </template>
+
+    </q-splitter>
+  </div>
 </template>
 
 <script>
-export default {}
-</script>
+import { ref } from 'vue'
+import WelcomePanel from './WelcomePanel.vue'
+import MemberPanel from './MemberPanel.vue'
+import SystemPanel from './SystemPanel.vue'
 
-<style></style>
+export default {
+  components: { WelcomePanel, MemberPanel, SystemPanel },
+  setup () {
+    return {
+      tab: ref('welcome'),
+      splitterModel: ref(20)
+    }
+  }
+}
+</script>

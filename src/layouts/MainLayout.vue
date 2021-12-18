@@ -90,6 +90,13 @@ const linksList = [
     route: 'CustomerSupportRep',
     rolesWithAccess: ['admin'],
   },
+  {
+    title: 'Administration',
+    caption: 'Administrators only',
+    icon: 'system ',
+    route: 'AdminPanels',
+    rolesWithAccess: ['admin'],
+  },
 ]
 
 export default defineComponent({

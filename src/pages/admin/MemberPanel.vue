@@ -1,0 +1,5 @@
+<template>
+  <div class="q-pa-md">
+    <h3>Member Administration</h3>
+  </div>
+</template>
