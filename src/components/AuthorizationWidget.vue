@@ -5,7 +5,7 @@
       <q-list>
         <q-item v-close-popup clickable @click="recoverSession">
           <q-item-section avatar
-            ><q-icon color="gray-6" name="fas fa-sign-in-alt"
+            ><q-icon color="green-6" name="fas fa-recycle"
           /></q-item-section>
           <q-item-section>
             <q-item-label>Rehydrate</q-item-label>
@@ -13,7 +13,7 @@
         </q-item>
         <q-item v-close-popup clickable @click="() => handleSignIn('bypass')">
           <q-item-section avatar
-            ><q-icon color="gray-6" name="fas fa-sign-in-alt"
+            ><q-icon color="orange-6" name="fas fa-sign-in-alt"
           /></q-item-section>
           <q-item-section>
             <q-item-label>Bypass</q-item-label>
@@ -84,7 +84,7 @@ export default {
     },
     recoverSession() {
       console.log('check for cookie with valid session token')
-      const localToken = this.q.cookies.get('token') 
+      const localToken = this.q.cookies.get('token')
       if (!this.isSignedIn && localToken) {
         const authDetails = jwtDecode(localToken)
         this.setUserInfo(localToken, authDetails.user)
