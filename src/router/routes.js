@@ -84,7 +84,7 @@ const routes = [
       },
       {
         path: 'admin',
-        name: 'AdminPanel',
+        name: 'AdminPanels',
         component: () => import('../pages/admin/AdminPage.vue'),
         meta: {
           requireAuth: true,
