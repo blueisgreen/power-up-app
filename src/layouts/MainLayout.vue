@@ -40,7 +40,7 @@
     <q-footer elevated class="bg-grey-8 text-white text-center">
       <q-toolbar>
         <q-toolbar-title>
-          <div>&copy; 2021 Happy Spirit Publishing</div>
+          <div class="copyright-text">Copyright 2021 &copy; Happy Spirit Publishing</div>
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>
@@ -144,5 +144,9 @@ h6 {
 }
 .section {
   margin-top: 2em;
+}
+.copyright-text {
+  font-family: merriweather;
+  font-size: 12pt;
 }
 </style>
