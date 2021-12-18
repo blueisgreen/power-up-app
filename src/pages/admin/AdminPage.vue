@@ -11,8 +11,8 @@
           vertical
           class="text-teal"
         >
-          <q-tab name="welcome" icon="mail" label="Welcome" />
-          <q-tab name="members" icon="account" label="Members" />
+          <q-tab name="welcome" icon="fas fa-tools" label="Welcome" />
+          <q-tab name="members" icon="fas fa-users-cog" label="Members" />
           <q-tab name="system" icon="settings" label="System" />
         </q-tabs>
       </template>

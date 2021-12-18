@@ -40,7 +40,9 @@
     <q-footer elevated class="bg-grey-8 text-white text-center">
       <q-toolbar>
         <q-toolbar-title>
-          <div class="copyright-text">Copyright 2021 &copy; Happy Spirit Publishing</div>
+          <div class="copyright-text">
+            Copyright 2021 &copy; Happy Spirit Publishing
+          </div>
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>
@@ -58,14 +60,14 @@ const linksList = [
   {
     title: "What's New",
     caption: 'The latest headlines and articles',
-    icon: 'home',
+    icon: 'fas fa-home',
     route: 'FrontPage',
     exact: true,
   },
   {
     title: 'Account',
     caption: 'Your account information',
-    icon: 'manage_accounts',
+    icon: 'fas fa-user',
     route: 'UserAccount',
     exact: true,
     rolesWithAccess: ['member'],
@@ -73,27 +75,27 @@ const linksList = [
   {
     title: 'Support',
     caption: 'Get help with Power Up',
-    icon: 'support',
+    icon: 'far fa-life-ring',
     route: 'SupportCenter',
   },
   {
     title: 'Article Workbench',
     caption: 'For creating articles (editors only)',
-    icon: 'article',
+    icon: 'far fa-edit',
     route: 'ArticleWorkbench',
     rolesWithAccess: ['author', 'editor', 'editorInChief'],
   },
   {
     title: 'Customer Support',
     caption: 'Administrators only',
-    icon: 'support',
+    icon: 'fas fa-headset',
     route: 'CustomerSupportRep',
     rolesWithAccess: ['admin'],
   },
   {
     title: 'Administration',
     caption: 'Administrators only',
-    icon: 'system ',
+    icon: 'fas fa-tools',
     route: 'AdminPanels',
     rolesWithAccess: ['admin'],
   },
@@ -121,7 +123,8 @@ export default defineComponent({
     }
   },
   computed: {
-    visibleMenuItems() {  // FIXME: get this to watch user roles
+    visibleMenuItems() {
+      // FIXME: get this to watch user roles
       const visibleItems = this.essentialLinks.filter(
         (menuItem) =>
           !menuItem.rolesWithAccess ||
@@ -153,7 +156,7 @@ h6 {
   margin-top: 2em;
 }
 .copyright-text {
-  font-family: merriweather;
+  font-family: 'merriweather';
   font-size: 12pt;
 }
 </style>

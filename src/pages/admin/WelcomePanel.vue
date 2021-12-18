@@ -1,10 +1,10 @@
 <template>
   <div class="q-pa-md">
     <h3>Power Up Administration</h3>
-    <p>
+    <div>
       This area is for Power Up app administrators. If you have the right
       permissions, you can manage:
-    </p>
+    </div>
     <ul>
       <li>Support functions: responding to inquiries</li>
       <li>
@@ -21,3 +21,11 @@
     </ul>
   </div>
 </template>
+<script>
+export default {
+  
+}
+</script>
+<style>
+
+</style>
