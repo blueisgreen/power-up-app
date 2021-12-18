@@ -1,7 +1,7 @@
-export const getUser = (state) => (articleId) => {
-  return state.byId[articleId]
+export const user = (state) => (userKey) => {
+  return state.usersById[userKey]
 }
 
 export function users(state) {
-  return state.userIds.map((id) => state.usersById[id])
+  return state.userIds.map((userKey) => state.usersById[userKey])
 }

@@ -1,5 +1,11 @@
 import { api } from '../../boot/axios'
 
 export async function fetchUsers() {
-  return await api.get('/admin/users')
+  try {
+    const results = await api.get('/admin/users')
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return []
+  }
 }
