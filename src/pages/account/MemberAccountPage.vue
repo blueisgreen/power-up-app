@@ -60,7 +60,8 @@
             I agree to receive email about Power Up Magazine.
           </q-item-label>
           <q-item-label v-if="!!emailCommsAcceptedAt" caption>
-            On {{ formatDayMonthYear(cookiesAcceptedAt) }}, you said email from us is OK.
+            On {{ formatDayMonthYear(cookiesAcceptedAt) }}, you said email from
+            us is OK.
           </q-item-label>
         </q-item-section>
         <q-item-section side top>
@@ -137,7 +138,7 @@
 
 <script>
 import { defineComponent, ref, onMounted } from 'vue'
-import { mapState } from 'vuex'
+import { mapState, useStore } from 'vuex'
 import { formatDayMonthYear } from '../../composables/powerUpUtils'
 import TermsOfUse from './TermsOfUse.vue'
 import InfoDialog from '../../components/InfoDialog'
@@ -148,32 +149,39 @@ export default defineComponent({
     InfoDialog,
   },
   setup() {
+    const store = useStore()
+    const areTermsOk = !!store.state.profile.termsAcceptedAt
+    console.log('okay?', areTermsOk)
+
     const terms = [
       {
         code: 'term1',
         explanation:
           'Power Up Magazine is for learning about nuclear power and related subjects.',
-        accepted: true,
+        accepted: areTermsOk,
       },
       {
         code: 'term2',
         explanation:
           "Be curious: Everyone is learning, even the experts. There will be errors and mistakes. Let's discuss, debate, and learn together.",
-        accepted: true,
+        accepted: areTermsOk,
       },
       {
         code: 'term3',
         explanation:
           'Be polite: This is civilized social media. Mind your manners.',
-        accepted: true,
+        accepted: areTermsOk,
       },
       {
         code: 'term4',
         explanation:
           'Be empowered: Membership is free. You may leave Power Up Magazine at any time.',
-        accepted: true,
+        accepted: areTermsOk,
       },
     ]
+    const emailIsOkay = ref(!!store.state.profile.emailCommsAcceptedAt)
+    const cookiesAreOkay = ref(!!store.state.profile.cookiesAcceptedAt)
+
     const dialogValues = {
       cookies: {
         prompt: 'Explain Cookies',
@@ -188,9 +196,6 @@ export default defineComponent({
           'We will only send you email about Power Up Magazine. We will not share your email address with anyone.',
       },
     }
-
-    const emailIsOkay = ref(false)
-    const cookiesAreOkay = ref(false)
 
     return {
       formatDayMonthYear,
@@ -212,14 +217,7 @@ export default defineComponent({
     'emailCommsAcceptedAt',
     'accountStatusId',
   ]),
-  mounted() {
-    this.setCurrentSettings()
-  },
   methods: {
-    setCurrentSettings() {
-      this.cookiesAreOkay = !!this.cookiesAcceptedAt
-      this.emailIsOkay = !!this.emailCommsAcceptedAt
-    },
     acknowledgeCookies() {
       console.log('cookies are okay, yo')
     },
