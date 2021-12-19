@@ -52,7 +52,7 @@
 
       <q-item v-ripple tag="label">
         <q-item-section side>
-          <q-checkbox v-model="emailIsOkay" />
+          <q-checkbox v-model="emailIsOkay" @click="toggleEmailComm" />
         </q-item-section>
         <q-item-section>
           <q-item-label>Email Communication</q-item-label>
@@ -75,7 +75,7 @@
 
       <q-item v-ripple tag="label">
         <q-item-section side>
-          <q-checkbox v-model="cookiesAreOkay" :disable="!!cookiesAcceptedAt" />
+          <q-checkbox v-model="cookiesAreOkay" :disable="!!cookiesAcceptedAt" @click="acknowledgeCookies"/>
         </q-item-section>
         <q-item-section>
           <q-item-label>Cookies</q-item-label>
@@ -128,9 +128,6 @@
           <q-item-label>{{ formatDayMonthYear(updatedAt) }}</q-item-label>
         </q-item-section>
       </q-item>
-
-      <!-- <q-separator spaced />
-      <q-item-label header>Info Shared by Social ID Providers</q-item-label> -->
     </q-list>
   </q-page>
 </template>
@@ -212,6 +209,17 @@ export default defineComponent({
     'emailCommsAcceptedAt',
     'accountStatusId',
   ]),
+  methods: {
+    acknowledgeCookies() {
+      console.log('cookie are okay, yo');
+    },
+    toggleEmailComm() {
+      console.log('email communication is super duper');
+    },
+    saveEmail(email) {
+      console.log(`saving email: ${email}`);
+    }
+  }
 })
 </script>
 
