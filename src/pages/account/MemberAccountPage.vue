@@ -60,8 +60,7 @@
             I agree to receive email about Power Up Magazine.
           </q-item-label>
           <q-item-label v-if="!!emailCommsAcceptedAt" caption>
-            On {{ formatDayMonthYear(cookiesAcceptedAt) }}, you said cookies are
-            OK.
+            On {{ formatDayMonthYear(cookiesAcceptedAt) }}, you said email from us is OK.
           </q-item-label>
         </q-item-section>
         <q-item-section side top>
@@ -75,7 +74,11 @@
 
       <q-item v-ripple tag="label">
         <q-item-section side>
-          <q-checkbox v-model="cookiesAreOkay" :disable="!!cookiesAcceptedAt" @click="acknowledgeCookies"/>
+          <q-checkbox
+            v-model="cookiesAreOkay"
+            :disable="!!cookiesAcceptedAt"
+            @click="acknowledgeCookies"
+          />
         </q-item-section>
         <q-item-section>
           <q-item-label>Cookies</q-item-label>
@@ -133,7 +136,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
 import { mapState } from 'vuex'
 import { formatDayMonthYear } from '../../composables/powerUpUtils'
 import TermsOfUse from './TermsOfUse.vue'
@@ -209,17 +212,24 @@ export default defineComponent({
     'emailCommsAcceptedAt',
     'accountStatusId',
   ]),
+  mounted() {
+    this.setCurrentSettings()
+  },
   methods: {
+    setCurrentSettings() {
+      this.cookiesAreOkay = !!this.cookiesAcceptedAt
+      this.emailIsOkay = !!this.emailCommsAcceptedAt
+    },
     acknowledgeCookies() {
-      console.log('cookie are okay, yo');
+      console.log('cookies are okay, yo')
     },
     toggleEmailComm() {
-      console.log('email communication is super duper');
+      console.log('email communication is super duper')
     },
     saveEmail(email) {
-      console.log(`saving email: ${email}`);
-    }
-  }
+      console.log(`saving email: ${email}`)
+    },
+  },
 })
 </script>
 
