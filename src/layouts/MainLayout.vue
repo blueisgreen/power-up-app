@@ -15,7 +15,7 @@
           Power Up Magazine - Learn About Nuclear Power
         </q-toolbar-title>
 
-        <div class="edition-label">Autumn 2021</div>
+        <div class="edition-label">{{ edition }}</div>
         <authorization-widget />
       </q-toolbar>
     </q-header>
@@ -55,6 +55,30 @@ import { useStore, mapGetters } from 'vuex'
 import AuthorizationWidget from 'components/AuthorizationWidget.vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import StatusBar from 'components/StatusBar.vue'
+
+// FIXME: cache this
+const now = new Date()
+const year = now.getFullYear()
+const month = now.getMonth()
+const day = now.getDate()
+const season =
+  (month === 11 && day >= 21) ||
+  month === 0 ||
+  month === 1 ||
+  (month === 2 && day < 21)
+    ? 'Winter'
+    : (month === 2 && day >= 21) ||
+      month === 3 ||
+      month === 4 ||
+      (month === 5 && day < 21)
+    ? 'Spring'
+    : (month === 5 && day >= 21) ||
+      month === 6 ||
+      month === 7 ||
+      (month === 8 && day <= 21)
+    ? 'Summer'
+    : 'Autumn'
+const edition = season + ' ' + year
 
 const linksList = [
   {
@@ -114,6 +138,7 @@ export default defineComponent({
     const leftDrawerOpen = ref(false)
 
     return {
+      edition,
       essentialLinks: linksList,
       leftDrawerOpen,
       toggleLeftDrawer() {
