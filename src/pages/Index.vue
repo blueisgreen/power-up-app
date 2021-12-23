@@ -1,7 +1,6 @@
 <template>
   <q-page class="flex">
     <div class="q-pa-md">
-      <h2 class="banner-font">Learn Truth</h2>
       <h3 class="headline-font">Nuclear Power is the Future</h3>
       <q-list>
         <q-item
