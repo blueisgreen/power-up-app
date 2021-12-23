@@ -45,11 +45,11 @@ module.exports = configure(function (ctx) {
       vueRouterMode: 'history', // available values: 'hash', 'history'
 
       env: require('dotenv').config().parsed,
-      env: {
-        API_URL: ctx.dev
-          ? 'http://localhost:3000'
-          : 'https://power-up-service-staging.herokuapp.com',
-      },
+      // env: {
+      //   API_URL: ctx.dev
+      //     ? 'http://localhost:3000'
+      //     : 'https://power-up-service-staging.herokuapp.com',
+      // },
 
       // transpile: false,
 

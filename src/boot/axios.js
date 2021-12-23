@@ -8,8 +8,7 @@ import axios from 'axios'
 // "export default () => {}" function below (which runs individually
 // for each client)
 const api = axios.create({
-  // baseURL: 'https://power-up-service-staging.herokuapp.com',
-  baseURL: process.env.API_URL,
+  baseURL: process.env.API_URL_BASE,
 })
 
 export default boot(({ app }) => {
