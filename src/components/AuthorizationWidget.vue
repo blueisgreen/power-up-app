@@ -80,7 +80,7 @@ export default {
       this.store.dispatch('auth/signOutUser')
     },
     handleSignIn(pid) {
-      window.location.href = `${process.env.API_URL_BASE}/login?pid=${pid}`
+      window.location.href = `${process.env.API_URL}/login?pid=${pid}`
     },
     recoverSession() {
       console.log('check for cookie with valid session token')
