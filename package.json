@@ -8,7 +8,7 @@
   "private": true,
   "scripts": {
     "dev": "quasar dev",
-    "build": "node_modules/@quasar/cli/bin/quasar build",
+    "build": "quasar-cli build",
     "start": "node server.js",
     "heroku-postbuild": "yarn && yarn build",
     "lint": "eslint --ext .js,.vue ./",
