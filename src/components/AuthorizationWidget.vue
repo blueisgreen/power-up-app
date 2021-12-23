@@ -56,7 +56,7 @@ import { useStore } from 'vuex'
 import jwtDecode from 'jwt-decode'
 import { setAuthHeader } from '../boot/axios'
 
-const apiUrl = process.env.API_URL
+const apiUrlBase = process.env.API_URL_BASE
 
 export default {
   setup() {
@@ -82,7 +82,7 @@ export default {
       this.store.dispatch('auth/signOutUser')
     },
     handleSignIn(pid) {
-      window.location.href = `${apiUrl}/login?pid=${pid}`
+      window.location.href = `${apiUrlBase}/login?pid=${pid}`
     },
     recoverSession() {
       console.log('check for cookie with valid session token')
