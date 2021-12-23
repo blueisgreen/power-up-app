@@ -46,9 +46,7 @@ module.exports = configure(function (ctx) {
 
       // env: require('dotenv').config().parsed,
       env: {
-        API_URL: ctx.dev
-          ? 'http://localhost:3000'
-          : process.env.API_URL_BASE,
+        API_URL: process.env.MY_API,
       },
 
       // transpile: false,

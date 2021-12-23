@@ -8,7 +8,7 @@ import axios from 'axios'
 // "export default () => {}" function below (which runs individually
 // for each client)
 const api = axios.create({
-  baseURL: process.env.API_URL,
+  baseURL: process.env.PowerUp.API_BASE_URL,
 })
 
 export default boot(({ app }) => {
