@@ -56,7 +56,7 @@ import { useStore } from 'vuex'
 import jwtDecode from 'jwt-decode'
 import { setAuthHeader } from '../boot/axios'
 
-const apiUrl = process.env.PowerUp.API_BASE_URL
+const apiUrl = process.env.API_URL
 
 export default {
   setup() {

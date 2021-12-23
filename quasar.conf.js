@@ -44,10 +44,10 @@ module.exports = configure(function (ctx) {
     build: {
       vueRouterMode: 'history', // available values: 'hash', 'history'
 
-      // env: require('dotenv').config().parsed,
-      env: {
-        API_URL: process.env.MY_API,
-      },
+      env: require('dotenv').config().parsed,
+      // env: {
+      //   API_URL: process.env.API_BASE_URL,
+      // },
 
       // transpile: false,
 
