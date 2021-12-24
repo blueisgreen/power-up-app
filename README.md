@@ -2,17 +2,20 @@
 
 Learn about nuclear power
 
-## To Do
+## Punchlist
 
-1. Better login session management: Use cookies to stay signed in
-1. Sign in button should allow in-place sign-in (not redirect to home)
-1. Write some good articles
+For alpha launch
+
 1. Set up production instance
+1. Get build to work on heroku
 1. Use correct domain name - purchased powerupmagazine.com
+1. Write some good articles
+
+After alpha launch
+
+1. Set up S3 bucket for images, static content
+1. Support images delivered from S3 bucket
+1. Get login working for GitHub and Google IDs
 1. CSR response submit, tied to original inquiry
 1. Show entire inquiry thread, with all replies
 1. Show user profile alongside message
-
-## Bugs
-
-nothing to see here
