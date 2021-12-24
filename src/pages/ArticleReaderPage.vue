@@ -2,13 +2,13 @@
   <q-page class="flex">
     <div class="q-pa-md reader-panel">
       <div v-if="activeArticle">
-        <h4 class="headline-font">{{ activeArticle.headline }}</h4>
-        <h2>by {{ activeArticle.byline }}</h2>
-        <h3>
-          published on {{ formatDayMonthYear(activeArticle.publishedAt) }}
-        </h3>
+        <div class="text-h4 headline-font">{{ activeArticle.headline }}</div>
+        <div class="byline">
+          by {{ activeArticle.byline }}
+          <span class="float-right">{{ formatDayMonthYear(activeArticle.publishedAt) }}</span>
+        </div>
         <q-separator spaced />
-        <div>
+        <div class="article">
           <span v-html="activeArticle.content" />
         </div>
       </div>
@@ -51,22 +51,14 @@ h5,
 h6 {
   margin-left: 0;
 }
-h1 {
-  font-size: 24pt;
-  font-weight: bold;
-  line-height: 2rem;
-}
-h2 {
-  font-size: 18pt;
-  color: orangered;
-  line-height: 2rem;
-}
-h3 {
-  font-size: 14pt;
-  line-height: 2rem;
+.byline {
+  font-size: large;
+  color: teal;
 }
 .reader-panel {
   padding: 2em;
-  font-size: 12pt;
+}
+.article {
+  font-size: x-large;
 }
 </style>
