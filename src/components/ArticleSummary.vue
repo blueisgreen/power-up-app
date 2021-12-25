@@ -1,10 +1,10 @@
 <template>
-  <q-card class="summary-card">
+  <q-card class="shadow-5 summary-card">
     <q-card-section>
-      <div class="text-h6">{{ summary.headline }}</div>
-      <div class="text-subtitle2">by {{ summary.byline }}</div>
+      <div class="text-h5">{{ summary.headline }}</div>
+      <div class="text-subtitle1">by {{ summary.byline }}</div>
       <div class="subdued">
-        posted on {{ formatDayMonthYear(summary.publishedAt) }}
+        {{ formatDayMonthYear(summary.publishedAt) }}
       </div>
     </q-card-section>
 
@@ -38,8 +38,8 @@ export default {
 <style lang="sass" scoped>
 .summary-card
   width: 100%
-  background: #014a88
-  color: white
+  background: $indigo-10
+  color: $yellow-12
 .subdued
-  color: $blue-3
+  color: $light-blue-3
 </style>
