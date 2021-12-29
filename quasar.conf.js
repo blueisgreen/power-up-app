@@ -47,7 +47,7 @@ module.exports = configure(function (ctx) {
       env: {
         API_URL_BASE: ctx.dev
           ? 'http://localhost:3000'
-          : 'https://power-up-service-staging.herokuapp.com',
+          : 'https://api.powerupmagazine.com',
       },
 
       // transpile: false,
