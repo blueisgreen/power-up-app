@@ -19,7 +19,7 @@
             <q-item-label>Bypass</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item v-close-popup clickable @click="() => handleSignIn('github')">
+        <q-item v-close-popup clickable @click="() => track('github')">
           <q-item-section avatar
             ><q-icon color="gray-6" name="fab fa-github"
           /></q-item-section>
@@ -27,7 +27,7 @@
             <q-item-label>GitHub</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item v-close-popup clickable @click="() => handleSignIn('google')">
+        <q-item v-close-popup clickable @click="() => track('google')">
           <q-item-section avatar
             ><q-icon color="red-8" name="fab fa-google"
           /></q-item-section>
@@ -35,7 +35,7 @@
             <q-item-label>Google</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item v-close-popup clickable @click="() => handleSignIn('linkedin')">
+        <q-item v-close-popup clickable @click="() => track('linkedin')">
           <q-item-section avatar
             ><q-icon color="blue-9" name="fab fa-linkedin"
           /></q-item-section>
@@ -55,6 +55,7 @@ import { useQuasar } from 'quasar'
 import { useStore } from 'vuex'
 import jwtDecode from 'jwt-decode'
 import { setAuthHeader } from '../boot/axios'
+import { recordClick } from '../composables/actions'
 
 const apiUrlBase = process.env.API_URL_BASE
 
@@ -79,13 +80,19 @@ export default {
   },
   methods: {
     handleSignOut() {
+      recordClick('Sign Out button', 'clear credentials')
       this.store.dispatch('auth/signOutUser')
     },
     handleSignIn(pid) {
+      recordClick('Sign In button', 'sign in using ' + pid)
       window.location.href = `${apiUrlBase}/login?pid=${pid}`
+    },
+    track(pid) {
+      recordClick('Sign In button', 'attempt sign in using ' + pid)
     },
     recoverSession() {
       console.log('check for cookie with valid session token')
+      recordClick('Sign In button', 'try to get session from cookie')
       const localToken = this.q.cookies.get('token')
       if (!this.isSignedIn && localToken) {
         const authDetails = jwtDecode(localToken)

@@ -4,6 +4,6 @@ export async function fetchActions() {
   return await api.get('/actions')
 }
 
-export async function createAction(actionCode, details) {
+export async function recordAction(actionCode, details) {
   return await api.post('/actions', { actionCode, details })
 }
