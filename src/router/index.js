@@ -6,6 +6,7 @@ import {
   createWebHashHistory,
 } from 'vue-router'
 import routes from './routes'
+import { recordNav } from '../composables/actions'
 
 /*
  * If not building with SSR mode, you can
@@ -36,6 +37,7 @@ export default route(function ({ store /*, ssrContext*/ }) {
   })
 
   Router.beforeEach((to, from, next) => {
+    recordNav(to.name)
     if (
       to.matched.some((record) => record.meta.requireAuth) &&
       !store.getters['auth/isSignedIn']
