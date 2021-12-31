@@ -41,7 +41,10 @@
       <q-toolbar>
         <q-toolbar-title>
           <div class="copyright-text">
-            Copyright 2021 &copy; Happy Spirit Publishing
+            Copyright {{ year }} &copy; Happy Spirit Publishing
+            <a href="https://www.happyspiritpublishing.com"
+              >(here)</a
+            >
           </div>
         </q-toolbar-title>
       </q-toolbar>
@@ -139,6 +142,7 @@ export default defineComponent({
 
     return {
       edition,
+      year,
       essentialLinks: linksList,
       leftDrawerOpen,
       toggleLeftDrawer() {
@@ -183,5 +187,6 @@ h6 {
 .copyright-text {
   font-family: 'merriweather';
   font-size: 12pt;
+  color: white;
 }
 </style>
