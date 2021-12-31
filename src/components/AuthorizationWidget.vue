@@ -43,7 +43,7 @@
             <q-item-label>GitHub</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item v-close-popup clickable @click="recoverSession">
+        <q-item v-show="sideDoor" v-close-popup clickable @click="recoverSession">
           <q-item-section avatar
             ><q-icon color="green-6" name="fas fa-recycle"
           /></q-item-section>
@@ -51,7 +51,7 @@
             <q-item-label>Rehydrate</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item v-close-popup clickable @click="() => handleSignIn('bypass')">
+        <q-item v-show="sideDoor" v-close-popup clickable @click="() => handleSignIn('bypass')">
           <q-item-section avatar
             ><q-icon color="orange-6" name="fas fa-sign-in-alt"
           /></q-item-section>
@@ -71,7 +71,8 @@
           <q-btn v-close-popup icon="close" flat round dense />
         </q-card-section>
         <q-card-section>
-          Sign In is not supported at this time. We took note of your interest and will get this working soon. Thanks for trying.
+          Sign In is not supported at this time. We took note of your interest
+          and will get this working soon. Thanks for trying.
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -90,6 +91,7 @@ import { recordClick } from '../composables/actions'
 const apiUrlBase = process.env.API_URL_BASE
 
 export default {
+  props: { sideDoor: Boolean },
   setup() {
     const q = useQuasar()
     const store = useStore()
