@@ -1,7 +1,7 @@
 export function notifyLoading({ commit }) {
   console.log('notifyLoading')
   commit('setIsLoading')
-  commit('setStatusMessage', { message: 'Hold your horses, Tex.' })
+  commit('setStatusMessage', { message: 'Hold your horses, Tex, while we look for that.' })
 }
 
 export function stopNotifyLoading({ commit }) {

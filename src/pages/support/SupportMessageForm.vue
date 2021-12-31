@@ -40,7 +40,7 @@ export default {
       { label: 'Something else', value: 'misc' },
     ]
     const purpose = ref('feedback')
-    const message = ref(' ')
+    const message = ref('')
 
     const store = useStore()
 
@@ -53,7 +53,7 @@ export default {
       onReset() {
         purpose.value = 'feedback'
         message.value = ' '
-      }
+      },
     }
   },
   methods: {
@@ -63,12 +63,14 @@ export default {
         message: this.message,
       }
       const confirmation = await createInquiry(inquiry)
-      this.notifyUser('Hey, you just sent a message to Power Up. Thanks! We will take it from here.')
+      this.notifyUser(
+        'Thanks! You just sent a message to the fine folks at Power Up Magazine. Glad to know you are out there.'
+      )
       this.onReset()
     },
     notifyUser(msg) {
-      this.store.commit('context/setStatusMessage', { message: msg })
-    }
+      this.store.commit('context/setStatusMessage', msg)
+    },
   },
 }
 </script>

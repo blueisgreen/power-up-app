@@ -2,6 +2,6 @@ export default function () {
   return {
     activeArticle: null,
     isLoading: false,
-    statusMessage: 'This is a work in progress. Feedback is welcome. Open the menu at the top left to find the Support page.',
+    statusMessage: 'Welcome to the Power Up interactive magazine. Everything you see is under construction. Click around and see what works. Feedback is welcome.',
   }
 }

@@ -11,5 +11,5 @@ export function setIsNotLoading(state) {
 }
 
 export function setStatusMessage(state, payload) {
-  state.statusMessage = payload.message
+  state.statusMessage = payload
 }
