@@ -30,6 +30,7 @@
           v-bind="link"
         />
       </q-list>
+      <img class="logo" alt="Power Up logo" src="~assets/logo-clear.svg" />
     </q-drawer>
 
     <q-page-container>
@@ -42,9 +43,7 @@
         <q-toolbar-title>
           <div class="copyright-text">
             Copyright {{ year }} &copy; Happy Spirit Publishing
-            <a href="https://www.happyspiritpublishing.com"
-              >(here)</a
-            >
+            <a href="https://www.happyspiritpublishing.com">(here)</a>
           </div>
         </q-toolbar-title>
       </q-toolbar>
@@ -126,6 +125,12 @@ const linksList = [
     route: 'AdminPanels',
     rolesWithAccess: ['admin'],
   },
+  {
+    title: 'About',
+    caption: 'About Power Up Magazine',
+    icon: 'fas fa-atom',
+    route: 'AboutPage',
+  },
 ]
 
 export default defineComponent({
@@ -188,5 +193,9 @@ h6 {
   font-family: 'merriweather';
   font-size: 12pt;
   color: white;
+}
+.logo {
+  margin-top: 3em;
+  width: 100%;
 }
 </style>

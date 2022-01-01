@@ -18,6 +18,11 @@ const routes = [
         component: () => import('../pages/SideDoor.vue'),
       },
       {
+        path: 'about',
+        name: 'AboutPage',
+        component: () => import('../pages/AboutPage.vue'),
+      },
+      {
         path: 'article/:articleId',
         name: 'ArticlePage',
         component: () => import('../pages/ArticleReaderPage.vue'),
