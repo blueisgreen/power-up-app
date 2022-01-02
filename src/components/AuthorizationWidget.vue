@@ -35,7 +35,7 @@
             <q-item-label>Amazon</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item v-close-popup clickable @click="() => track('github')">
+        <q-item v-close-popup clickable @click="() => handleSignIn('github')">
           <q-item-section avatar
             ><q-icon color="gray-6" name="fab fa-github"
           /></q-item-section>
