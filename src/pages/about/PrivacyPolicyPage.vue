@@ -42,15 +42,16 @@
     <p>
       Power Up Magazine authentication is done strictly using well-known
       identity providers, such as Google, LinkedIn, and GitHub. When you
-      register for an Account, we receive the public information that you have
-      given to that identity provider, including items such as name, nickname,
-      verified email address, and a link to your avatar image.
+      register for an account with Power Up Magazine, we receive some of the
+      public information that you have given to that identity provider,
+      including items such as name, nickname, verified email address, and a link
+      to your avatar image.
     </p>
     <p>
       If you contact us directly, we may receive additional information about
-      you such as your legal name, email address, phone number, the contents of the
-      message and/or attachments you may send us, and any other information you
-      may choose to provide.
+      you such as your legal name, email address, phone number, the contents of
+      the message and/or attachments you may send us, and any other information
+      you may choose to provide.
     </p>
 
     <h2 class="headline">How we use your information</h2>
