@@ -32,6 +32,24 @@
   font-style: italic;
 }
 
+.headline {
+  font-family: 'merriweather';
+  font-weight: bold;
+  font-style: italic;
+  margin-left: 0;
+  margin-bottom: 0.5em;
+}
+
+.article {
+  font-family: 'merriweather, serif';
+  font-size: 12pt;
+  margin-left: 0;
+}
+
+.article p {
+  margin-bottom: 1em;
+}
+
 .banner-font {
   font-family: 'merriweather';
   font-stretch: ultra-expanded;

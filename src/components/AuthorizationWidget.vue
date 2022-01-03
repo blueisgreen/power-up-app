@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <q-btn v-show="!isSignedIn" @click="() => handleSignIn('github')">Sign In</q-btn> -->
     <q-btn-dropdown v-show="!isSignedIn" color="primary" label="Sign In">
       <q-list>
         <q-item v-close-popup clickable @click="() => track('google')">
@@ -43,22 +42,6 @@
             <q-item-label>GitHub</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item v-show="sideDoor" v-close-popup clickable @click="recoverSession">
-          <q-item-section avatar
-            ><q-icon color="green-6" name="fas fa-recycle"
-          /></q-item-section>
-          <q-item-section>
-            <q-item-label>Rehydrate</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item v-show="sideDoor" v-close-popup clickable @click="() => handleSignIn('bypass')">
-          <q-item-section avatar
-            ><q-icon color="orange-6" name="fas fa-sign-in-alt"
-          /></q-item-section>
-          <q-item-section>
-            <q-item-label>Bypass</q-item-label>
-          </q-item-section>
-        </q-item>
       </q-list>
     </q-btn-dropdown>
     <q-btn v-show="isSignedIn" @click="handleSignOut">Sign Out</q-btn>
@@ -91,7 +74,6 @@ import { recordClick } from '../composables/actions'
 const apiUrlBase = process.env.API_URL_BASE
 
 export default {
-  props: { sideDoor: Boolean },
   setup() {
     const q = useQuasar()
     const store = useStore()
@@ -127,15 +109,6 @@ export default {
         'context/setStatusMessage',
         'This website is under construction. We appreciate your interest.'
       )
-    },
-    recoverSession() {
-      console.log('check for cookie with valid session token')
-      recordClick('Sign In button', 'try to get session from cookie')
-      const localToken = this.q.cookies.get('token')
-      if (!this.isSignedIn && localToken) {
-        const authDetails = jwtDecode(localToken)
-        this.setUserInfo(localToken, authDetails.user)
-      }
     },
   },
 }
