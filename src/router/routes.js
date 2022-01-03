@@ -13,14 +13,25 @@ const routes = [
         component: () => import('../pages/Index.vue'),
       },
       {
-        path: 'sidedoor',
-        name: 'SideDoor',
-        component: () => import('../pages/SideDoor.vue'),
-      },
-      {
         path: 'about',
-        name: 'AboutPage',
-        component: () => import('../pages/AboutPage.vue'),
+        component: () => import('../pages/about/AboutPage.vue'),
+        children: [
+          {
+            path: '',
+            name: 'AboutPage',
+            component: () => import('../pages/about/AboutUs.vue'),
+          },
+          {
+            path: 'terms',
+            name: 'TermsOfUsePage',
+            component: () => import('../pages/about/TermsOfUsePage.vue'),
+          },
+          {
+            path: 'privacy',
+            name: 'PrivacyPolicyPage',
+            component: () => import('../pages/about/PrivacyPolicyPage.vue'),
+          },
+        ],
       },
       {
         path: 'article/:articleId',

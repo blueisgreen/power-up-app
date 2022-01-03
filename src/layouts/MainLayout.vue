@@ -46,6 +46,20 @@
             <a href="https://www.happyspiritpublishing.com">(here)</a>
           </div>
         </q-toolbar-title>
+        <q-btn-dropdown color="primary" label="Policies">
+          <q-list>
+            <q-item v-close-popup clickable @click="() => navigate('TermsOfUsePage')">
+              <q-item-section>
+                <q-item-label>Terms of Use</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item v-close-popup clickable @click="() => navigate('PrivacyPolicyPage')">
+              <q-item-section>
+                <q-item-label>Privacy Policy</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
       </q-toolbar>
     </q-footer>
   </q-layout>
@@ -54,6 +68,7 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { useStore, mapGetters } from 'vuex'
+import { routerLink } from 'vue-router'
 import AuthorizationWidget from 'components/AuthorizationWidget.vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import StatusBar from 'components/StatusBar.vue'
@@ -167,6 +182,11 @@ export default defineComponent({
       return visibleItems
     },
     ...mapGetters('auth', ['isSignedIn', 'hasRole']),
+  },
+  methods: {
+    navigate(to) {
+      this.$router.push({ name: to })
+    },
   },
 })
 </script>
