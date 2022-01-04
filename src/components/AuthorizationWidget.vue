@@ -2,7 +2,7 @@
   <div>
     <q-btn-dropdown v-show="!isSignedIn" color="primary" label="Sign In">
       <q-list>
-        <q-item v-close-popup clickable @click="() => track('google')">
+        <q-item v-close-popup clickable @click="() => handleSignIn('google')">
           <q-item-section avatar
             ><q-icon color="red-8" name="fab fa-google"
           /></q-item-section>
