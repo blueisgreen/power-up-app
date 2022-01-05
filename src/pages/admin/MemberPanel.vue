@@ -1,6 +1,14 @@
 <template>
   <div class="q-pa-md">
     <h3>Member Administration</h3>
+    <q-toolbar class="text-primary">
+      <q-toolbar-title>
+        Find Member
+      <q-input v-model="aliasToFind" label="Alias" stack-label />
+      </q-toolbar-title>
+      <q-btn flat round dense icon="fas fa-search" @click="search" />
+    </q-toolbar>
+
     <q-list>
       <q-item v-for="user in users" :key="user.userKey" clickable>
         <q-item-section avatar>
@@ -30,11 +38,17 @@ export default defineComponent({
       store.dispatch('admin/refreshUsers')
     })
     return {
-      showDetail: false
+      showDetail: ref(false),
+      aliasToFind: ref(''),
     }
   },
   computed: {
     ...mapGetters('admin', ['users'])
+  },
+  methods: {
+    search() {
+      console.log('you are looking for someone...who goes by...' + this.aliasToFind);
+    }
   }
 })
 </script>
