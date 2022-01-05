@@ -9,3 +9,13 @@ export async function fetchUsers() {
     return []
   }
 }
+
+export async function fetchUserRoles(userKey) {
+  try {
+    const results = await api.get(`/admin/users/${userKey}/roles`)
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return []
+  }
+}

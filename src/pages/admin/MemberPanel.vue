@@ -17,10 +17,11 @@
         <q-item-section>
           <q-item-label>{{ user.alias }}</q-item-label>
           <q-item-label caption lines="2">{{ user.userKey }}</q-item-label>
+          <q-item-label caption lines="3">{{ user.createdAt }}</q-item-label>          
         </q-item-section>
         <q-item-section side top>
           <q-item-label caption>{{ user.email }}</q-item-label>
-          <q-icon name="star" color="yellow" />
+          <q-item-label v-for="role in user.roles" :key="role">{{ role }},</q-item-label>
         </q-item-section>
       </q-item>
     </q-list>
