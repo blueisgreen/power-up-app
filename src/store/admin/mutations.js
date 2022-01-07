@@ -15,3 +15,7 @@ export function removeUser(state, { userKey }) {
   delete state.usersById[userKey]
   state.userIds = state.userIds.filter((item) => item !== userKey)
 }
+
+export function loadRoles(state, { roles }) {
+  state.roles = roles
+}

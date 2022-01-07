@@ -44,6 +44,17 @@
         </ul>
       </q-card-section>
       <q-separator dark />
+      <q-card-section>
+        <select :v-model="roleToAdd">
+          <option
+            v-for="altRole in unassignedRoles"
+            :key="altRole.id"
+            :value="role.code"
+          >
+            {{ role.displayName }}
+          </option>
+        </select>
+      </q-card-section>
       <q-card-actions>
         <q-btn flat>Remove Role</q-btn>
         <q-btn flat>Assign Role</q-btn>
@@ -62,16 +73,28 @@ export default defineComponent({
     const store = useStore()
     onMounted(() => {
       store.dispatch('admin/refreshUsers')
+      store.dispatch('admin/loadRoleOptions')
     })
     return {
+      store,
       searchQuery: ref(null),
       showDetail: ref(false),
       selected: ref(null),
       roles: ref([]),
+      roleToAdd: ref(null),
     }
   },
   computed: {
     ...mapGetters('admin', ['users']),
+    unassignedRoles() {
+      const allRoles = this.store.state.admin.roles
+      if (!this.selected) {
+        return allRoles
+      } else {
+        // FIXME: should subtract roles already assigned
+        return allRoles
+      }
+    },
   },
   methods: {
     search() {
