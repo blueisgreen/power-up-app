@@ -108,6 +108,7 @@ export default defineComponent({
       console.log('Found roles:', roles)
       this.roles = roles
     },
+    assignRole(role) {},
   },
 })
 </script>
