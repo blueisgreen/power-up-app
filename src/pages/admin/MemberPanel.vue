@@ -49,15 +49,15 @@
           <option
             v-for="altRole in unassignedRoles"
             :key="altRole.id"
-            :value="role.code"
+            :value="altRole.code"
           >
-            {{ role.displayName }}
+            {{ altRole.displayName }}
           </option>
         </select>
+        <q-btn flat>Assign Role</q-btn>
       </q-card-section>
       <q-card-actions>
         <q-btn flat>Remove Role</q-btn>
-        <q-btn flat>Assign Role</q-btn>
       </q-card-actions>
     </q-card>
   </div>
@@ -91,8 +91,10 @@ export default defineComponent({
       if (!this.selected) {
         return allRoles
       } else {
-        // FIXME: should subtract roles already assigned
-        return allRoles
+        const diff = allRoles.filter(
+          (check) => !this.roles.includes(check.code)
+        )
+        return diff
       }
     },
   },
