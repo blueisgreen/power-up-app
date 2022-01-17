@@ -1,16 +1,8 @@
 <template>
   <div>
-    <q-splitter
-      v-model="splitterModel"
-      style="height: 250px"
-    >
-
+    <q-splitter v-model="splitterModel">
       <template #before>
-        <q-tabs
-          v-model="tab"
-          vertical
-          class="text-teal"
-        >
+        <q-tabs v-model="tab" vertical class="text-teal">
           <q-tab name="welcome" icon="fas fa-tools" label="Welcome" />
           <q-tab name="members" icon="fas fa-users-cog" label="Members" />
           <q-tab name="system" icon="settings" label="System" />
@@ -39,7 +31,6 @@
           </q-tab-panel>
         </q-tab-panels>
       </template>
-
     </q-splitter>
   </div>
 </template>
@@ -52,11 +43,11 @@ import SystemPanel from './SystemPanel.vue'
 
 export default {
   components: { WelcomePanel, MemberPanel, SystemPanel },
-  setup () {
+  setup() {
     return {
       tab: ref('welcome'),
-      splitterModel: ref(20)
+      splitterModel: ref(20),
     }
-  }
+  },
 }
 </script>
