@@ -120,7 +120,7 @@
           <q-item-label class="text-bold">Account Status</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ accountStatusId }}</q-item-label>
+          <q-item-label>Powered On</q-item-label>
         </q-item-section>
       </q-item>
 

@@ -225,7 +225,7 @@ export default {
         this.store.dispatch('profile/updateMyProfile', {
           publicId: this.accountId,
           alias: this.desiredAlias,
-          email: this.unverifiedEmail,
+          email: this.unverifiedEmail || this.socialEmail,
           agreeToTerms: !!this.termsAcceptedAt || this.okWithTerms,
           agreeToCookies: !!this.cookiesAcceptedAt || this.okWithCookies,
           agreeToEmailComms: !!this.emailCommsAcceptedAt || this.okWithEmail,

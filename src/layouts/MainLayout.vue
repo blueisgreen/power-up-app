@@ -45,7 +45,6 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { useStore, mapGetters } from 'vuex'
-import { routerLink } from 'vue-router'
 import AuthorizationWidget from 'components/AuthorizationWidget.vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import StatusBar from 'components/StatusBar.vue'
