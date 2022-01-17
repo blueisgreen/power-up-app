@@ -22,7 +22,7 @@
 
     <q-drawer v-model="leftDrawerOpen" side="left" bordered class="bg-grey-1">
       <q-list>
-        <q-item-label header class="text-grey-8"> Site Directory </q-item-label>
+        <q-item-label header class="text-grey-8">Site Directory</q-item-label>
 
         <EssentialLink
           v-for="link in visibleMenuItems"
@@ -38,30 +38,7 @@
       <router-view />
     </q-page-container>
 
-    <q-footer elevated class="bg-grey-8 text-white text-center">
-      <q-toolbar>
-        <q-toolbar-title>
-          <div class="copyright-text">
-            Copyright {{ year }} &copy; Happy Spirit Publishing
-            <a href="https://www.happyspiritpublishing.com">(here)</a>
-          </div>
-        </q-toolbar-title>
-        <q-btn-dropdown color="primary" label="Policies">
-          <q-list>
-            <q-item v-close-popup clickable @click="() => navigate('TermsOfUsePage')">
-              <q-item-section>
-                <q-item-label>Terms of Use</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item v-close-popup clickable @click="() => navigate('PrivacyPolicyPage')">
-              <q-item-section>
-                <q-item-label>Privacy Policy</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-btn-dropdown>
-      </q-toolbar>
-    </q-footer>
+    <main-footer />
   </q-layout>
 </template>
 
@@ -72,6 +49,7 @@ import { routerLink } from 'vue-router'
 import AuthorizationWidget from 'components/AuthorizationWidget.vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import StatusBar from 'components/StatusBar.vue'
+import MainFooter from 'layouts/MainFooter.vue'
 
 // FIXME: cache this
 const now = new Date()
@@ -155,6 +133,7 @@ export default defineComponent({
     EssentialLink,
     AuthorizationWidget,
     StatusBar,
+    MainFooter,
   },
 
   setup() {
@@ -183,11 +162,6 @@ export default defineComponent({
     },
     ...mapGetters('auth', ['isSignedIn', 'hasRole']),
   },
-  methods: {
-    navigate(to) {
-      this.$router.push({ name: to })
-    },
-  },
 })
 </script>
 <style>
@@ -208,11 +182,6 @@ h6 {
 }
 .section {
   margin-top: 2em;
-}
-.copyright-text {
-  font-family: 'merriweather';
-  font-size: 12pt;
-  color: white;
 }
 .logo {
   margin-top: 3em;
