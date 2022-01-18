@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-btn-dropdown v-show="!isSignedIn" color="primary" label="Sign In">
-      <q-list>
+      <q-list style="max-width: 200px">
         <q-item v-close-popup clickable @click="() => handleSignIn('google')">
           <q-item-section avatar
             ><q-icon color="red-8" name="fab fa-google"
@@ -10,12 +10,30 @@
             <q-item-label>Google</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item v-close-popup clickable @click="() => track('linkedin')">
+        <q-item v-close-popup clickable @click="() => handleSignIn('linkedin')">
           <q-item-section avatar
             ><q-icon color="blue-9" name="fab fa-linkedin"
           /></q-item-section>
           <q-item-section>
             <q-item-label>LinkedIn</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item v-close-popup clickable @click="() => handleSignIn('github')">
+          <q-item-section avatar
+            ><q-icon color="gray-6" name="fab fa-github"
+          /></q-item-section>
+          <q-item-section>
+            <q-item-label>GitHub</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-separator />
+        <q-item>
+          <q-item-section>
+            <q-item-label>Future Options Below</q-item-label>
+            <q-item-label caption
+              >If you see what you like better, click to make a
+              wish.</q-item-label
+            >
           </q-item-section>
         </q-item>
         <q-item v-close-popup clickable @click="() => track('twitter')">
@@ -32,14 +50,6 @@
           /></q-item-section>
           <q-item-section>
             <q-item-label>Amazon</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item v-close-popup clickable @click="() => handleSignIn('github')">
-          <q-item-section avatar
-            ><q-icon color="gray-6" name="fab fa-github"
-          /></q-item-section>
-          <q-item-section>
-            <q-item-label>GitHub</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
