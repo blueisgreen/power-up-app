@@ -40,7 +40,7 @@
       <q-card-section>
         Assigned Roles
         <ul>
-          <li v-for="role in roles" :key="role">{{ role }}</li>
+          <li v-for="role in selectedRoles" :key="role">{{ role }}</li>
         </ul>
       </q-card-section>
       <q-separator dark />
@@ -80,19 +80,20 @@ export default defineComponent({
       searchQuery: ref(null),
       showDetail: ref(false),
       selected: ref(null),
-      roles: ref([]),
+      selectedRoles: ref([]),
+      roleOptions: ref([]),
       roleToAdd: ref(null),
     }
   },
   computed: {
     ...mapGetters('admin', ['users']),
     unassignedRoles() {
-      const allRoles = this.store.state.admin.roles
+      const allRoles = this.store.state.admin.roleOptions || []
       if (!this.selected) {
         return allRoles
       } else {
         const diff = allRoles.filter(
-          (check) => !this.roles.includes(check.code)
+          (check) => !this.roleOptions.includes(check.code)
         )
         return diff
       }
@@ -106,7 +107,7 @@ export default defineComponent({
       this.selected = member
       const roles = await fetchUserRoles(this.selected.userKey)
       console.log('Found roles:', roles)
-      this.roles = roles
+      this.selectedRoles = roles
     },
     assignRole(role) {},
   },

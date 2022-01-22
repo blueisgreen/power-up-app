@@ -16,6 +16,10 @@ export function removeUser(state, { userKey }) {
   state.userIds = state.userIds.filter((item) => item !== userKey)
 }
 
+export function loadRoleOptions(state, { roles }) {
+  state.roleOptions = roles
+}
+
 export function loadRoles(state, { roles }) {
   state.roles = roles
 }
