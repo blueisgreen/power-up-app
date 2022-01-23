@@ -14,11 +14,12 @@
 
         <q-card-section style="width: 50%">
           <div class="text-h6">Available</div>
-          <select v-model="roleToAdd">
-            <option v-for="role in available" :key="role.code">
-              {{ role.display }}
-            </option>
-          </select>
+          <q-select
+            v-model="roleToAdd"
+            :options="available"
+            option-label="display"
+            option-value="code"
+          ></q-select>
           <div><q-btn @click="add">Assign</q-btn></div>
         </q-card-section>
       </q-card-section>
@@ -70,7 +71,8 @@ export default {
       }
     },
     remove(role) {
-      this.proposed.value = this.proposed.filter((item) => item !== role)
+      console.log('tried to remove', role)
+      this.proposed = this.proposed.filter((item) => item !== role)
     },
     save() {
       // emit so that parent component can decide what action to take
