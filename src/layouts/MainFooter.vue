@@ -3,7 +3,7 @@
     <q-toolbar>
       <q-toolbar-title>
         <div class="copyright-text">
-          Copyright {{ year }} &copy;
+          Copyright 2022 &copy;
           <a href="https://www.happyspiritpublishing.com"
             >Happy Spirit Publishing</a
           >

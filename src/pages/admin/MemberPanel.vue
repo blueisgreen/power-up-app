@@ -32,7 +32,7 @@
         </q-item-section>
       </q-item>
     </q-list>
-    <member-detail-panel v-if="selected" :user="selected" />
+    <MemberDetailPanel v-if="selected" :user="selected" />
   </div>
 </template>
 
@@ -42,7 +42,7 @@ import { useStore, mapGetters } from 'vuex'
 import MemberDetailPanel from './MemberDetailPanel.vue'
 
 export default defineComponent({
-  components: [MemberDetailPanel],
+  components: { MemberDetailPanel },
   setup() {
     const store = useStore()
     onMounted(() => {
@@ -50,7 +50,6 @@ export default defineComponent({
       store.dispatch('admin/loadRoleOptions')
     })
     return {
-      store,
       searchQuery: ref(null),
       showDetail: ref(false),
       selected: ref(null),
