@@ -107,7 +107,7 @@ export default defineComponent({
       this.selected = member
       const roles = await fetchUserRoles(this.selected.userKey)
       console.log('Found roles:', roles)
-      this.selectedRoles = roles
+      this.selected.roles = roles
     },
     assignRole(role) {},
   },
