@@ -65,10 +65,9 @@ export default defineComponent({
     },
     async selectMember(member) {
       this.selected = member
-      // const roles = await fetchUserRoles(this.selected.userKey)
-      // console.log('Found roles:', roles)
-      // // FIXME: this is making vuex complain - rightly so
-      // this.selected.roles = roles
+      store.dispatch('admin/loadUserDetails', {
+        userKey: member.userKey,
+      })
     },
   },
 })

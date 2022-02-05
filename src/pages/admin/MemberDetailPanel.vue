@@ -1,12 +1,18 @@
 <template>
   <div>
-    <div class="text-h4 text-center">{{ user.alias }} ( {{ user.userKey }} )</div>
-    <role-assignment-selector />
+    <div class="text-h4 text-center">
+      {{ user.alias }} ( {{ user.userKey }} )
+    </div>
+    <role-assignment-selector
+      :role-options="roleOptions"
+      :starting-roles="user.roles"
+    />
   </div>
 </template>
 
 <script>
-import { defineComponent, onMounted } from 'vue'
+import { defineComponent } from 'vue'
+import { useStore } from 'vuex'
 import RoleAssignmentSelector from './RoleAssignmentSelector.vue'
 
 export default defineComponent({
@@ -16,6 +22,13 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+  },
+  setup() {
+    const store = useStore()
+    const roleOptions = store.state.admin.roleOptions
+    return {
+      roleOptions,
+    }
   },
 })
 </script>

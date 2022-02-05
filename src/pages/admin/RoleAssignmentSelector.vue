@@ -15,7 +15,7 @@
         <q-card-section style="width: 50%">
           <div class="text-h6">Available</div>
           <q-select
-            v-model="roleToAdd"
+            v-model="selectedRole"
             :options="available"
             option-label="display"
             option-value="code"
@@ -37,24 +37,27 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 // TODO: try using new setup approach
 export default {
-  setup() {
-    // TODO: use props for roleOptions and assigned
-    const roleOptions = [
-      { code: '', display: '--choose--' },
-      { code: 'member', display: 'Member' },
-      { code: 'author', display: 'Author' },
-      { code: 'editor', display: 'Editor' },
-      { code: 'moderator', display: 'Moderator' },
-      { code: 'support', display: 'Support' },
-    ]
-    const assigned = ['member']
-    const proposed = ref([...assigned]) // start with a copy of the array passed in
-    const roleToAdd = ref('')
-
-    return { roleOptions, proposed, roleToAdd }
+  props: {
+    startingRoles: {
+      type: Array,
+      required: true,
+    },
+    roleOptions: {
+      type: Array,
+      required: true,
+    },
+  },
+  setup(props) {
+    const proposed = ref([]) // start with a copy of the array passed in
+    const selectedRole = ref('')
+    onMounted(() => {
+      //load initial roles passed as prop
+      props.startingRoles.map((item) => this.proposed.push(item))
+    })
+    return { proposed, selectedRole }
   },
   computed: {
     available() {
@@ -65,9 +68,9 @@ export default {
   },
   methods: {
     add() {
-      if (this.roleToAdd) {
-        this.proposed.push(this.roleToAdd.code)
-        this.roleToAdd = ''
+      if (this.selectedRole) {
+        this.proposed.push(this.selectedRole.code)
+        this.selectedRole = ''
       }
     },
     remove(role) {
