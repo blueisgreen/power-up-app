@@ -50,6 +50,7 @@ export default defineComponent({
       store.dispatch('admin/loadRoleOptions')
     })
     return {
+      store,
       searchQuery: ref(null),
       showDetail: ref(false),
       selected: ref(null),
@@ -65,7 +66,7 @@ export default defineComponent({
     },
     async selectMember(member) {
       this.selected = member
-      store.dispatch('admin/loadUserDetails', {
+      this.store.dispatch('admin/loadUserDetails', {
         userKey: member.userKey,
       })
     },

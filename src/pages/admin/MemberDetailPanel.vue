@@ -5,7 +5,7 @@
     </div>
     <role-assignment-selector
       :role-options="roleOptions"
-      :starting-roles="user.roles"
+      :starting-roles="userRoles"
     />
   </div>
 </template>
@@ -30,6 +30,11 @@ export default defineComponent({
       roleOptions,
     }
   },
+  computed: {
+    userRoles() {
+      return this.user.roles || []
+    }
+  }
 })
 </script>
 
