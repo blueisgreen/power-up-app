@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="text-h4 text-center">
+    <hr />
+    <div class="text-h6 text-center">
       {{ user.alias }} ( {{ user.userKey }} )
     </div>
     <role-assignment-selector

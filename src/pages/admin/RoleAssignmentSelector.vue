@@ -1,11 +1,10 @@
 <template>
   <div class="q-pa-md">
-    <div class="text-h5 row">Roles</div>
     <q-card class="my-card">
       <q-card-section horizontal>
         <q-card-section style="width: 50%">
           <div class="text-h6">Assigned</div>
-          <div v-for="role in proposed" :key="role">
+          <div v-for="role in assignedRoles" :key="role">
             {{ display(role) }} <q-btn @click="() => remove(role)">X</q-btn>
           </div>
         </q-card-section>
@@ -26,22 +25,15 @@
 
       <q-separator />
 
-      <q-card-section class="bg-secondary">
-        <q-card-actions align="around">
-          <q-btn class="bg-positive" @click="save">Save</q-btn>
-          <q-btn class="bg-warning" @click="cancel">Cancel</q-btn>
-        </q-card-actions>
-      </q-card-section>
     </q-card>
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
-// TODO: try using new setup approach
+import { ref } from 'vue'
 export default {
   props: {
-    startingRoles: {
+    assignedRoles: {
       type: Array,
       required: true,
     },
@@ -50,32 +42,27 @@ export default {
       required: true,
     },
   },
+  emits: ['addItem', 'removeItem'],
   setup(props) {
-    const proposed = ref([]) // start with a copy of the array passed in
     const selectedRole = ref('')
-    onMounted(() => {
-      //load initial roles passed as prop
-      props.startingRoles.map((item) => this.proposed.push(item))
-    })
-    return { proposed, selectedRole }
+    return { selectedRole }
   },
   computed: {
     available() {
       return this.roleOptions.filter(
-        (role) => !this.proposed.includes(role.code)
+        (role) => !this.assignedRoles.includes(role.code)
       )
     },
   },
   methods: {
     add() {
       if (this.selectedRole) {
-        this.proposed.push(this.selectedRole.code)
+        this.$emit('addItem', this.selectedRole)
         this.selectedRole = ''
       }
     },
     remove(role) {
-      console.log('tried to remove', role)
-      this.proposed = this.proposed.filter((item) => item !== role)
+      this.$emit('removeItem', role)
     },
     save() {
       // emit so that parent component can decide what action to take
