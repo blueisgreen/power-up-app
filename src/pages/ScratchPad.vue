@@ -10,8 +10,8 @@
     <q-card>
       <q-card-section class="bg-secondary">
         <q-card-actions align="around">
-          <q-btn class="bg-positive" @click="save">Save</q-btn>
-          <q-btn class="bg-warning" @click="cancel">Cancel</q-btn>
+          <q-btn class="bg-positive" @click="noop">Save</q-btn>
+          <q-btn class="bg-warning" @click="noop">Cancel</q-btn>
         </q-card-actions>
       </q-card-section>
     </q-card>
@@ -45,6 +45,9 @@ export default defineComponent({
     },
     remove(role) {
       this.starting = this.starting.filter((item) => item !== role)
+    },
+    noop() {
+      console.log('not implemented')
     },
   },
 })

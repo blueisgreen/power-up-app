@@ -64,14 +64,6 @@ export default {
     remove(role) {
       this.$emit('removeItem', role)
     },
-    save() {
-      // emit so that parent component can decide what action to take
-      console.log('not implemented: save roles', this.proposed)
-    },
-    cancel() {
-      // reset proposed to given and emit signal to parent component
-      console.log('not implemented: cancel')
-    },
     display(code) {
       if (code && code !== '') {
         const option = this.roleOptions.find((bah) => code === bah.code)

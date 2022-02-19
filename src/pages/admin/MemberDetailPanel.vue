@@ -6,7 +6,9 @@
     </div>
     <role-assignment-selector
       :role-options="roleOptions"
-      :starting-roles="userRoles"
+      :assigned-roles="userRoles"
+      @add-item="addRole"
+      @remove-item="removeRole"
     />
   </div>
 </template>
@@ -34,8 +36,18 @@ export default defineComponent({
   computed: {
     userRoles() {
       return this.user.roles || []
-    }
-  }
+    },
+  },
+  methods: {
+    addRole(role) {
+      // FIXME: use API to update roles
+      console.log('add', role)
+    },
+    removeRole(role) {
+      // FIXME: use API to update roles
+      console.log('remove', role)
+    },
+  },
 })
 </script>
 
