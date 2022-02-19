@@ -1,4 +1,10 @@
-import { fetchUsers, fetchUserRoles, fetchRoles } from '../../api/PowerUpApi'
+import {
+  fetchUsers,
+  fetchUserRoles,
+  fetchRoles,
+  addUserRole,
+  removeUserRole,
+} from '../../api/PowerUpApi'
 
 export async function refreshUsers({ commit }) {
   const results = await fetchUsers()
@@ -9,13 +15,13 @@ export async function refreshUsers({ commit }) {
 export async function loadUserDetails({ commit, getters }, { userKey }) {
   const user = getters.user(userKey)
   if (!user) {
-    console.log('user not cached', userKey);
+    console.log('user not cached', userKey)
   } else if (!user.roles) {
     const roles = await fetchUserRoles(userKey)
-    console.log('got roles for user', userKey, roles);
+    console.log('got roles for user', userKey, roles)
     commit('addUserDetails', { userKey, roles })
   } else {
-    console.log('user and roles already cached');
+    console.log('user and roles already cached')
   }
 }
 
@@ -25,5 +31,17 @@ export async function loadRoleOptions({ commit, getters }) {
     commit('loadRoleOptions', { roles: results })
   } else {
     console.log('role options already loaded')
+  }
+}
+
+export async function assignUserRole({ commit }, { userKey, role }) {
+  if (await addUserRole(userKey, role)) {
+    commit('addUserRole', { userKey, role })
+  }
+}
+
+export async function unassignUserRole({ commit }, { userKey, role }) {
+  if (await removeUserRole(userKey, role)) {
+    commit('removeUserRole', { userKey, role })
   }
 }

@@ -20,6 +20,28 @@ export async function fetchUserRoles(userKey) {
   }
 }
 
+export async function addUserRole(userKey, role) {
+  try {
+    const results = await api.put(`/admin/users/${userKey}/roles/${role}`)
+    console.log(JSON.stringify(results))
+    return true
+  } catch (err) {
+    console.error(err)
+    return false
+  }
+}
+
+export async function removeUserRole(userKey, role) {
+  try {
+    const results = await api.delete(`/admin/users/${userKey}/roles/${role}`)
+    console.log(JSON.stringify(results))
+    return true
+  } catch (err) {
+    console.error(err)
+    return false
+  }
+}
+
 export async function fetchRoles() {
   try {
     const results = await api.get('/admin/roles')
