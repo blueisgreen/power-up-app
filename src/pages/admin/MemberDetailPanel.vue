@@ -31,6 +31,7 @@ export default defineComponent({
     const roleOptions = store.state.admin.roleOptions
     return {
       roleOptions,
+      store,
     }
   },
   computed: {
@@ -40,12 +41,16 @@ export default defineComponent({
   },
   methods: {
     addRole(role) {
-      // FIXME: use API to update roles
-      console.log('add', role)
+      this.store.dispatch('admin/assignUserRole', {
+        userKey: this.user.userKey,
+        role: role.code,
+      })
     },
     removeRole(role) {
-      // FIXME: use API to update roles
-      console.log('remove', role)
+      this.store.dispatch('admin/unassignUserRole', {
+        userKey: this.user.userKey,
+        role,
+      })
     },
   },
 })

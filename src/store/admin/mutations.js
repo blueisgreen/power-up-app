@@ -31,6 +31,6 @@ export function addUserRole(state, { userKey, role }) {
 }
 
 export function removeUserRole(state, { userKey, role }) {
-  const roles = state.usersById[userKey].roles
-  roles = roles.filter((item) => item !== role)
+  const starting = state.usersById[userKey].roles
+  state.usersById[userKey].roles = starting.filter((item) => item !== role)
 }
