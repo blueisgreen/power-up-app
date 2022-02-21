@@ -1,10 +1,13 @@
 <template>
   <div class="q-pa-md">
     <h3>System Administration</h3>
+
     <div class="row">
-      <div class="col">Filters</div>
+      <div class="text-h5 col">Filters</div>
+    </div>
+    <div class="row">
       <div class="col">
-        Date:
+        <span class="text-h6">When:</span>
         <q-input v-model="dateFilter" filled>
           <template #prepend>
             <q-icon name="event" class="cursor-pointer">
@@ -24,7 +27,7 @@
         </q-input>
       </div>
       <div class="col">
-        Who:
+        <span class="text-h6">Who:</span>
         <q-select
           v-model="userFilter"
           standout="bg-teal text-white"
@@ -83,3 +86,12 @@ export default defineComponent({
   },
 })
 </script>
+<style scoped>
+th {
+  background-color: bisque;
+}
+td {
+  border-bottom: 1px solid gray;
+  padding: 0.5em;
+}
+</style>
