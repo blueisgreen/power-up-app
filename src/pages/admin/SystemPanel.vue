@@ -50,14 +50,17 @@
   </div>
 </template>
 <script>
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, ref } from 'vue'
 import { date } from 'quasar'
 
 export default defineComponent({
   setup() {
-    formatDate = (ts) => date.formatDate(ts, 'YYYY-MM-DDTHH:mm:ss.SSSZ')
+    const formatDate = (ts) => date.formatDate(ts, 'YYYY-MM-DDTHH:mm:ss.SSSZ')
     return {
       formatDate,
+      dateFilter: ref(new Date()),
+      userFilter: ref(null),
+      usersWithActivity: ref(['bubba', 'zanzibar']),
     }
   },
 })
