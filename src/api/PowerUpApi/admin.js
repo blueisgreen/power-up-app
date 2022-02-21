@@ -52,7 +52,10 @@ export async function fetchRoles() {
 
 export async function fetchActivity(dateFilter) {
   try {
-    const results = await api.get(`/admin/activity?on=${dateFilter}`)
+    const endpoint = dateFilter
+      ? `/admin/activities?on=${dateFilter.toISOString()}`
+      : '/admin/activities'
+    const results = await api.get(endpoint)
     return results.data
   } catch (err) {
     console.error(err)

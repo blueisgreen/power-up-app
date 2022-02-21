@@ -40,11 +40,11 @@
         <th>What</th>
         <th>Details</th>
       </tr>
-      <tr>
-        <td>{{ formatDate(new Date()) }}</td>
-        <td>The Happy Spirit</td>
-        <td>viewpage</td>
-        <td>Home</td>
+      <tr v-for="action in activity" :key="action.createdAt">
+        <td>{{ formatDate(action.createdAt) }}</td>
+        <td>{{ action.userKey }}</td>
+        <td>{{ action.actionCode }}</td>
+        <td>{{ action.details }}</td>
       </tr>
     </table>
   </div>
@@ -55,12 +55,20 @@ import { date } from 'quasar'
 
 export default defineComponent({
   setup() {
-    const formatDate = (ts) => date.formatDate(ts, 'YYYY-MM-DDTHH:mm:ss.SSSZ')
+    const formatDate = (ts) => date.formatDate(ts, 'YYYY MMM DD')
     return {
       formatDate,
       dateFilter: ref(new Date()),
       userFilter: ref(null),
       usersWithActivity: ref(['bubba', 'zanzibar']),
+      activity: ref([
+        {
+          createdAt: new Date(),
+          userKey: '123-abc-4567-def-890',
+          actionCode: 'navigate',
+          details: '{"target":"AdminPanels"}',
+        },
+      ]),
     }
   },
 })
