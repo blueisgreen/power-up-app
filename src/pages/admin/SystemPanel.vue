@@ -52,24 +52,34 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { date } from 'quasar'
+import { fetchActivity } from '../../api/PowerUpApi'
 
 export default defineComponent({
   setup() {
     const formatDate = (ts) => date.formatDate(ts, 'YYYY MMM DD')
+    const dateFilter = ref(new Date())
+    const userFilter = ref(null)
+    const activity = ref([
+      {
+        createdAt: new Date(),
+        userKey: '123-abc-4567-def-890',
+        actionCode: 'navigate',
+        details: '{"target":"AdminPanels"}',
+      },
+    ])
     return {
       formatDate,
-      dateFilter: ref(new Date()),
-      userFilter: ref(null),
+      activity,
+      dateFilter,
+      userFilter,
       usersWithActivity: ref(['bubba', 'zanzibar']),
-      activity: ref([
-        {
-          createdAt: new Date(),
-          userKey: '123-abc-4567-def-890',
-          actionCode: 'navigate',
-          details: '{"target":"AdminPanels"}',
-        },
-      ]),
     }
+  },
+  async mounted() {
+    const results = await fetchActivity(this.dateFilter)
+    console.log('found activities', results)
+    this.activity.length = 0
+    results.forEach((result) => this.activity.push(result))
   },
 })
 </script>
