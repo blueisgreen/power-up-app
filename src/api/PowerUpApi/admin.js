@@ -49,3 +49,13 @@ export async function fetchRoles() {
     return []
   }
 }
+
+export async function fetchActivity(dateFilter) {
+  try {
+    const results = await api.get(`/admin/activity?on=${dateFilter}`)
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return []
+  }
+}

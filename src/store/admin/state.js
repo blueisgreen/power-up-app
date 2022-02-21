@@ -3,5 +3,6 @@ export default function () {
     usersById: {},
     userIds: [],
     roleOptions: [],
+    activity: [],
   }
 }

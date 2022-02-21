@@ -3,7 +3,7 @@
     <h3>Power Up Administration</h3>
     <div>
       This area is for Power Up app administrators. If you have the right
-      permissions, you can manage:
+      permissions, you can see an activity dashboard and manage:
     </div>
     <ul>
       <li>Support functions: responding to inquiries</li>
@@ -22,10 +22,6 @@
   </div>
 </template>
 <script>
-export default {
-  
-}
+export default {}
 </script>
-<style>
-
-</style>
+<style></style>

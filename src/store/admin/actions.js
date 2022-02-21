@@ -4,6 +4,7 @@ import {
   fetchRoles,
   addUserRole,
   removeUserRole,
+  fetchActivity,
 } from '../../api/PowerUpApi'
 
 export async function refreshUsers({ commit }) {
@@ -44,4 +45,9 @@ export async function unassignUserRole({ commit }, { userKey, role }) {
   if (await removeUserRole(userKey, role)) {
     commit('removeUserRole', { userKey, role })
   }
+}
+
+export async function loadActivity({ commit }, { dateFilter }) {
+  const activity = fetchActivity(dateFilter)
+  commit('loadActivity', { activity })
 }
