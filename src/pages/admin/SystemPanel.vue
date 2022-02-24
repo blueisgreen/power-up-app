@@ -2,40 +2,28 @@
   <div class="q-pa-md">
     <h3>System Administration</h3>
 
-    <div class="row">
-      <div class="text-h5 col">Filters</div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <span class="text-h6">When:</span>
-        <q-input v-model="dateFilter" filled>
-          <template #prepend>
-            <q-icon name="event" class="cursor-pointer">
-              <q-popup-proxy
-                cover
-                transition-show="scale"
-                transition-hide="scale"
-              >
-                <q-date v-model="date" mask="YYYY-MM-DD HH:mm">
-                  <div class="row items-center justify-end">
-                    <q-btn v-close-popup label="Close" color="primary" flat />
-                  </div>
-                </q-date>
-              </q-popup-proxy>
-            </q-icon>
-          </template>
-        </q-input>
-      </div>
-      <div class="col">
-        <span class="text-h6">Who:</span>
-        <q-select
-          v-model="userFilter"
-          standout="bg-teal text-white"
-          :options="usersWithActivity"
-          label="Only for selected user"
-        />
-      </div>
-    </div>
+    <q-toolbar class="bg-primary glossy text-white">
+      <q-toolbar-title shrink>Filters:</q-toolbar-title>
+      <q-input v-model="dateFilter" label="When" filled>
+        <template #prepend>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy
+              cover
+              transition-show="scale"
+              transition-hide="scale"
+            >
+              <q-date v-model="dateFilter" mask="YYYY-MM-DD">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="primary" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
+      <q-space></q-space>
+      <q-btn flat round dense icon="search" />
+    </q-toolbar>
     <table>
       <tr>
         <th>When</th>
@@ -61,7 +49,6 @@ export default defineComponent({
   setup() {
     const formatDate = (ts) => date.formatDate(ts, 'YYYY MMM DD')
     const dateFilter = ref(new Date())
-    const userFilter = ref(null)
     const activity = ref([
       {
         createdAt: new Date(),
@@ -74,8 +61,6 @@ export default defineComponent({
       formatDate,
       activity,
       dateFilter,
-      userFilter,
-      usersWithActivity: ref(['bubba', 'zanzibar']),
     }
   },
   async mounted() {
