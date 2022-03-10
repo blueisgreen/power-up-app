@@ -123,6 +123,12 @@ const linksList = [
     icon: 'fas fa-atom',
     route: 'AboutPage',
   },
+  {
+    title: 'Scratch',
+    caption: 'About Power Up Magazine',
+    icon: 'fas fa-atom',
+    route: 'Scratch',
+  },
 ]
 
 export default defineComponent({

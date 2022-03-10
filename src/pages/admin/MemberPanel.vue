@@ -32,43 +32,17 @@
         </q-item-section>
       </q-item>
     </q-list>
-    <q-card v-if="selected" class="my-card bg-secondary text-white">
-      <q-card-section>
-        <div class="text-h6">{{ selected.alias }}</div>
-        <div class="text-subtitle2">member information</div>
-      </q-card-section>
-      <q-card-section>
-        Assigned Roles
-        <ul>
-          <li v-for="role in roles" :key="role">{{ role }}</li>
-        </ul>
-      </q-card-section>
-      <q-separator dark />
-      <q-card-section>
-        <select :v-model="roleToAdd">
-          <option
-            v-for="altRole in unassignedRoles"
-            :key="altRole.id"
-            :value="altRole.code"
-          >
-            {{ altRole.displayName }}
-          </option>
-        </select>
-        <q-btn flat>Assign Role</q-btn>
-      </q-card-section>
-      <q-card-actions>
-        <q-btn flat>Remove Role</q-btn>
-      </q-card-actions>
-    </q-card>
+    <MemberDetailPanel v-if="selected" :user="selected" />
   </div>
 </template>
 
 <script>
 import { defineComponent, onMounted, ref } from 'vue'
 import { useStore, mapGetters } from 'vuex'
-import { fetchUserRoles } from '../../api/PowerUpApi'
+import MemberDetailPanel from './MemberDetailPanel.vue'
 
 export default defineComponent({
+  components: { MemberDetailPanel },
   setup() {
     const store = useStore()
     onMounted(() => {
@@ -80,23 +54,11 @@ export default defineComponent({
       searchQuery: ref(null),
       showDetail: ref(false),
       selected: ref(null),
-      roles: ref([]),
-      roleToAdd: ref(null),
+      selectedRoles: ref([]),
     }
   },
   computed: {
     ...mapGetters('admin', ['users']),
-    unassignedRoles() {
-      const allRoles = this.store.state.admin.roles
-      if (!this.selected) {
-        return allRoles
-      } else {
-        const diff = allRoles.filter(
-          (check) => !this.roles.includes(check.code)
-        )
-        return diff
-      }
-    },
   },
   methods: {
     search() {
@@ -104,11 +66,10 @@ export default defineComponent({
     },
     async selectMember(member) {
       this.selected = member
-      const roles = await fetchUserRoles(this.selected.userKey)
-      console.log('Found roles:', roles)
-      this.roles = roles
+      this.store.dispatch('admin/loadUserDetails', {
+        userKey: member.userKey,
+      })
     },
-    assignRole(role) {},
   },
 })
 </script>

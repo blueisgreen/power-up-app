@@ -2,6 +2,7 @@ export default function () {
   return {
     usersById: {},
     userIds: [],
-    roles: [],
+    roleOptions: [],
+    activity: [],
   }
 }

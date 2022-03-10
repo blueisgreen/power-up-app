@@ -45,7 +45,7 @@ export default {
   components: { WelcomePanel, MemberPanel, SystemPanel },
   setup() {
     return {
-      tab: ref('welcome'),
+      tab: ref('members'),
       splitterModel: ref(20),
     }
   },

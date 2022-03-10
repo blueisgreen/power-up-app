@@ -132,6 +132,11 @@ const routes = [
         name: 'Calculators',
         component: () => import('../pages/big-ideas/CalculatorsPage.vue'),
       },
+      {
+        path: 'scratch',
+        name: 'Scratch',
+        component: () => import('../pages/ScratchPad.vue'),
+      },
     ],
   },
 
