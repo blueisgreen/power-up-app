@@ -77,8 +77,8 @@
 import { ref } from 'vue'
 import { useQuasar } from 'quasar'
 import { useStore } from 'vuex'
-import jwtDecode from 'jwt-decode'
-import { setAuthHeader } from '../boot/axios'
+import { useContextStore } from '../stores/context'
+import { useUserStore } from '../stores/user'
 import { recordClick } from '../composables/actions'
 
 const apiUrlBase = process.env.API_URL_BASE
@@ -87,14 +87,13 @@ export default {
   setup() {
     const q = useQuasar()
     const store = useStore()
-    const setUserInfo = (token, user) => {
-      setAuthHeader(token)
-      store.dispatch('auth/signInUser', { user })
-    }
+    const userStore = useUserStore()
+    const contextStore = useContextStore()
     return {
       popup: ref(false),
-      setUserInfo,
       store,
+      userStore,
+      contextStore,
       q,
     }
   },
@@ -106,17 +105,17 @@ export default {
   methods: {
     handleSignOut() {
       recordClick('Sign Out button', 'clear credentials')
+      this.userStore.signOutUser()
       this.store.dispatch('auth/signOutUser')
     },
-    handleSignIn(pid) {
-      recordClick('Sign In button', 'sign in using ' + pid)
+    async handleSignIn(pid) {
+      await recordClick('Sign In button', 'sign in using ' + pid)
       window.location.href = `${apiUrlBase}/login?pid=${pid}`
     },
     track(pid) {
       recordClick('Sign In button', 'attempt sign in using ' + pid)
       this.popup = true
-      this.store.commit(
-        'context/setStatusMessage',
+      this.contextStore.setUserMessage(
         'This website is under construction. We appreciate your interest.'
       )
     },

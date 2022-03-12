@@ -9,10 +9,10 @@ const actionCodes = {
   navigate: 'navigate',
 }
 
-export function recordClick(clickedOn, intention) {
-  recordAction(actionCodes.click, { clickedOn, intention })
+export async function recordClick(clickedOn, intention) {
+  await recordAction(actionCodes.click, { clickedOn, intention })
 }
 
-export function recordNav(target) {
-  recordAction(actionCodes.navigate, { target })
+export async function recordNav(target) {
+  await recordAction(actionCodes.navigate, { target })
 }

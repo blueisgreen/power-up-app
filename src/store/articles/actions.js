@@ -10,6 +10,7 @@ import {
   reviveArticle,
   purgeArticle,
 } from '../../api/PowerUpApi'
+import { useContextStore } from '../../stores/context'
 
 export async function refreshArticles({ commit }) {
   const results = await fetchPublishedArticles()

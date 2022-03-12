@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 
-export const useStore = defineStore('user', {
+export const useUserStore = defineStore('user', {
   state: () => {
     return {
       signedIn: false,
-      userId: null,
-      alias: null,
+      userId: '',
+      alias: '',
       roles: [],
     }
   },
@@ -31,17 +31,18 @@ export const useStore = defineStore('user', {
   },
   actions: {
     signInUser(user) {
+      console.log('user is', user)
       this.signedIn = true
       this.userId = user.who
       this.alias = user.alias
       this.roles = user.roles
     },
     signOutUser() {
-      this.$reset() // TODO: make sure this works
-      // this.signedIn = false
-      // this.userId = null
-      // this.alias = null
-      // this.roles = user.roles
+      // this.$reset() // TODO: see if this works
+      this.signedIn = false
+      this.userId = ''
+      this.alias = ''
+      this.roles = []
     },
   },
 })
