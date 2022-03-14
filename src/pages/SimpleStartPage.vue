@@ -1,6 +1,8 @@
 <template>
   <q-page>
-    <div class="q-pa-md text-h1">Hello</div>
+    <div class="q-pa-md text-h1">
+      <q-img src="https://cdn.powerupmagazine.com/nuclear-power-coexist.jpg" />
+    </div>
   </q-page>
 </template>
 

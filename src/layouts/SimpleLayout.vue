@@ -3,10 +3,10 @@
     <q-header reveal elevated class="bg-primary text-white">
       <q-toolbar>
         <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
+          <q-avatar square>
+            <img src="https://cdn.powerupmagazine.com/radioactive-sign.png" />
           </q-avatar>
-          What say you?
+          Power Up Digital Magazine
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
