@@ -1,17 +1,23 @@
 <template>
-  <q-banner class="bg-secondary text-blue-9 text-center">{{ statusMessage }}</q-banner>
+  <q-banner class="bg-secondary text-blue-9 text-center">{{
+    statusMessage
+  }}</q-banner>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { useContextStore } from '../stores/context'
 
 export default {
-    computed: {
-       ...mapState('context', ['isLoading', 'statusMessage'])
-    }
+  setup() {
+    const store = useContextStore()
+    return { store }
+  },
+  computed: {
+    statusMessage() {
+      return this.store.messageToUser
+    },
+  },
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

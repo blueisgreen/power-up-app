@@ -3,10 +3,7 @@
     <h3>Login</h3>
     <q-card bordered>
       <q-card-section>
-        Use this page to transfer the code received from auth provider to Power
-        Up service. Should get a jwt back if everything checks out. Also should
-        get back roles. If something goes wrong, use this page to rectify the
-        problem.
+        This page should redirect immediately to where you want to be.
       </q-card-section>
       <q-separator inset />
       <q-card-section>
@@ -22,6 +19,7 @@
 <script>
 import { defineComponent } from 'vue'
 import { useStore } from 'vuex'
+import { useUserStore } from '../../stores/user'
 import jwtDecode from 'jwt-decode'
 import { setAuthHeader } from '../../boot/axios'
 
@@ -33,8 +31,10 @@ import { setAuthHeader } from '../../boot/axios'
 export default defineComponent({
   setup() {
     const store = useStore()
+    const userStore = useUserStore()
     const setUserInfo = (token, user) => {
       setAuthHeader(token)
+      userStore.signInUser({ user })
       store.dispatch('auth/signInUser', { user })
     }
     return {

@@ -28,7 +28,7 @@
 <script>
 import { ref } from 'vue'
 import { createInquiry } from '../../api/PowerUpApi'
-import { useStore } from 'vuex'
+import { useContextStore } from '../../stores/context'
 
 export default {
   setup() {
@@ -42,14 +42,13 @@ export default {
     const purpose = ref('feedback')
     const message = ref('')
 
-    const store = useStore()
+    const contextStore = useContextStore()
 
     return {
       purposeOptions,
       purpose,
       message,
-      store,
-
+      contextStore,
       onReset() {
         purpose.value = 'feedback'
         message.value = ' '
@@ -69,7 +68,7 @@ export default {
       this.onReset()
     },
     notifyUser(msg) {
-      this.store.commit('context/setStatusMessage', msg)
+      this.contextStore.setUserMessage(msg)
     },
   },
 }

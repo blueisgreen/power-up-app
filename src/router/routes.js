@@ -1,10 +1,11 @@
 import MainLayout from 'layouts/MainLayout'
 import AccountCenterLayout from 'layouts/AccountCenterLayout'
 import WorkbenchLayout from 'layouts/WorkbenchLayout'
+import SimpleLayout from 'layouts/SimpleLayout'
 
 const routes = [
   {
-    path: '/',
+    path: '/full/',
     component: MainLayout,
     children: [
       {
@@ -136,6 +137,18 @@ const routes = [
         path: 'scratch',
         name: 'Scratch',
         component: () => import('../pages/ScratchPad.vue'),
+      },
+    ],
+  },
+
+  {
+    path: '/',
+    component: SimpleLayout,
+    children: [
+      {
+        path: '',
+        name: 'StartSimple',
+        component: () => import('../pages/SimpleStartPage.vue'),
       },
     ],
   },
