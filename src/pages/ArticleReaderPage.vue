@@ -5,7 +5,9 @@
         <div class="text-h4 headline-font">{{ activeArticle.headline }}</div>
         <div class="byline">
           by {{ activeArticle.byline }}
-          <span class="float-right">{{ formatDayMonthYear(activeArticle.publishedAt) }}</span>
+          <span class="float-right">{{
+            formatDayMonthYear(activeArticle.publishedAt)
+          }}</span>
         </div>
         <q-separator spaced />
         <div class="article">
@@ -15,29 +17,29 @@
       <div v-else class="q-pa-md">
         <h1>Now then, where did I leave that article?</h1>
       </div>
-      <q-btn color="primary" to="/" label="Pick Another Article" />
+      <q-btn color="primary" :to="{ name: 'FrontPage' }" label="Pick Another Article" />
     </div>
   </q-page>
 </template>
 <script>
-import { useStore, mapState } from 'vuex'
+import { useContextStore } from '../stores/context'
 import { formatDayMonthYear } from '../composables/powerUpUtils'
 
 export default {
   setup() {
-    const store = useStore()
+    const context = useContextStore()
     return {
-      store,
+      context,
       formatDayMonthYear,
     }
   },
   computed: {
-    ...mapState('context', ['activeArticle']),
+    activeArticle() {
+      return this.context.article(this.$route.params.articleId)
+    },
   },
   created() {
-    const id = this.$route.params.articleId
-    console.log('loading article', id)
-    this.store.dispatch('articles/loadArticle', { id })
+    this.context.loadArticle(this.$route.params.articleId)
   },
   methods: {},
 }
