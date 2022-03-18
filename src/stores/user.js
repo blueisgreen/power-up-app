@@ -31,11 +31,7 @@ export const useUserStore = defineStore('user', {
       this.roles = user.roles
     },
     signOutUser() {
-      // this.$reset() // TODO: see if this works
-      this.signedIn = false
-      this.userId = ''
-      this.alias = ''
-      this.roles = []
+      this.$reset()
     },
   },
 })
