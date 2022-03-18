@@ -42,6 +42,7 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { useStore, mapGetters } from 'vuex'
+import { useUserStore } from '../stores/user'
 import AuthorizationWidget from 'components/AuthorizationWidget.vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import StatusBar from 'components/StatusBar.vue'
@@ -58,23 +59,27 @@ export default defineComponent({
   },
   setup() {
     const leftDrawerOpen = ref(false)
+    const toggleLeftDrawer = () => {
+      leftDrawerOpen.value = !leftDrawerOpen.value
+    }
     return {
       essentialLinks: MainMenuLinks,
+      user: useUserStore(),
       leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      },
-      store: useStore(),
+      toggleLeftDrawer,
     }
   },
   computed: {
     visibleMenuItems() {
-      const visibleItems = this.essentialLinks.filter(
-        (menuItem) =>
+      return this.essentialLinks.filter((menuItem) => {
+        return (
           !menuItem.rolesWithAccess ||
-          (this.isSignedIn && this.hasRole(menuItem.rolesWithAccess))
-      )
-      return visibleItems
+          (this.user.isSignedIn &&
+            menuItem.rolesWithAccess.filter((itemRole) =>
+              this.user.roles.includes(itemRole)
+            ))
+        )
+      })
     },
     edition() {
       const now = new Date()
@@ -100,7 +105,6 @@ export default defineComponent({
           : 'Autumn'
       return season + ' ' + year
     },
-    ...mapGetters('auth', ['isSignedIn', 'hasRole']),
   },
 })
 </script>

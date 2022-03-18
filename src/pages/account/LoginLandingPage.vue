@@ -34,7 +34,7 @@ export default defineComponent({
     const userStore = useUserStore()
     const setUserInfo = (token, user) => {
       setAuthHeader(token)
-      userStore.signInUser({ user })
+      userStore.signInUser(user)
       store.dispatch('auth/signInUser', { user })
     }
     return {

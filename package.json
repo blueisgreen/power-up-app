@@ -57,9 +57,9 @@
     "eslint-webpack-plugin": "^3.0.0"
   },
   "browserslist": [
-    "last 10 Chrome versions",
     "last 10 Firefox versions",
     "last 4 Edge versions",
+    "last 10 Chrome versions",
     "last 7 Safari versions",
     "last 8 Android versions",
     "last 8 ChromeAndroid versions",

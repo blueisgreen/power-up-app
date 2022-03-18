@@ -3,7 +3,6 @@
     <q-item-section v-if="icon" avatar>
       <q-icon :name="icon" />
     </q-item-section>
-
     <q-item-section>
       <q-item-label>{{ title }}</q-item-label>
       <q-item-label caption>
@@ -23,27 +22,22 @@ export default defineComponent({
       type: String,
       required: true,
     },
-
     caption: {
       type: String,
       default: '',
     },
-
     link: {
       type: String,
       default: '#',
     },
-
     route: {
       type: String,
       default: '',
     },
-
     icon: {
       type: String,
       default: '',
     },
-
     exact: {
       type: Boolean,
       default: false,
