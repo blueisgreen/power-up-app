@@ -7,7 +7,6 @@
       <q-btn
         :to="{ name: 'FrontPage' }"
         fab
-        icon="add"
         color="primary"
         label="Get Started"
       />

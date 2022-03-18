@@ -3,7 +3,7 @@
     <q-toolbar>
       <q-toolbar-title>
         <div class="copyright-text">
-          Copyright 2022 &copy;
+          Copyright 2021-{{ year }} &copy;
           <a href="https://www.happyspiritpublishing.com"
             >Happy Spirit Publishing</a
           >
@@ -39,6 +39,11 @@
 import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'MainFooter',
+  computed: {
+    year() {
+      return new Date().getFullYear()
+    },
+  },
   methods: {
     navigate(to) {
       this.$router.push({ name: to })
