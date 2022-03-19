@@ -1,5 +1,4 @@
 import {
-  fetchPublishedArticles,
   fetchAllArticles,
   fetchArticle,
   createArticle,
@@ -10,11 +9,6 @@ import {
   reviveArticle,
   purgeArticle,
 } from '../../api/PowerUpApi'
-
-export async function refreshArticles({ commit }) {
-  const results = await fetchPublishedArticles()
-  commit('loadArticles', { articles: results })
-}
 
 export async function loadCache({ commit }) {
   const results = await fetchAllArticles()
