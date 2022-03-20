@@ -2,8 +2,6 @@ import { store } from 'quasar/wrappers'
 import { createStore, createLogger } from 'vuex'
 
 import admin from './admin'
-import auth from './auth'
-import context from './context'
 import csr from './csr'
 import profile from './profile'
 
@@ -22,8 +20,6 @@ export default store(function (/* { ssrContext } */) {
   const Store = createStore({
     modules: {
       admin,
-      auth,
-      context,
       csr,
       profile,
     },

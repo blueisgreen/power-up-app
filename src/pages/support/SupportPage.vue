@@ -20,7 +20,7 @@
         <q-tab-panel name="contact">
           <div class="text-h4">Contact Power Up Support</div>
           <q-banner
-            v-if="!isSignedIn"
+            v-if="!user.isSignedIn"
             class="bg-amber-2 text-black v-space"
             inline-actions
           >
@@ -35,10 +35,10 @@
         </q-tab-panel>
         <q-tab-panel name="messages">
           <h4>Message History</h4>
-          <div v-if="!isSignedIn" class="text-body1">
+          <div v-if="!user.isSignedIn" class="text-body1">
             Sign in to see your message history.
           </div>
-          <message-reader v-if="isSignedIn" />
+          <message-reader v-if="user.isSignedIn" />
         </q-tab-panel>
       </q-tab-panels>
     </q-card>
@@ -47,7 +47,7 @@
 
 <script>
 import { ref } from 'vue'
-import { mapGetters, mapState } from 'vuex'
+import { useUserStore } from '../../stores/user'
 import AuthorizationWidget from 'components/AuthorizationWidget.vue'
 import SupportMessageForm from './SupportMessageForm.vue'
 import MessageReader from './MessageReader.vue'
@@ -59,14 +59,12 @@ export default {
     MessageReader,
   },
   setup() {
+    const user = useUserStore()
     const tab = ref('contact')
     return {
+      user,
       tab,
     }
-  },
-  computed: {
-    ...mapState('auth', ['alias']),
-    ...mapGetters('auth', ['isSignedIn']),
   },
 }
 </script>
