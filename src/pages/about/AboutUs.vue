@@ -26,8 +26,8 @@
     <h2 class="headline">Policies and Legal Stuff</h2>
     <p>
       You might be interested in our
-      <q-btn to="/about/terms">Terms of Use</q-btn> or our
-      <q-btn to="/about/privacy">Privacy Policy</q-btn>. You are welcome to
+      <q-btn :to="{ name: 'TermsOfUsePage' }">Terms of Use</q-btn> or our
+      <q-btn :to="{ name: 'PrivacyPolicyPage' }">Privacy Policy</q-btn>. You are welcome to
       submit inquires using our Support Page.
     </p>
     <h2 class="headline">Coming Soon...</h2>
