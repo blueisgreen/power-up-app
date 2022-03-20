@@ -27,31 +27,21 @@
           </q-item-section>
         </q-item>
         <q-separator />
-        <q-item>
-          <q-item-section>
-            <q-item-label>Future Options Below</q-item-label>
-            <q-item-label caption
-              >If you see what you like better, click to make a
-              wish.</q-item-label
-            >
-          </q-item-section>
-        </q-item>
-        <q-item v-close-popup clickable @click="() => track('twitter')">
-          <q-item-section avatar
-            ><q-icon color="blue-6" name="fab fa-twitter"
-          /></q-item-section>
-          <q-item-section>
-            <q-item-label>Twitter</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item v-close-popup clickable @click="() => track('amazon')">
-          <q-item-section avatar
-            ><q-icon color="gray-10" name="fab fa-amazon"
-          /></q-item-section>
-          <q-item-section>
-            <q-item-label>Amazon</q-item-label>
-          </q-item-section>
-        </q-item>
+
+        <q-btn-dropdown color="accent" label="Missing Something?">
+          <q-item>
+            <q-item-section>
+              <q-item-label>Make a Wish</q-item-label>
+              <q-item-label caption>Which do you prefer?</q-item-label>
+            </q-item-section>
+          </q-item>
+          <unsupported-auth-option
+            v-for="opt in unsupportedAuthProviders"
+            :key="opt.code"
+            :provider="opt"
+            @make-wish="(wish) => track(wish)"
+          />
+        </q-btn-dropdown>
       </q-list>
     </q-btn-dropdown>
     <q-btn v-show="isSignedIn" @click="handleSignOut">Sign Out</q-btn>
@@ -64,8 +54,9 @@
           <q-btn v-close-popup icon="close" flat round dense />
         </q-card-section>
         <q-card-section>
-          Sign In is not supported at this time. We took note of your interest
-          and will get this working soon. Thanks for trying.
+          Sorry, we don't support that way of signing in at the moment. However,
+          we took note of your interest and will think about adding it. Try a
+          different way for now.
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -73,50 +64,61 @@
 </template>
 
 <script>
-// TODO: separate alert into its own component, using props for context
 import { ref } from 'vue'
 import { useQuasar } from 'quasar'
-import { useStore } from 'vuex'
 import { useContextStore } from '../stores/context'
 import { useUserStore } from '../stores/user'
 import { recordClick } from '../composables/actions'
+import UnsupportedAuthOption from './UnsupportedAuthOption.vue'
 
 const apiUrlBase = process.env.API_URL_BASE
 
 export default {
+  components: {
+    UnsupportedAuthOption,
+  },
   setup() {
     const q = useQuasar()
-    const store = useStore()
     const userStore = useUserStore()
     const contextStore = useContextStore()
+
+    const unsupportedAuthProviders = [
+      { code: 'twitter', label: 'Twitter' },
+      { code: 'facebook', label: 'Facebook' },
+      { code: 'amazon', label: 'Amazon' },
+      { code: 'instagram', label: 'Instagram' },
+      { code: 'discord', label: 'Discord' },
+      { code: 'apple', label: 'Apple' },
+      { code: 'microsoft', label: 'Microsoft' },
+    ]
+
     return {
+      q,
       popup: ref(false),
-      store,
       userStore,
       contextStore,
-      q,
+      unsupportedAuthProviders,
     }
   },
   computed: {
     isSignedIn() {
-      return this.store.getters['auth/isSignedIn']
+      return this.userStore.isSignedIn
     },
   },
   methods: {
     handleSignOut() {
       recordClick('Sign Out button', 'clear credentials')
       this.userStore.signOutUser()
-      this.store.dispatch('auth/signOutUser')
     },
     async handleSignIn(pid) {
       await recordClick('Sign In button', 'sign in using ' + pid)
       window.location.href = `${apiUrlBase}/login?pid=${pid}`
     },
-    track(pid) {
-      recordClick('Sign In button', 'attempt sign in using ' + pid)
+    track(provider) {
+      recordClick('Sign In button', 'user prefers ' + provider.code)
       this.popup = true
       this.contextStore.setUserMessage(
-        'This website is under construction. We appreciate your interest.'
+        `Thanks for telling us you prefer to sign in with ${provider.label}.`
       )
     },
   },
