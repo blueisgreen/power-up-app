@@ -15,19 +15,12 @@ export const useUserStore = defineStore('user', {
       state.roles.find((role) => role === 'member') !== undefined,
     isAuthor: (state) =>
       state.roles.find((role) => role === 'author') !== undefined,
-    isAuthor: (state) =>
+    isEditor: (state) =>
       state.roles.find((role) => role === 'editor') !== undefined,
-    isAuthor: (state) =>
+    isEditorInChief: (state) =>
       state.roles.find((role) => role === 'editorInChief') !== undefined,
-    isAuthor: (state) =>
+    isAdmin: (state) =>
       state.roles.find((role) => role === 'admin') !== undefined,
-    hasRole: (state) => {
-      return (permittedRoles) => {
-        return permittedRoles.some((permittedRole) =>
-          state.roles.includes(permittedRole)
-        )
-      }
-    },
   },
   actions: {
     signInUser(user) {
@@ -38,11 +31,7 @@ export const useUserStore = defineStore('user', {
       this.roles = user.roles
     },
     signOutUser() {
-      // this.$reset() // TODO: see if this works
-      this.signedIn = false
-      this.userId = ''
-      this.alias = ''
-      this.roles = []
+      this.$reset()
     },
   },
 })

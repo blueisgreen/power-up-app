@@ -7,6 +7,7 @@ import {
 } from 'vue-router'
 import routes from './routes'
 import { recordNav } from '../composables/actions'
+import { useUserStore } from '../stores/user'
 
 /*
  * If not building with SSR mode, you can
@@ -37,10 +38,11 @@ export default route(function ({ store /*, ssrContext*/ }) {
   })
 
   Router.beforeEach((to, from, next) => {
+    const userStore = useUserStore()
     recordNav(to.name)
     if (
       to.matched.some((record) => record.meta.requireAuth) &&
-      !store.getters['auth/isSignedIn']
+      !userStore.isSignedIn
     ) {
       next({ name: 'register', query: { next: to.fullPath } })
     } else {

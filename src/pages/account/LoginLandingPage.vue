@@ -18,10 +18,9 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { useStore } from 'vuex'
 import { useUserStore } from '../../stores/user'
-import jwtDecode from 'jwt-decode'
 import { setAuthHeader } from '../../boot/axios'
+import jwtDecode from 'jwt-decode'
 
 // stash jwt for use in subsequent API calls
 // stash roles and preferences in local store
@@ -30,12 +29,10 @@ import { setAuthHeader } from '../../boot/axios'
 
 export default defineComponent({
   setup() {
-    const store = useStore()
     const userStore = useUserStore()
     const setUserInfo = (token, user) => {
       setAuthHeader(token)
-      userStore.signInUser({ user })
-      store.dispatch('auth/signInUser', { user })
+      userStore.signInUser(user)
     }
     return {
       setUserInfo,

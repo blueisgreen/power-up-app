@@ -29,7 +29,7 @@
     </div>
     <div class="section">
       <h4>Articles</h4>
-      <q-list v-if="articles.length" bordered separator dense>
+      <q-list v-if="workbench.articles.length" bordered separator dense>
         <q-item>
           <q-item-section>
             <q-item-label header>Headline / Byline</q-item-label>
@@ -41,7 +41,11 @@
             <q-item-label header>Actions</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item v-for="article in articles" :key="article" v-ripple>
+        <q-item
+          v-for="article in workbench.articles"
+          :key="article"
+          v-ripple
+        >
           <q-item-section>
             <q-item-label>{{ article.headline }}</q-item-label>
             <q-item-label caption>{{ article.byline }}</q-item-label>
@@ -131,29 +135,23 @@
 
 <script>
 import { defineComponent, onMounted, ref } from 'vue'
-import { useStore, mapGetters } from 'vuex'
+import { useWorkbenchStore } from '../../stores/workbench'
 import { formatDayMonthYear } from '../../composables/powerUpUtils'
 
 export default defineComponent({
   setup() {
-    const store = useStore()
-    onMounted(() => store.dispatch('articles/loadCache'))
+    const workbench = useWorkbenchStore()
+    onMounted(() => workbench.loadArticleIndex())
     return {
       newHeadline: ref(''),
-      store,
+      workbench,
       formatDayMonthYear,
     }
-  },
-  computed: {
-    // articles() {
-    //   return this.store.getters['articles/articles']
-    // }
-    ...mapGetters('articles', ['articles']),
   },
   methods: {
     createArticle() {
       if (this.newHeadline != '') {
-        this.store.dispatch('articles/create', this.newHeadline)
+        this.workbench.create(this.newHeadline)
         this.newHeadline = ''
       }
     },
@@ -161,19 +159,19 @@ export default defineComponent({
       this.$router.push({ name: 'ArticleComposer', params: { articleId: id } })
     },
     publishArticle(id) {
-      this.store.dispatch('articles/publish', id)
+      this.workbench.publish(id)
     },
     retractArticle(id) {
-      this.store.dispatch('articles/retract', id)
+      this.workbench.retract(id)
     },
     archiveArticle(id) {
-      this.store.dispatch('articles/archive', id)
+      this.workbench.archive(id)
     },
     reviveArticle(id) {
-      this.store.dispatch('articles/revive', id)
+      this.workbench.revive(id)
     },
     deleteArticle(id) {
-      this.store.dispatch('articles/purge', id)
+      this.workbench.purge(id)
     },
   },
 })

@@ -10,11 +10,9 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
-
         <q-toolbar-title>
           Power Up Magazine - Learn About Nuclear Power
         </q-toolbar-title>
-
         <div class="edition-label">{{ edition }}</div>
         <authorization-widget />
       </q-toolbar>
@@ -23,7 +21,6 @@
     <q-drawer v-model="leftDrawerOpen" side="left" bordered class="bg-grey-1">
       <q-list>
         <q-item-label header class="text-grey-8">Site Directory</q-item-label>
-
         <EssentialLink
           v-for="link in visibleMenuItems"
           :key="link.title"
@@ -45,127 +42,69 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { useStore, mapGetters } from 'vuex'
+import { useUserStore } from '../stores/user'
 import AuthorizationWidget from 'components/AuthorizationWidget.vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import StatusBar from 'components/StatusBar.vue'
 import MainFooter from 'layouts/MainFooter.vue'
-
-// FIXME: cache this
-const now = new Date()
-const year = now.getFullYear()
-const month = now.getMonth()
-const day = now.getDate()
-const season =
-  (month === 11 && day >= 21) ||
-  month === 0 ||
-  month === 1 ||
-  (month === 2 && day < 21)
-    ? 'Winter'
-    : (month === 2 && day >= 21) ||
-      month === 3 ||
-      month === 4 ||
-      (month === 5 && day < 21)
-    ? 'Spring'
-    : (month === 5 && day >= 21) ||
-      month === 6 ||
-      month === 7 ||
-      (month === 8 && day <= 21)
-    ? 'Summer'
-    : 'Autumn'
-const edition = season + ' ' + year
-
-const linksList = [
-  {
-    title: "What's New",
-    caption: 'The latest headlines and articles',
-    icon: 'fas fa-home',
-    route: 'FrontPage',
-    exact: true,
-  },
-  {
-    title: 'Account',
-    caption: 'Your account information',
-    icon: 'fas fa-user',
-    route: 'UserAccount',
-    exact: true,
-    rolesWithAccess: ['member'],
-  },
-  {
-    title: 'Support',
-    caption: 'Get help with Power Up',
-    icon: 'far fa-life-ring',
-    route: 'SupportCenter',
-  },
-  {
-    title: 'Article Workbench',
-    caption: 'For creating articles (editors only)',
-    icon: 'far fa-edit',
-    route: 'ArticleWorkbench',
-    rolesWithAccess: ['author', 'editor', 'editorInChief'],
-  },
-  {
-    title: 'Customer Support',
-    caption: 'Administrators only',
-    icon: 'fas fa-headset',
-    route: 'CustomerSupportRep',
-    rolesWithAccess: ['admin'],
-  },
-  {
-    title: 'Administration',
-    caption: 'Administrators only',
-    icon: 'fas fa-tools',
-    route: 'AdminPanels',
-    rolesWithAccess: ['admin'],
-  },
-  {
-    title: 'About',
-    caption: 'About Power Up Magazine',
-    icon: 'fas fa-atom',
-    route: 'AboutPage',
-  },
-  {
-    title: 'Scratch',
-    caption: 'About Power Up Magazine',
-    icon: 'fas fa-atom',
-    route: 'Scratch',
-  },
-]
+import MainMenuLinks from './MainMenuLinks'
 
 export default defineComponent({
   name: 'MainLayout',
-
   components: {
     EssentialLink,
     AuthorizationWidget,
     StatusBar,
     MainFooter,
   },
-
   setup() {
     const leftDrawerOpen = ref(false)
-
+    const toggleLeftDrawer = () => {
+      leftDrawerOpen.value = !leftDrawerOpen.value
+    }
     return {
-      edition,
-      year,
-      essentialLinks: linksList,
+      essentialLinks: MainMenuLinks,
+      user: useUserStore(),
       leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      },
-      store: useStore(),
+      toggleLeftDrawer,
     }
   },
   computed: {
     visibleMenuItems() {
-      // FIXME: get this to watch user roles
-      const visibleItems = this.essentialLinks.filter(
-        (menuItem) =>
+      return this.essentialLinks.filter((menuItem) => {
+        return (
           !menuItem.rolesWithAccess ||
-          (this.isSignedIn && this.hasRole(menuItem.rolesWithAccess))
-      )
-      return visibleItems
+          (this.user.isSignedIn &&
+            menuItem.rolesWithAccess.filter((itemRole) =>
+              this.user.roles.includes(itemRole)
+            ))
+        )
+      })
     },
-    ...mapGetters('auth', ['isSignedIn', 'hasRole']),
+    edition() {
+      const now = new Date()
+      const year = now.getFullYear()
+      const month = now.getMonth()
+      const day = now.getDate()
+      const season =
+        (month === 11 && day >= 21) ||
+        month === 0 ||
+        month === 1 ||
+        (month === 2 && day < 21)
+          ? 'Winter'
+          : (month === 2 && day >= 21) ||
+            month === 3 ||
+            month === 4 ||
+            (month === 5 && day < 21)
+          ? 'Spring'
+          : (month === 5 && day >= 21) ||
+            month === 6 ||
+            month === 7 ||
+            (month === 8 && day <= 21)
+          ? 'Summer'
+          : 'Autumn'
+      return season + ' ' + year
+    },
   },
 })
 </script>

@@ -23,12 +23,38 @@
     <p>
       It's time to spread hope. Time to empower the next generation. Literally.
     </p>
-    <h2 class="headline">Policies and Legal Stuff</h2>
+    <h2 class="headline">Get Plugged In</h2>
     <p>
-      You might be interested in our
-      <q-btn to="/about/terms">Terms of Use</q-btn> or our
-      <q-btn to="/about/privacy">Privacy Policy</q-btn>. You are welcome to
-      submit inquires using our Support Page.
+      <q-avatar>
+        <q-icon name="fab fa-twitter" size="md" class="gap-right" />
+      </q-avatar>
+      <q-btn href="https://twitter.com/ZanzibarNuclear" no-caps
+        >Follow ZanzibarNuclear on Twitter</q-btn
+      >
+    </p>
+    <p>
+      <q-avatar square class="gap-right">
+        <img src="https://cdn.powerupmagazine.com/logo-clear.svg" />
+      </q-avatar>
+      <q-btn :to="{ name: 'SupportCenter' }" no-caps
+        >Connect with us using the Support Page</q-btn
+      >
+    </p>
+    <p>
+      <q-avatar square class="gap-right">
+        <img src="https://cdn.powerupmagazine.com/locals-logo.svg" />
+      </q-avatar>
+      <q-btn href="https://powerupmagazine.locals.com/" no-caps
+        >Join Power Up Magazine on Locals</q-btn
+      >
+    </p>
+    <p>
+      <q-avatar square class="gap-right">
+        <img src="https://cdn.powerupmagazine.com/substack-logo.png" />
+      </q-avatar>
+      <q-btn href="https://zanzibar.substack.com/" no-caps
+        >Read about Power Up Magazine on Substack.</q-btn
+      >
     </p>
     <h2 class="headline">Coming Soon...</h2>
     <p>
@@ -38,11 +64,6 @@
       2022...
     </p>
     <ul>
-      <li>
-        <span class="text-bold">Sign Up / Sign In</span> - Authentication is
-        almost ready, but a few things need to work better. Rather than leave
-        you frustrated, we held off until we can make it right (enough).
-      </li>
       <li>
         <span class="text-bold">Lessons</span> - Topics will be organized into
         information-packed lessons that help focus and guide through the
@@ -64,26 +85,11 @@
         say more?
       </li>
     </ul>
-    <h2 class="headline">Get Plugged In</h2>
-    <p>Want to help? You can send a note using the Support page.</p>
+    <h2 class="headline">Policies and Legal Stuff</h2>
     <p>
-      <q-btn
-        icon="fab fa-twitter"
-        href="https://twitter.com/ZanzibarNuclear"
-        no-caps
-        >Follow ZanzibarNuclear on Twitter</q-btn
-      >
-    </p>
-    <p>
-      <a href="https://zanzibar.substack.com/"
-        >Read about Power Up Magazine on Substack.</a
-      >
-    </p>
-    <p>
-      Join Power Up Magazine on Locals. (<a
-        href="https://powerupmagazine.locals.com/"
-        >pending approval</a
-      >)
+      You might be interested in our
+      <q-btn :to="{ name: 'TermsOfUsePage' }">Terms of Use</q-btn> or our
+      <q-btn :to="{ name: 'PrivacyPolicyPage' }">Privacy Policy</q-btn>.
     </p>
   </div>
 </template>
@@ -97,11 +103,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.section {
-  margin-top: 2em;
-}
-.section h2 {
-  margin-left: 0;
+.gap-right {
+  margin-right: 0.5em;
 }
 li {
   margin-bottom: 0.5em;

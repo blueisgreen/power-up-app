@@ -4,7 +4,7 @@
       <h3 class="headline-font">Nuclear Power is the Future</h3>
       <q-list>
         <q-item
-          v-for="article in articles"
+          v-for="article in context.suggestedArticles"
           :key="article.id"
           clickable
           class="article-block"
@@ -21,7 +21,7 @@
 
 <script>
 import { defineComponent, onMounted } from 'vue'
-import { useStore, mapGetters } from 'vuex'
+import { useContextStore } from '../stores/context'
 import { formatDayMonthYear } from '../composables/powerUpUtils'
 import ArticleSummary from '../components/ArticleSummary.vue'
 
@@ -31,15 +31,12 @@ export default defineComponent({
     ArticleSummary
   },
   setup() {
-    const store = useStore()
-    onMounted(() => store.dispatch('articles/refreshArticles'))
+    const context = useContextStore()
+    onMounted(() => context.loadSuggestedArticles())
     return {
-      store,
+      context,
       formatDayMonthYear,
     }
-  },
-  computed: {
-    ...mapGetters('articles', ['articles']),
   },
   methods: {
     viewArticle(id) {

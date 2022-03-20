@@ -26,7 +26,7 @@
       </li>
     </ul>
     <p>
-      Take a look at our <q-btn to="/about/privacy">Privacy Policy</q-btn> if
+      Take a look at our <q-btn :to="{ name: 'PrivacyPolicyPage' }">Privacy Policy</q-btn> if
       that is of interest to you.
     </p>
     <p>Enjoy!</p>
