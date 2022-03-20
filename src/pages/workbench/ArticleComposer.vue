@@ -110,7 +110,7 @@
         >Save</q-btn
       >
       <q-btn color="positive" @click="saveAndClose"
-        ><span v-if="workbench.isDraftArticleDirty">Save &amp; </span
+        ><span v-if="workbench.isDraftArticleDirty">Save &amp;&nbsp;</span
         >Close</q-btn
       >
       <q-btn color="warning" :to="{ name: 'ArticleWorkbench' }" replace
@@ -126,13 +126,13 @@ import { useWorkbenchStore } from 'src/stores/workbench'
 
 export default {
   setup() {
+    const workbench = useWorkbenchStore()
     const blankDraft = ref({
       headline: '',
       byline: '',
       synopsis: '',
       content: '',
     })
-    const workbench = useWorkbenchStore()
     return {
       workbench,
       draft: blankDraft,
