@@ -47,10 +47,10 @@ export default [
     icon: 'fas fa-atom',
     route: 'AboutPage',
   },
-  {
-    title: 'Scratch',
-    caption: 'About Power Up Magazine',
-    icon: 'fas fa-atom',
-    route: 'Scratch',
-  },
+  // {
+  //   title: 'Scratch',
+  //   caption: 'About Power Up Magazine',
+  //   icon: 'fas fa-atom',
+  //   route: 'Scratch',
+  // },
 ]
