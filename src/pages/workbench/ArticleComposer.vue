@@ -103,9 +103,15 @@
       </q-form>
     </div>
     <q-btn-group spread>
-      <q-btn color="primary" :disable="!isDirty" @click="save">Save</q-btn>
+      <q-btn
+        color="primary"
+        :disable="!workbench.isDraftArticleDirty"
+        @click="save"
+        >Save</q-btn
+      >
       <q-btn color="positive" @click="saveAndClose"
-        ><span v-if="isDirty">Save &amp; </span>Close</q-btn
+        ><span v-if="workbench.isDraftArticleDirty">Save &amp; </span
+        >Close</q-btn
       >
       <q-btn color="warning" :to="{ name: 'ArticleWorkbench' }" replace
         >Cancel</q-btn
@@ -116,49 +122,30 @@
 
 <script>
 import { ref } from 'vue'
-import { useStore } from 'vuex'
+import { useWorkbenchStore } from 'src/stores/workbench'
 
 export default {
   setup() {
-    const draft = ref({
+    const blankDraft = ref({
       headline: '',
       byline: '',
       synopsis: '',
       content: '',
     })
-    const store = useStore()
+    const workbench = useWorkbenchStore()
     return {
-      draft,
-      store,
+      workbench,
+      draft: blankDraft,
     }
   },
-  computed: {
-    isDirty() {
-      const id = this.$route.params.articleId
-      const original = this.store.state.articles.byId[id]
-      return (
-        original.headline !== this.draft.headline ||
-        original.byline !== this.draft.byline ||
-        original.synopsis !== this.draft.synopsis ||
-        original.content !== this.draft.content
-      )
-    },
-  },
-  created() {
-    const id = this.$route.params.articleId
-    const lookup = this.store.state.articles.byId[id]
-    if (lookup !== null) {
-      this.draft = Object.assign(this.draft, lookup)
-      this.draft.headline = lookup.headline || ''
-      this.draft.byline = lookup.byline || ''
-      this.draft.synopsis = lookup.synopsis || ''
-      this.draft.content = lookup.content || ''
-    }
+  async created() {
+    await this.workbench.loadArticleForEdit(this.$route.params.articleId)
+    this.draft = this.workbench.draftArticle
   },
   methods: {
     save() {
-      if (this.isDirty) {
-        this.store.dispatch('articles/save', Object.assign({}, this.draft))
+      if (this.workbench.isDraftArticleDirty) {
+        this.workbench.saveDraft()
       }
     },
     saveAndClose() {

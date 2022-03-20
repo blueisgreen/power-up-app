@@ -15,24 +15,40 @@ export const useWorkbenchStore = defineStore('workbench', {
   state: () => ({
     articleList: [],
     articlesById: {},
-    draftArticleStart: '',
-    draftArticle: '',
+    draftArticle: {},
     draftLesson: '',
   }),
   getters: {
     articles() {
       return this.articleList
     },
-    draftIsDirty() {
-      // FIXME: make this a deep comparison
-      return this.draftArticle !== this.draftArticleStart
+    originalOfDraft() {
+      return this.articlesById[this.draftArticle.id]
+    },
+    isDraftArticleDirty() {
+      const original = this.originalOfDraft || {}
+      return (
+        this.draftArticle.headline !== original.headline ||
+        this.draftArticle.byline !== original.byline ||
+        this.draftArticle.synopsis != original.synopsis ||
+        this.draftArticle.content !== original.content
+      )
     },
   },
   actions: {
     updateArticle(article) {
       this.articlesById[article.id] = article
+      const articleIndex = this.articleList.indexOf(
+        (item) => item.id === article.id
+      )
+      this.articleList[articleIndex] = article
     },
     async loadArticleIndex() {
+      /*
+      TODO: NOTE FOR FUTURE:
+        the idea is to deal with summary while browsing articles;
+        call to fetch should specific "summary-only"
+      */
       try {
         this.articlesById = {}
         this.articleList = []
@@ -46,10 +62,26 @@ export const useWorkbenchStore = defineStore('workbench', {
       }
     },
     async loadArticleForEdit(id) {
+      /*
+      TODO: NOTE FOR FUTURE:
+        now that we want to edit an article, fetch the full article,
+        which might be quite long
+      */
       try {
-        // make a copy to update; keep original for change detection
-        this.draftArticleStart = await fetchArticle(id)
-        this.draftArticle = Object.assign({}, this.draftArticleStart) // FIXME: is there a better way to clone?
+        const original = this.articlesById[id]
+        if (!original) {
+          original = await fetchArticle(id)
+        }
+        this.draftArticle = Object.assign(
+          {},
+          {
+            id: original.id,
+            headline: original.headline,
+            byline: original.byline,
+            synopsis: original.synopsis,
+            content: original.content,
+          }
+        )
       } catch (err) {
         console.error(err)
       }
@@ -64,7 +96,15 @@ export const useWorkbenchStore = defineStore('workbench', {
     async save(update) {
       try {
         const results = await saveArticle(update)
-        updateArticle(results)
+        this.updateArticle(results)
+      } catch (err) {
+        console.error(err)
+      }
+    },
+    async saveDraft() {
+      try {
+        const results = await saveArticle(this.draftArticle)
+        this.updateArticle(results)
       } catch (err) {
         console.error(err)
       }
@@ -72,7 +112,7 @@ export const useWorkbenchStore = defineStore('workbench', {
     async publish(id) {
       try {
         const results = await publishArticle(id)
-        updateArticle(results)
+        this.updateArticle(results)
       } catch (err) {
         console.error(err)
       }
@@ -80,7 +120,7 @@ export const useWorkbenchStore = defineStore('workbench', {
     async retract(id) {
       try {
         const results = await retractArticle(id)
-        updateArticle(results)
+        this.updateArticle(results)
       } catch (err) {
         console.error(err)
       }
@@ -88,7 +128,7 @@ export const useWorkbenchStore = defineStore('workbench', {
     async archive(id) {
       try {
         const results = await archiveArticle(id)
-        updateArticle(results)
+        this.updateArticle(results)
       } catch (err) {
         console.error(err)
       }
@@ -96,7 +136,7 @@ export const useWorkbenchStore = defineStore('workbench', {
     async revive(id) {
       try {
         const results = await reviveArticle(id)
-        updateArticle(results)
+        this.updateArticle(results)
       } catch (err) {
         console.error(err)
       }
