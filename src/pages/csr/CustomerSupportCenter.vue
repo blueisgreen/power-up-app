@@ -85,7 +85,7 @@
     </q-toolbar>
 
     <q-scroll-area class="inquiry-list">
-      <q-list v-for="item in filteredInquires" :key="item.id">
+      <q-list v-for="item in supportStore.filteredInquires" :key="item.id">
         <q-item clickable @click="() => setSelected(item)">
           <q-item-section side top>
             <q-item-label
@@ -136,7 +136,8 @@
 
 <script>
 import { defineComponent, onMounted, ref } from 'vue'
-import { useStore, mapGetters } from 'vuex'
+import { useSupportStore } from '../../stores/support'
+import { useContextStore } from '../../stores/context'
 import { formatDate } from '../../composables/powerUpUtils'
 import { createInquiry } from '../../api/PowerUpApi'
 
@@ -151,8 +152,9 @@ const purposeIconMap = {
 export default defineComponent({
   name: 'PageCustomerSupportCenter',
   setup() {
-    onMounted(() => useStore().dispatch('csr/fetchSupportInquiries'))
-
+    const supportStore = useSupportStore()
+    const context = useContextStore()
+    onMounted(() => supportStore.fetchSupportInquiries())
     return {
       showOnlyUnread: ref(false),
       searchQuery: ref(''),
@@ -160,14 +162,14 @@ export default defineComponent({
       selected: ref(null),
       response: ref('Gentle User, '),
       formatDate,
-      store: useStore(),
+      supportStore,
+      context
     }
   },
   computed: {
     selectedMessage() {
       return !this.selected ? '--select an inquiry--' : this.selected.message
     },
-    ...mapGetters('csr', ['filteredInquires']),
   },
   methods: {
     mapPurposeToIcon(purpose) {
@@ -183,11 +185,12 @@ export default defineComponent({
         relatedTo: this.selected.id,
       }
       const confirmation = await createInquiry(replyToInquiry)
+      log.debug('confirmation message:', confirmation)
       this.notifyUser('Nice work!')
     },
     notifyUser(msg) {
-      this.store.commit('context/setStatusMessage', { message: msg })
-    }
+      this.context.setUserMessage(msg)
+    },
   },
 })
 </script>
