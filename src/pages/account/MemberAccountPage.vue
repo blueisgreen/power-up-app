@@ -47,7 +47,10 @@
       <q-item-label header>Settings</q-item-label>
       <q-item v-ripple tag="label">
         <q-item-section side>
-          <q-checkbox v-model="profile.emailIsOkay" @click="toggleEmailComm" />
+          <q-checkbox
+            v-model="userStore.isEmailOkay"
+            @click="toggleEmailComm"
+          />
         </q-item-section>
         <q-item-section>
           <q-item-label>Email Communication</q-item-label>
@@ -55,8 +58,8 @@
             I agree to receive email about Power Up Magazine.
           </q-item-label>
           <q-item-label v-if="userStore.isEmailOkay" caption>
-            On {{ formatDayMonthYear(profile.emailAcceptedAt) }}, you said
-            email from us is OK.
+            On {{ formatDayMonthYear(profile.emailAcceptedAt) }}, you said email
+            from us is OK.
           </q-item-label>
         </q-item-section>
         <q-item-section side top>
@@ -71,7 +74,7 @@
       <q-item v-ripple tag="label">
         <q-item-section side>
           <q-checkbox
-            v-model="profile.cookiesAreOkay"
+            v-model="userStore.areCookiesOkay"
             :disable="userStore.areCookiesOkay"
             @click="acknowledgeCookies"
           />
@@ -82,8 +85,8 @@
             >Check to allow cookies.</q-item-label
           >
           <q-item-label v-if="userStore.areCookiesOkay" caption>
-            On {{ formatDayMonthYear(profile.cookiesAcceptedAt) }}, you said cookies are
-            OK.
+            On {{ formatDayMonthYear(profile.cookiesAcceptedAt) }}, you said
+            cookies are OK.
           </q-item-label>
         </q-item-section>
         <q-item-section side top>
@@ -96,7 +99,7 @@
       </q-item>
 
       <q-separator spaced />
-      <terms-of-use :terms="terms" :accepted-at="termsAcceptedAt" />
+      <terms-of-use :terms="terms" :accepted-at="profile.termsAcceptedAt" />
 
       <q-separator spaced />
       <q-item-label header>Technical Details</q-item-label>
@@ -124,7 +127,9 @@
           <q-item-label class="text-bold">Last Updated</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ formatDayMonthYear(profile.updatedAt) }}</q-item-label>
+          <q-item-label>{{
+            formatDayMonthYear(profile.updatedAt)
+          }}</q-item-label>
         </q-item-section>
       </q-item>
     </q-list>
@@ -138,6 +143,7 @@ import { formatDayMonthYear } from '../../composables/powerUpUtils'
 import TermsOfUse from './TermsOfUse.vue'
 import InfoDialog from '../../components/InfoDialog'
 
+// FIXME: rethink entire profile - lots of personalization use cases are not right
 export default defineComponent({
   components: {
     TermsOfUse,
@@ -145,6 +151,7 @@ export default defineComponent({
   },
   setup() {
     const userStore = useUserStore()
+    const profile = userStore.profile
     const terms = ref([])
     onMounted(async () => {
       await userStore.fetchMyProfile()
@@ -194,12 +201,14 @@ export default defineComponent({
       terms,
       dialogValues,
       userStore,
-      profile: userStore.profile,
+      profile,
     }
   },
   methods: {
     acknowledgeCookies() {},
-    toggleEmailComm() {},
+    toggleEmailComm() {
+      this.userStore.agreeToEmail()
+    },
     saveEmail(email) {},
   },
 })

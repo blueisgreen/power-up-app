@@ -1,5 +1,9 @@
 import { defineStore } from 'pinia'
-import { fetchOwnProfile, updateOwnProfile } from '../api/PowerUpApi/profile'
+import {
+  fetchOwnProfile,
+  updateOwnProfile,
+  agreeToEmailComms,
+} from '../api/PowerUpApi'
 
 export const useUserStore = defineStore('user', {
   state: () => {
@@ -74,6 +78,10 @@ export const useUserStore = defineStore('user', {
     async updateMyProfile(profileUpdates) {
       const profile = await updateOwnProfile(profileUpdates)
       this.loadProfile(profile.data)
+    },
+    async agreeToEmail() {
+      const result = await agreeToEmailComms()
+      console.log('result of agree to email comms', result);
     },
   },
 })

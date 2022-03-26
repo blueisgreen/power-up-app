@@ -104,7 +104,7 @@
 
 <script>
 import { computed, ref } from 'vue'
-import { useStore } from 'vuex'
+import { useStore } from 'vuex'  // FIXME: convert to pinia
 import { useQuasar } from 'quasar'
 import InfoDialog from 'components/InfoDialog'
 import {
