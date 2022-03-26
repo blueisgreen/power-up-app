@@ -104,7 +104,7 @@
 
 <script>
 import { computed, ref } from 'vue'
-import { useStore } from 'vuex'  // FIXME: convert to pinia
+import { useUserStore } from '../../stores/user'
 import { useQuasar } from 'quasar'
 import InfoDialog from 'components/InfoDialog'
 import {
@@ -117,9 +117,9 @@ export default {
   components: { InfoDialog, TermsOfUse },
   setup() {
     const q = useQuasar()
-    const store = useStore()
+    const user = useUserStore()
 
-    const desiredAlias = ref(store.state.profile.alias)
+    const desiredAlias = ref(user.profile.alias)
     const unverifiedEmail = ref(null)
     const okWithCookies = ref(false)
     const okWithEmail = ref(false)
@@ -172,7 +172,7 @@ export default {
     }
     return {
       q,
-      store,
+      user,
       formatYearMonthDay,
       formatDayMonthYear,
       dialogValues,
@@ -183,26 +183,22 @@ export default {
       okWithCookies,
       okWithEmail,
 
-      accountId: computed(() => store.state.profile.accountId),
-      alias: computed(() => store.state.profile.alias),
-      socialEmail: computed(() => store.state.profile.email),
-      createdAt: computed(() => store.state.profile.createdAt),
-      termsAcceptedAt: computed(() => store.state.profile.termsAcceptedAt),
-      cookiesAcceptedAt: computed(() => store.state.profile.cookiesAcceptedAt),
-      emailCommsAcceptedAt: computed(
-        () => store.state.profile.emailCommsAcceptedAt
-      ),
+      accountId: computed(() => user.profile.accountId),
+      alias: computed(() => user.profile.alias),
+      socialEmail: computed(() => user.profile.email),
+      createdAt: computed(() => user.profile.createdAt),
+      termsAcceptedAt: computed(() => user.profile.termsAcceptedAt),
+      cookiesAcceptedAt: computed(() => user.profile.cookiesAcceptedAt),
+      emailCommsAcceptedAt: computed(() => user.profile.emailCommsAcceptedAt),
       onSuggestAlias() {
-        const idea = store.state.profile.alias
-        console.log(idea)
-        desiredAlias.value = store.state.profile.alias
+        desiredAlias.value = user.profile.alias
       },
     }
   },
   computed: {
     okWithTerms() {
       return !this.termsOfUse.find((term) => !term.accepted)
-    }
+    },
   },
   methods: {
     onSubmit() {
@@ -222,7 +218,7 @@ export default {
           message: 'Submitted',
         })
         console.log('about to dispatch registration action')
-        this.store.dispatch('profile/updateMyProfile', {
+        this.user(updateMyProfile, {
           publicId: this.accountId,
           alias: this.desiredAlias,
           email: this.unverifiedEmail || this.socialEmail,
