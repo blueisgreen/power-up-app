@@ -1,37 +1,49 @@
 <template>
   <div>
     <h1>Assignment Selector</h1>
-    <h2>Available</h2>
-    <q-list>
-      <q-item
-        v-for="item in unassigned"
-        :key="item"
-        clickable
-        ripple
-        data-test="available"
-        @click="() => handleAddItem(item)"
-      >
-        <q-item-section>{{ item }}</q-item-section>
-      </q-item>
-    </q-list>
-    <h2>Assigned</h2>
-    <q-list>
-      <q-item
-        v-for="item in assignedItems"
-        :key="item"
-        clickable
-        ripple
-        data-test="assigned"
-        @click="() => handleRemoveItem(item)"
-      >
-        <q-item-section>{{ item }}</q-item-section>
-      </q-item>
-    </q-list>
+
+    <q-splitter
+      v-model="splitterModel"
+      :limits="[50, 100]"
+      style="height: 400px"
+    >
+      <template #before>
+        <h2>Available</h2>
+        <q-list>
+          <q-item
+            v-for="item in unassigned"
+            :key="item"
+            clickable
+            ripple
+            data-test="available"
+            @click="() => handleAddItem(item)"
+          >
+            <q-item-section>{{ item }}</q-item-section>
+          </q-item>
+        </q-list>
+      </template>
+
+      <template #after>
+        <h2>Assigned</h2>
+        <q-list>
+          <q-item
+            v-for="item in assignedItems"
+            :key="item"
+            clickable
+            ripple
+            data-test="assigned"
+            @click="() => handleRemoveItem(item)"
+          >
+            <q-item-section>{{ item }}</q-item-section>
+          </q-item>
+        </q-list>
+      </template>
+    </q-splitter>
   </div>
 </template>
 
 <script>
-import { defineComponent, computed } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 export default defineComponent({
   name: 'AssignmentSelector',
   props: {
@@ -53,9 +65,16 @@ export default defineComponent({
     })
     return {
       unassigned,
+      splitterModel: ref(50),
     }
   },
   methods: {
+    lookupLabel(value) {
+      return typeof item === object ? item.label : item
+    },
+    getValue(item) {
+      return typeof item === object ? item.value : item
+    },
     handleAddItem(item) {
       this.$emit('addItem', item)
     },

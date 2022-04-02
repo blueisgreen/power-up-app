@@ -84,4 +84,41 @@ describe('AssignmentSelector', () => {
     expect(event).toHaveLength(1)
     expect(event[0]).toEqual(['a'])
   })
+
+  it('handles scalar items', () => {
+    const wrapper = mount(AssignmentSelector, {
+      props: {
+        availableItems: [1, 2],
+        assignedItems: [1],
+      },
+    })
+
+    const foundAvailable = wrapper.findAll('[data-test="available"]')
+    const foundAssigned = wrapper.findAll('[data-test="assigned"]')
+
+    expect(foundAvailable).toHaveLength(1)
+    expect(foundAvailable[0].text()).toBe('2')
+    expect(foundAssigned).toHaveLength(1)
+    expect(foundAssigned[0].text()).toBe('1')
+  })
+
+  it('handles object with label and value', () => {
+    const wrapper = mount(AssignmentSelector, {
+      props: {
+        availableItems: [
+          { label: 'Alpha', value: 'a' },
+          { label: 'Beta', value: 'b' },
+        ],
+        assignedItems: ['a'],
+      },
+    })
+
+    const foundAvailable = wrapper.findAll('[data-test="available"]')
+    const foundAssigned = wrapper.findAll('[data-test="assigned"]')
+
+    expect(foundAvailable).toHaveLength(1)
+    expect(foundAvailable[0].text()).toBe('Beta')
+    expect(foundAssigned).toHaveLength(1)
+    expect(foundAssigned[0].text()).toBe('Alpha')
+  })
 })
