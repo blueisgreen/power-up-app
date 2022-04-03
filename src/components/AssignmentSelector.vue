@@ -57,11 +57,11 @@ export default defineComponent({
     },
     labelPropName: {
       type: String,
-      default: 'label',
+      default: 'display',
     },
     valuePropName: {
       type: String,
-      default: 'value',
+      default: 'code',
     },
   },
   emits: ['addItem', 'removeItem'],

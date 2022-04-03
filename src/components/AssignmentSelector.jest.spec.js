@@ -102,12 +102,12 @@ describe('AssignmentSelector', () => {
     expect(foundAssigned[0].text()).toBe('1')
   })
 
-  it('handles object with label and value', () => {
+  it('handles object by default with display and code', () => {
     const wrapper = mount(AssignmentSelector, {
       props: {
         availableItems: [
-          { label: 'Alpha', value: 'a' },
-          { label: 'Beta', value: 'b' },
+          { display: 'Alpha', code: 'a' },
+          { display: 'Beta', code: 'b' },
         ],
         assignedItems: ['a'],
       },
@@ -122,12 +122,12 @@ describe('AssignmentSelector', () => {
     expect(foundAssigned[0].text()).toBe('Alpha')
   })
 
-  it('handles actions by returning value when items are objects', async () => {
+  it('handles actions by returning code when items are objects', async () => {
     const wrapper = mount(AssignmentSelector, {
       props: {
         availableItems: [
-          { label: 'Alpha', value: 'a' },
-          { label: 'Beta', value: 'b' },
+          { display: 'Alpha', code: 'a' },
+          { display: 'Beta', code: 'b' },
         ],
         assignedItems: ['a'],
       },
@@ -138,16 +138,16 @@ describe('AssignmentSelector', () => {
     expect(wrapper.emitted('removeItem')[0]).toEqual(['a'])
   })
 
-  it('allow alternate properties for label and value', async () => {
+  it('allow alternate properties for display and code', async () => {
     const wrapper = mount(AssignmentSelector, {
       props: {
         availableItems: [
-          { display: 'Alpha', code: 'a' },
-          { display: 'Beta', code: 'b' },
+          { label: 'Alpha', value: 'a' },
+          { label: 'Beta', value: 'b' },
         ],
         assignedItems: ['a'],
-        labelPropName: 'display',
-        valuePropName: 'code',
+        labelPropName: 'label',
+        valuePropName: 'value',
       },
     })
     await wrapper.find('[data-test="available"]').trigger('click')
