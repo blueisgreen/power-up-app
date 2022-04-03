@@ -121,4 +121,20 @@ describe('AssignmentSelector', () => {
     expect(foundAssigned).toHaveLength(1)
     expect(foundAssigned[0].text()).toBe('Alpha')
   })
+
+  it('handles actions by returning value when items are objects', async () => {
+    const wrapper = mount(AssignmentSelector, {
+      props: {
+        availableItems: [
+          { label: 'Alpha', value: 'a' },
+          { label: 'Beta', value: 'b' },
+        ],
+        assignedItems: ['a'],
+      },
+    })
+    await wrapper.find('[data-test="available"]').trigger('click')
+    await wrapper.find('[data-test="assigned"]').trigger('click')
+    expect(wrapper.emitted('addItem')[0]).toEqual(['b'])
+    expect(wrapper.emitted('removeItem')[0]).toEqual(['a'])
+  })
 })
