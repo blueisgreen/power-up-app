@@ -18,7 +18,7 @@
             data-test="available"
             @click="() => handleAddItem(item)"
           >
-            <q-item-section>{{ item }}</q-item-section>
+            <q-item-section>{{ getLabel(item) }}</q-item-section>
           </q-item>
         </q-list>
       </template>
@@ -27,14 +27,14 @@
         <h2>Assigned</h2>
         <q-list>
           <q-item
-            v-for="item in assignedItems"
+            v-for="item in assigned"
             :key="item"
             clickable
             ripple
             data-test="assigned"
             @click="() => handleRemoveItem(item)"
           >
-            <q-item-section>{{ item }}</q-item-section>
+            <q-item-section>{{ getLabel(item) }}</q-item-section>
           </q-item>
         </q-list>
       </template>
@@ -58,28 +58,37 @@ export default defineComponent({
   },
   emits: ['addItem', 'removeItem'],
   setup(props) {
-    const unassigned = computed(() => {
-      return props.availableItems.filter(
-        (item) => !props.assignedItems.includes(item)
-      )
-    })
     return {
-      unassigned,
       splitterModel: ref(50),
     }
   },
+  computed: {
+    unassigned() {
+      return this.availableItems.filter(
+        (item) => !this.assignedItems.includes(this.getValue(item))
+      )
+    },
+    assigned() {
+      const assignedItems = this.assignedItems.map((valueToFind) =>
+        this.availableItems.find(
+          (item) => item === valueToFind || item.value === valueToFind
+        )
+      )
+      return assignedItems
+    },
+  },
   methods: {
-    lookupLabel(value) {
-      return typeof item === object ? item.label : item
+    getLabel(item) {
+      return typeof item === 'object' ? item.label : item
     },
     getValue(item) {
-      return typeof item === object ? item.value : item
+      return typeof item === 'object' ? item.value : item
     },
     handleAddItem(item) {
-      this.$emit('addItem', item)
+      this.$emit('addItem', this.getValue(item))
     },
     handleRemoveItem(item) {
-      this.$emit('removeItem', item)
+      this.$emit('removeItem', this.getValue(item))
     },
   },
 })
