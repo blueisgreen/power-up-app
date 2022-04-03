@@ -137,4 +137,22 @@ describe('AssignmentSelector', () => {
     expect(wrapper.emitted('addItem')[0]).toEqual(['b'])
     expect(wrapper.emitted('removeItem')[0]).toEqual(['a'])
   })
+
+  it('allow alternate properties for label and value', async () => {
+    const wrapper = mount(AssignmentSelector, {
+      props: {
+        availableItems: [
+          { display: 'Alpha', code: 'a' },
+          { display: 'Beta', code: 'b' },
+        ],
+        assignedItems: ['a'],
+        labelPropName: 'display',
+        valuePropName: 'code',
+      },
+    })
+    await wrapper.find('[data-test="available"]').trigger('click')
+    await wrapper.find('[data-test="assigned"]').trigger('click')
+    expect(wrapper.emitted('addItem')[0]).toEqual(['b'])
+    expect(wrapper.emitted('removeItem')[0]).toEqual(['a'])
+  })
 })

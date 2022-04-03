@@ -1,15 +1,13 @@
 <template>
   <q-page>
     <div class="q-pa-md text-h3">Scratch Pad</div>
-    <role-assignment-selector
-      :role-options="options"
-      :assigned-roles="starting"
-      @add-item="add"
-      @remove-item="remove"
-    />
     <assignment-selector
       :available-items="roles"
       :assigned-items="assignedRoles"
+      value-prop-name="code"
+      label-prop-name="display"
+      @add-item="add"
+      @remove-item="remove"
     />
     <q-card>
       <q-card-section class="bg-secondary">
@@ -24,28 +22,19 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import RoleAssignmentSelector from './admin/RoleAssignmentSelector.vue'
 import AssignmentSelector from '../components/AssignmentSelector.vue'
 
 export default defineComponent({
   name: 'ScratchPad',
-  components: { RoleAssignmentSelector, AssignmentSelector },
+  components: { AssignmentSelector },
   setup() {
     return {
-      options: ref([
+      roles: ref([
         { code: 'admin', display: 'System Administrator' },
         { code: 'editorInChief', display: 'Editor in Chief' },
         { code: 'member', display: 'Member' },
         { code: 'author', display: 'Author' },
         { code: 'editor', display: 'Editor' },
-      ]),
-      starting: ref(['member', 'author']),
-      roles: ref([
-        { value: 'admin', label: 'System Administrator' },
-        { value: 'editorInChief', label: 'Editor in Chief' },
-        { value: 'member', label: 'Member' },
-        { value: 'author', label: 'Author' },
-        { value: 'editor', label: 'Editor' },
       ]),
       assignedRoles: ref(['member', 'author']),
     }
@@ -53,11 +42,11 @@ export default defineComponent({
   methods: {
     add(role) {
       if (role) {
-        this.starting.push(role.code)
+        this.assignedRoles.push(role)
       }
     },
     remove(role) {
-      this.starting = this.starting.filter((item) => item !== role)
+      this.assignedRoles = this.assignedRoles.filter((item) => item !== role)
     },
     noop() {
       console.log('not implemented')

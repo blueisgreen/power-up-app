@@ -55,6 +55,14 @@ export default defineComponent({
       type: Array,
       default: () => [],
     },
+    labelPropName: {
+      type: String,
+      default: 'label',
+    },
+    valuePropName: {
+      type: String,
+      default: 'value',
+    },
   },
   emits: ['addItem', 'removeItem'],
   setup(props) {
@@ -71,7 +79,8 @@ export default defineComponent({
     assigned() {
       const assignedItems = this.assignedItems.map((valueToFind) =>
         this.availableItems.find(
-          (item) => item === valueToFind || item.value === valueToFind
+          (item) =>
+            item === valueToFind || item[this.valuePropName] === valueToFind
         )
       )
       return assignedItems
@@ -79,10 +88,10 @@ export default defineComponent({
   },
   methods: {
     getLabel(item) {
-      return typeof item === 'object' ? item.label : item
+      return typeof item === 'object' ? item[this.labelPropName] : item
     },
     getValue(item) {
-      return typeof item === 'object' ? item.value : item
+      return typeof item === 'object' ? item[this.valuePropName] : item
     },
     handleAddItem(item) {
       this.$emit('addItem', this.getValue(item))
