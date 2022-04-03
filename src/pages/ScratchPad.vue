@@ -4,19 +4,10 @@
     <assignment-selector
       :available-items="roles"
       :assigned-items="assignedRoles"
-      value-prop-name="code"
-      label-prop-name="display"
+      label="Assignment Prototype"
       @add-item="add"
       @remove-item="remove"
     />
-    <q-card>
-      <q-card-section class="bg-secondary">
-        <q-card-actions align="around">
-          <q-btn class="bg-positive" @click="noop">Save</q-btn>
-          <q-btn class="bg-warning" @click="noop">Cancel</q-btn>
-        </q-card-actions>
-      </q-card-section>
-    </q-card>
   </q-page>
 </template>
 

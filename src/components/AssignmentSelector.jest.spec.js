@@ -18,6 +18,18 @@ describe('AssignmentSelector', () => {
     expect(items).toHaveLength(2)
   })
 
+  it('shows the label', () => {
+    const wrapper = mount(AssignmentSelector, {
+      props: {
+        availableItems: [],
+        assignedItems: [],
+        label: 'Super Powers',
+      }
+    })
+
+    expect(wrapper.find('#assignment-selector-label').text()).toEqual('Super Powers')
+  })
+
   it('shows correct available items when one already assigned', () => {
     const wrapper = mount(AssignmentSelector, {
       props: {

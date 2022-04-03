@@ -1,44 +1,51 @@
 <template>
   <div>
-    <h1>Assignment Selector</h1>
+    <div class="row">
+      <div id="assignment-selector-label" class="col header-style">
+        {{ label }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <q-splitter
+          v-model="splitterModel"
+          :limits="[50, 100]"
+          class="widget-style"
+        >
+          <template #before>
+            <div class="sub-header-style">Available</div>
+            <q-list>
+              <q-item
+                v-for="item in unassigned"
+                :key="item"
+                clickable
+                ripple
+                data-test="available"
+                @click="() => handleAddItem(item)"
+              >
+                <q-item-section class="item-style">{{ getLabel(item) }}</q-item-section>
+              </q-item>
+            </q-list>
+          </template>
 
-    <q-splitter
-      v-model="splitterModel"
-      :limits="[50, 100]"
-      style="height: 400px"
-    >
-      <template #before>
-        <h2>Available</h2>
-        <q-list>
-          <q-item
-            v-for="item in unassigned"
-            :key="item"
-            clickable
-            ripple
-            data-test="available"
-            @click="() => handleAddItem(item)"
-          >
-            <q-item-section>{{ getLabel(item) }}</q-item-section>
-          </q-item>
-        </q-list>
-      </template>
-
-      <template #after>
-        <h2>Assigned</h2>
-        <q-list>
-          <q-item
-            v-for="item in assigned"
-            :key="item"
-            clickable
-            ripple
-            data-test="assigned"
-            @click="() => handleRemoveItem(item)"
-          >
-            <q-item-section>{{ getLabel(item) }}</q-item-section>
-          </q-item>
-        </q-list>
-      </template>
-    </q-splitter>
+          <template #after>
+            <div class="sub-header-style">Assigned</div>
+            <q-list>
+              <q-item
+                v-for="item in assigned"
+                :key="item"
+                clickable
+                ripple
+                data-test="assigned"
+                @click="() => handleRemoveItem(item)"
+              >
+                <q-item-section class="item-style">{{ getLabel(item) }}</q-item-section>
+              </q-item>
+            </q-list>
+          </template>
+        </q-splitter>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -54,6 +61,10 @@ export default defineComponent({
     assignedItems: {
       type: Array,
       default: () => [],
+    },
+    label: {
+      type: String,
+      default: 'Cool Beans',
     },
     labelPropName: {
       type: String,
@@ -103,11 +114,24 @@ export default defineComponent({
 })
 </script>
 
-<style>
-h1 {
-  font-size: 24pt;
+<style scoped>
+.widget-style {
+  height: 300px;
 }
-h2 {
+.header-style {
+  text-align: center;
+  font-size: 24pt;
+  font-weight: bold;
+}
+.sub-header-style {
+  text-align: center;
   font-size: 16pt;
+  font-weight: bold;
+  font-style: italic;
+  background-color: bisque;
+}
+.item-style {
+  text-align: center;
+  font-size: 12pt;
 }
 </style>
