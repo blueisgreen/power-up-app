@@ -7,6 +7,10 @@
       @add-item="add"
       @remove-item="remove"
     />
+    <assignment-selector
+      :available-items="roles"
+      :assigned-items="assignedRoles"
+    />
     <q-card>
       <q-card-section class="bg-secondary">
         <q-card-actions align="around">
@@ -21,10 +25,11 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import RoleAssignmentSelector from './admin/RoleAssignmentSelector.vue'
+import AssignmentSelector from '../components/AssignmentSelector.vue'
 
 export default defineComponent({
   name: 'ScratchPad',
-  components: { RoleAssignmentSelector },
+  components: { RoleAssignmentSelector, AssignmentSelector },
   setup() {
     return {
       options: ref([
@@ -35,6 +40,14 @@ export default defineComponent({
         { code: 'editor', display: 'Editor' },
       ]),
       starting: ref(['member', 'author']),
+      roles: ref([
+        { value: 'admin', label: 'System Administrator' },
+        { value: 'editorInChief', label: 'Editor in Chief' },
+        { value: 'member', label: 'Member' },
+        { value: 'author', label: 'Author' },
+        { value: 'editor', label: 'Editor' },
+      ]),
+      assignedRoles: ref(['member', 'author']),
     }
   },
   methods: {

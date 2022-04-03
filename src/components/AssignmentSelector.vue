@@ -94,4 +94,11 @@ export default defineComponent({
 })
 </script>
 
-<style></style>
+<style>
+h1 {
+  font-size: 24pt;
+}
+h2 {
+  font-size: 16pt;
+}
+</style>
