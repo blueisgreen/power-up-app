@@ -43,7 +43,7 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { date } from 'quasar'
-import { fetchActivity } from '../../api/PowerUpApi'
+import { fetchActions, actionFilterBuilder } from '../../api/PowerUpApi'
 
 export default defineComponent({
   setup() {
@@ -64,7 +64,8 @@ export default defineComponent({
     }
   },
   async mounted() {
-    const results = await fetchActivity(this.dateFilter)
+    const filter = actionFilterBuilder.init().setLimit(20).build()
+    const results = await fetchActions(filter)
     console.log('found activities', results)
     this.activity.length = 0
     results.forEach((result) => this.activity.push(result))
