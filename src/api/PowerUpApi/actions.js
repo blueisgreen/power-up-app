@@ -1,3 +1,4 @@
+import { registerRuntimeHelpers } from '@vue/compiler-core';
 import { api } from '../../boot/axios'
 
 export async function recordAction(actionCode, details) {
@@ -5,8 +6,9 @@ export async function recordAction(actionCode, details) {
 }
 
 export async function fetchActions(actionFilter) {
+  console.log('filter', actionFilter);
   let queryStr = ''
-  actionFilter.keys().map((key) => {
+  Object.keys(actionFilter).map((key) => {
     if (typeof key !== 'function') {
       if (queryStr.length > 0) {
         queryStr += '&'
@@ -14,45 +16,44 @@ export async function fetchActions(actionFilter) {
       queryStr += `${key}=${actionFilter[key]}`
     }
   })
-  console.log('finding actions that match:', queryStr);
-  return await api.get(`/actions?${queryStr}`)
+  console.log('finding actions that match:', queryStr)
+  const results = await api.get(`/actions?${queryStr}`)
+  return results.data
 }
 
 // hold builder in actionFilter component; call build with api call
-export const actionFilterBuilder = {
-  filterSet: {},
-  init: () => {
-    this.filterSet = {}
-    return this
-  },
-  setStart: (start) => {
-    // TODO: ensure format YYYY-MM-DD
-    this.filterSet.start = start
-    return this
-  },
-  setEnd: (end) => {
-    // TODO: ensure format YYYY-MM-DD
-    this.filterSet.end = end
-    return this
-  },
-  setActionCode: (code) => {
-    this.filterSet.action = code
-    return this
-  },
-  setUserKey: (key) => {
-    this.filterSet.user = key
-    return this
-  },
-  setLimit: (limit) => {
-    this.filterSet.limit = limit
-    return this
-  },
-  setOffset: (offset) => {
-    this.filterSet.offset = offset
-    return this
-  },
-  build: () => {
-    // return a copy to detach from builder
-    return Object.assign({}, filterSet)
-  },
+export const actionFilterBuilder = () => {
+  return {
+    filterSet: {},
+    setStart: function(start) {
+      // TODO: ensure format YYYY-MM-DD
+      this.filterSet.start = start
+      return this
+    },
+    setEnd: function(end) {
+      // TODO: ensure format YYYY-MM-DD
+      this.filterSet.end = end
+      return this
+    },
+    setActionCode: function(code) {
+      this.filterSet.action = code
+      return this
+    },
+    setUserKey: function(key) {
+      this.filterSet.user = key
+      return this
+    },
+    setLimit: function(limit) {
+      this.filterSet.limit = limit
+      return this
+    },
+    setOffset: function(offset) {
+      this.filterSet.offset = offset
+      return this
+    },
+    build: function() {
+      // return a copy to detach from builder
+      return Object.assign({}, this.filterSet)
+    },
+  }
 }
