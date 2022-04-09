@@ -11,7 +11,7 @@
 
     <q-list>
       <q-item
-        v-for="user in users"
+        v-for="user in adminStore.userList"
         :key="user.userKey"
         clickable
         @click="() => selectMember(user)"
@@ -38,27 +38,24 @@
 
 <script>
 import { defineComponent, onMounted, ref } from 'vue'
-import { useStore, mapGetters } from 'vuex'
+import { useAdminStore } from '../../stores/admin'
 import MemberDetailPanel from './MemberDetailPanel.vue'
 
 export default defineComponent({
   components: { MemberDetailPanel },
   setup() {
-    const store = useStore()
+    const adminStore = useAdminStore()
     onMounted(() => {
-      store.dispatch('admin/refreshUsers')
-      store.dispatch('admin/loadRoleOptions')
+      adminStore.refreshUsers()
+      adminStore.loadRoleOptions()
     })
     return {
-      store,
+      adminStore,
       searchQuery: ref(null),
       showDetail: ref(false),
       selected: ref(null),
       selectedRoles: ref([]),
     }
-  },
-  computed: {
-    ...mapGetters('admin', ['users']),
   },
   methods: {
     search() {
@@ -66,9 +63,7 @@ export default defineComponent({
     },
     async selectMember(member) {
       this.selected = member
-      this.store.dispatch('admin/loadUserDetails', {
-        userKey: member.userKey,
-      })
+      this.adminStore.loadUserDetails(member.userKey)
     },
   },
 })

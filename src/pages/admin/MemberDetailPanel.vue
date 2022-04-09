@@ -4,9 +4,10 @@
     <div class="text-h6 text-center">
       {{ user.alias }} ( {{ user.userKey }} )
     </div>
-    <role-assignment-selector
-      :role-options="roleOptions"
-      :assigned-roles="userRoles"
+    <assignment-selector
+      :available-items="adminStore.roleOptions"
+      :assigned-items="userRoles"
+      label="Role Assignments"
       @add-item="addRole"
       @remove-item="removeRole"
     />
@@ -15,11 +16,11 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { useStore } from 'vuex'
-import RoleAssignmentSelector from './RoleAssignmentSelector.vue'
+import { useAdminStore } from '../../stores/admin'
+import AssignmentSelector from '../../components/AssignmentSelector.vue'
 
 export default defineComponent({
-  components: { RoleAssignmentSelector },
+  components: { AssignmentSelector },
   props: {
     user: {
       type: Object,
@@ -27,11 +28,9 @@ export default defineComponent({
     },
   },
   setup() {
-    const store = useStore()
-    const roleOptions = store.state.admin.roleOptions
+    const adminStore = useAdminStore()
     return {
-      roleOptions,
-      store,
+      adminStore: useAdminStore(),
     }
   },
   computed: {
@@ -41,16 +40,10 @@ export default defineComponent({
   },
   methods: {
     addRole(role) {
-      this.store.dispatch('admin/assignUserRole', {
-        userKey: this.user.userKey,
-        role: role.code,
-      })
+      this.adminStore.assignUserRole(this.user.userKey, role)
     },
     removeRole(role) {
-      this.store.dispatch('admin/unassignUserRole', {
-        userKey: this.user.userKey,
-        role,
-      })
+      this.adminStore.unassignUserRole(this.user.userKey, role)
     },
   },
 })

@@ -1,67 +1,65 @@
 <template>
   <q-page class="q-pa-md">
     <h4>Your Power Up Account</h4>
-    <div class="q-pb-md">
-      Review and update your online profile and account settings.
-    </div>
+
     <q-list padding bordered>
       <q-item-label header>Profile</q-item-label>
-
       <q-item>
         <q-item-section side>
           <q-item-label class="text-bold">Member since:</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ formatDayMonthYear(createdAt) }}</q-item-label>
+          <q-item-label>{{
+            formatDayMonthYear(profile.createdAt)
+          }}</q-item-label>
         </q-item-section>
       </q-item>
-
       <q-item>
         <q-item-section side>
           <q-item-label class="text-bold">Screen name:</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ alias }}</q-item-label>
+          <q-item-label>{{ profile.alias }}</q-item-label>
         </q-item-section>
       </q-item>
-
       <q-item>
         <q-item-section side>
           <q-item-label class="text-bold">Email:</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label v-if="email">{{ email }}</q-item-label>
+          <q-item-label v-if="profile.email">{{ profile.email }}</q-item-label>
           <q-item-label v-else class="text-italic">unknown</q-item-label>
         </q-item-section>
       </q-item>
-
       <q-item>
         <q-item-section side>
           <q-item-label class="text-bold">Avatar:</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-avatar v-if="avatarUrl">
-            <img :src="avatarUrl" />
+          <q-avatar v-if="profile.avatarUrl">
+            <img :src="profile.avatarUrl" />
           </q-avatar>
-          <q-item-label v-if="avatarUrl === null">Unknown</q-item-label>
+          <q-item-label v-if="profile.avatarUrl === null">Unknown</q-item-label>
         </q-item-section>
       </q-item>
 
       <q-separator spaced />
       <q-item-label header>Settings</q-item-label>
-
       <q-item v-ripple tag="label">
         <q-item-section side>
-          <q-checkbox v-model="emailIsOkay" @click="toggleEmailComm" />
+          <q-checkbox
+            v-model="userStore.isEmailOkay"
+            @click="toggleEmailComm"
+          />
         </q-item-section>
         <q-item-section>
           <q-item-label>Email Communication</q-item-label>
-          <q-item-label v-if="!emailCommsAcceptedAt" caption>
+          <q-item-label v-if="!userStore.isEmailOkay" caption>
             I agree to receive email about Power Up Magazine.
           </q-item-label>
-          <q-item-label v-if="!!emailCommsAcceptedAt" caption>
-            On {{ formatDayMonthYear(cookiesAcceptedAt) }}, you said email from
-            us is OK.
+          <q-item-label v-if="userStore.isEmailOkay" caption>
+            On {{ formatDayMonthYear(profile.emailAcceptedAt) }}, you said email
+            from us is OK.
           </q-item-label>
         </q-item-section>
         <q-item-section side top>
@@ -76,19 +74,19 @@
       <q-item v-ripple tag="label">
         <q-item-section side>
           <q-checkbox
-            v-model="cookiesAreOkay"
-            :disable="!!cookiesAcceptedAt"
+            v-model="userStore.areCookiesOkay"
+            :disable="userStore.areCookiesOkay"
             @click="acknowledgeCookies"
           />
         </q-item-section>
         <q-item-section>
           <q-item-label>Cookies</q-item-label>
-          <q-item-label v-if="!cookiesAcceptedAt" caption
+          <q-item-label v-if="!userStore.areCookiesOkay" caption
             >Check to allow cookies.</q-item-label
           >
-          <q-item-label v-if="!!cookiesAcceptedAt" caption>
-            On {{ formatDayMonthYear(cookiesAcceptedAt) }}, you said cookies are
-            OK.
+          <q-item-label v-if="userStore.areCookiesOkay" caption>
+            On {{ formatDayMonthYear(profile.cookiesAcceptedAt) }}, you said
+            cookies are OK.
           </q-item-label>
         </q-item-section>
         <q-item-section side top>
@@ -101,7 +99,7 @@
       </q-item>
 
       <q-separator spaced />
-      <terms-of-use :terms="terms" :accepted-at="termsAcceptedAt" />
+      <terms-of-use :terms="terms" :accepted-at="profile.termsAcceptedAt" />
 
       <q-separator spaced />
       <q-item-label header>Technical Details</q-item-label>
@@ -111,7 +109,7 @@
           <q-item-label class="text-bold">Account ID</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ accountId }}</q-item-label>
+          <q-item-label>{{ profile.accountId }}</q-item-label>
         </q-item-section>
       </q-item>
 
@@ -129,7 +127,9 @@
           <q-item-label class="text-bold">Last Updated</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ formatDayMonthYear(updatedAt) }}</q-item-label>
+          <q-item-label>{{
+            formatDayMonthYear(profile.updatedAt)
+          }}</q-item-label>
         </q-item-section>
       </q-item>
     </q-list>
@@ -138,49 +138,48 @@
 
 <script>
 import { defineComponent, ref, onMounted } from 'vue'
-import { mapState, useStore } from 'vuex'
+import { useUserStore } from '../../stores/user'
 import { formatDayMonthYear } from '../../composables/powerUpUtils'
 import TermsOfUse from './TermsOfUse.vue'
 import InfoDialog from '../../components/InfoDialog'
 
+// FIXME: rethink entire profile - lots of personalization use cases are not right
 export default defineComponent({
   components: {
     TermsOfUse,
     InfoDialog,
   },
   setup() {
-    const store = useStore()
-    const areTermsOk = !!store.state.profile.termsAcceptedAt
-    console.log('okay?', areTermsOk)
-
-    const terms = [
-      {
+    const userStore = useUserStore()
+    const profile = userStore.profile
+    const terms = ref([])
+    onMounted(async () => {
+      await userStore.fetchMyProfile()
+      terms.value.push({
         code: 'term1',
         explanation:
           'Power Up Magazine is for learning about nuclear power and related subjects.',
-        accepted: areTermsOk,
-      },
-      {
+        accepted: userStore.areTermsOkay,
+      })
+      terms.value.push({
         code: 'term2',
         explanation:
           "Be curious: Everyone is learning, even the experts. There will be errors and mistakes. Let's discuss, debate, and learn together.",
-        accepted: areTermsOk,
-      },
-      {
+        accepted: userStore.areTermsOkay,
+      })
+      terms.value.push({
         code: 'term3',
         explanation:
           'Be polite: This is civilized social media. Mind your manners.',
-        accepted: areTermsOk,
-      },
-      {
+        accepted: userStore.areTermsOkay,
+      })
+      terms.value.push({
         code: 'term4',
         explanation:
           'Be empowered: Membership is free. You may leave Power Up Magazine at any time.',
-        accepted: areTermsOk,
-      },
-    ]
-    const emailIsOkay = ref(!!store.state.profile.emailCommsAcceptedAt)
-    const cookiesAreOkay = ref(!!store.state.profile.cookiesAcceptedAt)
+        accepted: userStore.areTermsOkay,
+      })
+    })
 
     const dialogValues = {
       cookies: {
@@ -201,32 +200,16 @@ export default defineComponent({
       formatDayMonthYear,
       terms,
       dialogValues,
-      emailIsOkay,
-      cookiesAreOkay,
+      userStore,
+      profile,
     }
   },
-  computed: mapState('profile', [
-    'accountId',
-    'alias',
-    'email',
-    'avatarUrl',
-    'createdAt',
-    'updatedAt',
-    'termsAcceptedAt',
-    'cookiesAcceptedAt',
-    'emailCommsAcceptedAt',
-    'accountStatusId',
-  ]),
   methods: {
-    acknowledgeCookies() {
-      console.log('cookies are okay, yo')
-    },
+    acknowledgeCookies() {},
     toggleEmailComm() {
-      console.log('email communication is super duper')
+      this.userStore.agreeToEmail()
     },
-    saveEmail(email) {
-      console.log(`saving email: ${email}`)
-    },
+    saveEmail(email) {},
   },
 })
 </script>

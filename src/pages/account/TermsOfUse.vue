@@ -3,7 +3,7 @@
 
   <q-item v-if="acceptedAt">
     <q-item-label>
-      You agreed to the following terms of use on {{ formatDayMonthYear(acceptedAt) }}.
+      You agreed to the following terms of use on {{ whenAccepted }}.
     </q-item-label>
   </q-item>
 
@@ -29,15 +29,15 @@ export default defineComponent({
       default: () => [],
     },
     acceptedAt: {
-      type: String,
+      type: Date,
       default: null,
     },
   },
-  setup() {
-    return {
-      formatDayMonthYear,
+  computed: {
+    whenAccepted() {
+      return formatDayMonthYear(this.acceptedAt)
     }
-  },
+  }
 })
 </script>
 

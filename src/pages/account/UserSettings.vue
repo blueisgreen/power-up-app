@@ -70,15 +70,6 @@ export default {
       type: String,
       default: null,
     },
-    // options: {
-    //   type: Object,
-    //   default: () => {
-    //     return {
-    //       okayWithEmailComms: false,
-    //       okayWithCookies: false,
-    //     }
-    //   },
-    // },
   },
   setup() {
     const options = ref({ okayWithEmailComms: false, okayWithCookies: false })
