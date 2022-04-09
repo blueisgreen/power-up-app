@@ -4,7 +4,7 @@
 
     <q-toolbar class="bg-primary glossy text-white">
       <q-toolbar-title shrink>Filters:</q-toolbar-title>
-      <q-input v-model="dateFilter" label="When" filled>
+      <q-input v-model="startFilter" label="From" filled>
         <template #prepend>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy
@@ -12,7 +12,24 @@
               transition-show="scale"
               transition-hide="scale"
             >
-              <q-date v-model="dateFilter" mask="YYYY-MM-DD">
+              <q-date v-model="startFilter" mask="YYYY-MM-DD">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="primary" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
+      <q-input v-model="endFilter" label="Until" filled>
+        <template #prepend>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy
+              cover
+              transition-show="scale"
+              transition-hide="scale"
+            >
+              <q-date v-model="endFilter" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="Close" color="primary" flat />
                 </div>
@@ -48,19 +65,14 @@ import { fetchActions, actionFilterBuilder } from '../../api/PowerUpApi'
 export default defineComponent({
   setup() {
     const formatDate = (ts) => date.formatDate(ts, 'YYYY MMM DD')
-    const dateFilter = ref(new Date())
-    const activity = ref([
-      {
-        createdAt: new Date(),
-        userKey: '123-abc-4567-def-890',
-        actionCode: 'navigate',
-        details: '{"target":"AdminPanels"}',
-      },
-    ])
+    const startFilter = ref(new Date())
+    const endFilter = ref(new Date())
+    const activity = ref([])
     return {
       formatDate,
+      startFilter,
+      endFilter,
       activity,
-      dateFilter,
     }
   },
   async mounted() {
