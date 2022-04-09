@@ -2,7 +2,7 @@
   <div class="q-pa-md">
     <h3>System Administration</h3>
 
-    <q-toolbar class="bg-primary glossy text-white">
+    <q-toolbar class="bg-primary glossy">
       <q-toolbar-title shrink>Filters:</q-toolbar-title>
       <q-input v-model="startFilter" label="From" filled>
         <template #prepend>
@@ -39,7 +39,7 @@
         </template>
       </q-input>
       <q-space></q-space>
-      <q-btn flat round dense icon="search" />
+      <q-btn flat round dense icon="search" @click="findActionsUsingFilters" />
     </q-toolbar>
     <table>
       <tr>
@@ -64,23 +64,32 @@ import { fetchActions, actionFilterBuilder } from '../../api/PowerUpApi'
 
 export default defineComponent({
   setup() {
-    const formatDate = (ts) => date.formatDate(ts, 'YYYY MMM DD')
-    const startFilter = ref(new Date())
-    const endFilter = ref(new Date())
+    const filterBuilder = actionFilterBuilder().setLimit(20)
     const activity = ref([])
+    const formatDate = (ts) => date.formatDate(ts, 'YYYY-MM-DD')
+    const startFilter = ref('2022-03-18')
+    const endFilter = ref('2022-04-10')
     return {
       formatDate,
       startFilter,
       endFilter,
       activity,
+      filterBuilder,
     }
   },
-  async mounted() {
-    const filter = actionFilterBuilder().setLimit(20)
-    const results = await fetchActions(filter)
-    console.log('found activities', results)
-    this.activity.length = 0
-    results.forEach((result) => this.activity.push(result))
+  methods: {
+    async findActionsUsingFilters() {
+      const builder = this.filterBuilder
+      if (this.startFilter) {
+        builder.setStart(this.startFilter)
+      }
+      if (this.endFilter) {
+        builder.setEnd(this.endFilter)
+      }
+      const results = await fetchActions(builder)
+      this.activity.length = 0
+      results.forEach((result) => this.activity.push(result))
+    },
   },
 })
 </script>
