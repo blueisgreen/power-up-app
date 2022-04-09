@@ -64,7 +64,7 @@ export default defineComponent({
     }
   },
   async mounted() {
-    const filter = actionFilterBuilder().setLimit(20).build()
+    const filter = actionFilterBuilder().setLimit(20)
     const results = await fetchActions(filter)
     console.log('found activities', results)
     this.activity.length = 0
