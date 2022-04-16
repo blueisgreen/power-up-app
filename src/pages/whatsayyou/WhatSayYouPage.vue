@@ -2,19 +2,20 @@
   <q-page class="q-pa-md">
     <div class="row q-col-gutter-lg">
       <div class="col" style="max-width: 500px">
+        <div class="text-h3">What Say You?</div>
         <composition-editor
           :original="prose"
           @save-work="handleSave"
         />
       </div>
       <div class="col">
-        <div class="text-h2">What You've Said</div>
+        <div class="text-h3">What You Said</div>
         <q-card>
           <q-card-section>{{ afterMassaging }}</q-card-section>
         </q-card>
         <hr />
-        <q-card>
-          <q-card-section v-html="afterMassaging" />
+        <q-card v-for="(point, index) in savePoints" :key="index">
+          <q-card-section v-html="point" />
         </q-card>
       </div>
     </div>
@@ -35,9 +36,11 @@ export default defineComponent({
       '<p>this is exactly the kind of thing...</p><p>we should tweet about</p>'
     )
     const lastSavePoint = ref('')
+    const savePoints = ref([])
     return {
       prose,
       lastSavePoint,
+      savePoints,
     }
   },
   computed: {
@@ -48,6 +51,7 @@ export default defineComponent({
   methods: {
     handleSave(blah) {
       this.lastSavePoint = blah
+      this.savePoints.push(blah)
     },
   },
 })
