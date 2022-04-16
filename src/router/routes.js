@@ -150,6 +150,11 @@ const routes = [
         name: 'StartSimple',
         component: () => import('../pages/SimpleStartPage.vue'),
       },
+      {
+        path: '/wsy',
+        name: 'WhatSayYou',
+        component: () => import('../pages/whatsayyou/WhatSayYouPage.vue'),
+      },
     ],
   },
 
