@@ -2,19 +2,16 @@
   <q-page class="q-pa-md">
     <div class="row q-col-gutter-lg">
       <div class="col" style="max-width: 500px">
-        <q-input
-          v-model="prose"
-          autogrow
-          filled
-          label="Write something...anything."
+        <composition-editor
+          :original="prose"
+          @save-work="handleSave"
         />
-        <q-editor v-model="prose" />
-        <q-btn @click="save">Say It</q-btn>
-        <composition-editor save-work="saveMe"/>
       </div>
       <div class="col">
         <div class="text-h2">What You've Said</div>
-        <div class="">{{ lastSavePoint }}</div>
+        <q-card>
+          <q-card-section>{{ afterMassaging }}</q-card-section>
+        </q-card>
         <hr />
         <q-card>
           <q-card-section v-html="afterMassaging" />
@@ -31,7 +28,7 @@ import CompositionEditor from './CompositionEditor.vue'
 export default defineComponent({
   name: 'WhatSayYouPage',
   components: {
-    CompositionEditor
+    CompositionEditor,
   },
   setup() {
     const prose = ref(
@@ -49,12 +46,9 @@ export default defineComponent({
     },
   },
   methods: {
-    save() {
-      this.lastSavePoint = this.prose
+    handleSave(blah) {
+      this.lastSavePoint = blah
     },
-    saveMe(blah) {
-      alert('Another great save!', blah)
-    }
   },
 })
 </script>
