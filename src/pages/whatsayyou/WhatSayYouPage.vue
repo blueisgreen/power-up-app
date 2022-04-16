@@ -8,15 +8,17 @@
           filled
           label="Write something...anything."
         />
+        <q-editor v-model="prose" />
         <q-btn @click="save">Say It</q-btn>
+        <composition-editor save-work="saveMe"/>
       </div>
       <div class="col">
         <div class="text-h2">What You've Said</div>
         <div class="">{{ lastSavePoint }}</div>
         <hr />
-        <div><span v-html="lastSavePoint" /></div>
-        <hr />
-        <div><span v-html="afterMassaging" /></div>
+        <q-card>
+          <q-card-section v-html="afterMassaging" />
+        </q-card>
       </div>
     </div>
   </q-page>
@@ -24,9 +26,13 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
+import CompositionEditor from './CompositionEditor.vue'
 
 export default defineComponent({
   name: 'WhatSayYouPage',
+  components: {
+    CompositionEditor
+  },
   setup() {
     const prose = ref(
       '<p>this is exactly the kind of thing...</p><p>we should tweet about</p>'
@@ -46,6 +52,9 @@ export default defineComponent({
     save() {
       this.lastSavePoint = this.prose
     },
+    saveMe(blah) {
+      alert('Another great save!', blah)
+    }
   },
 })
 </script>
