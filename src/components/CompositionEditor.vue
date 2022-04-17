@@ -4,6 +4,8 @@
       v-model="composition"
       :max-height="maxHeight"
       paragraph-tag="p"
+      toolbar-push
+      toolbar-bg="secondary"
       placeholder="Type whatever you like..."
       :definitions="{
         save: {
@@ -47,7 +49,7 @@ export default defineComponent({
     },
     maxHeight: {
       type: String,
-      default: '400px'
+      default: '400px',
     },
     bareBones: Boolean, // alignment, bold, italic, save
     fontOptions: Boolean, // variety of fonts, text sizes
@@ -58,6 +60,11 @@ export default defineComponent({
     return {
       toolbarItems: ref({}),
       composition: ref(''),
+    }
+  },
+  beforeUpdate() {
+    if (this.startingText) {
+      this.composition = this.startingText
     }
   },
   created() {
@@ -72,54 +79,62 @@ export default defineComponent({
       list: 'only-icons',
       options: ['left', 'center', 'right', 'justify'],
     }
+    const fontItems = [
+      {
+        label: $q.lang.editor.formatting,
+        icon: $q.iconSet.editor.formatting,
+        list: 'no-icons',
+        options: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code'],
+      },
+      {
+        label: $q.lang.editor.fontSize,
+        icon: $q.iconSet.editor.fontSize,
+        fixedLabel: true,
+        fixedIcon: true,
+        list: 'no-icons',
+        options: ['size-1', 'size-2', 'size-3', 'size-5', 'size-6'],
+      },
+      {
+        label: $q.lang.editor.defaultFont,
+        icon: $q.iconSet.editor.font,
+        fixedIcon: true,
+        list: 'no-icons',
+        options: [
+          'default_font',
+          'arial',
+          'arial_black',
+          'comic_sans',
+          'courier_new',
+          'impact',
+          'lucida_grande',
+          'times_new_roman',
+          'verdana',
+        ],
+      },
+      'removeFormat',
+    ]
 
     if (this.bareBones) {
-      this.toolbarItems = [['bold', 'italic'], [alignmentItems], ['undo', 'redo'], ['save']]
+      this.toolbarItems = [['bold', 'italic']]
     } else {
       this.toolbarItems = [
         ['bold', 'italic', 'strike', 'underline', 'subscript', 'superscript'],
-        [alignmentItems, 'quote', 'unordered', 'ordered', 'link'],
-        ['undo', 'redo'], ['save'],
       ]
     }
     if (this.fontOptions) {
-      this.toolbarItems.unshift([
-        {
-          label: $q.lang.editor.formatting,
-          icon: $q.iconSet.editor.formatting,
-          list: 'no-icons',
-          options: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code'],
-        },
-        {
-          label: $q.lang.editor.fontSize,
-          icon: $q.iconSet.editor.fontSize,
-          fixedLabel: true,
-          fixedIcon: true,
-          list: 'no-icons',
-          options: ['size-1', 'size-2', 'size-3', 'size-5', 'size-6'],
-        },
-        {
-          label: $q.lang.editor.defaultFont,
-          icon: $q.iconSet.editor.font,
-          fixedIcon: true,
-          list: 'no-icons',
-          options: [
-            'default_font',
-            'arial',
-            'arial_black',
-            'comic_sans',
-            'courier_new',
-            'impact',
-            'lucida_grande',
-            'times_new_roman',
-            'verdana',
-          ],
-        },
-        'removeFormat',
-      ])
+      this.toolbarItems.push(fontItems)
     }
     if (this.mathSymbols) {
       console.log('Sorry, not implemented')
+    }
+    if (this.bareBones) {
+      this.toolbarItems.push([alignmentItems], ['undo', 'redo'], ['save'])
+    } else {
+      this.toolbarItems.push(
+        [alignmentItems, 'quote', 'unordered', 'ordered', 'link'],
+        ['undo', 'redo'],
+        ['save']
+      )
     }
   },
   methods: {
