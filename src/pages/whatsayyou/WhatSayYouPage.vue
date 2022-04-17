@@ -4,7 +4,23 @@
       <div class="col" style="max-width: 500px">
         <div class="text-h3">What Say You?</div>
         <composition-editor
-          :original="prose"
+          :starting-text="prose"
+          @save-work="handleSave"
+        />
+        <composition-editor
+          :starting-text="prose"
+          bare-bones
+          max-height="100px"
+          @save-work="handleSave"
+        />
+        <composition-editor
+          :starting-text="prose"
+          bare-bones
+          font-options
+          @save-work="handleSave"
+        />
+        <composition-editor
+          font-options
           @save-work="handleSave"
         />
       </div>
@@ -24,7 +40,7 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import CompositionEditor from './CompositionEditor.vue'
+import CompositionEditor from '../../components/CompositionEditor.vue'
 
 export default defineComponent({
   name: 'WhatSayYouPage',
