@@ -62,11 +62,6 @@ export default defineComponent({
       composition: ref(''),
     }
   },
-  beforeUpdate() {
-    if (this.startingText) {
-      this.composition = this.startingText
-    }
-  },
   created() {
     const $q = useQuasar()
     if (this.startingText) {

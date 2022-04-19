@@ -19,7 +19,17 @@
         />
         <div>
           <div class="text-h4">Synopsis</div>
+          <q-card v-if="!editSynopsis" class="my-card">
+            <q-card-section horizontal>
+              <div class="q-pt-sm q-pl-sm" v-html="draft.synopsis" />
+              <q-space />
+              <q-card-actions vertical>
+                <q-btn flat round icon="edit" @click="handleSynopsisEdit" />
+              </q-card-actions>
+            </q-card-section>
+          </q-card>
           <composition-editor
+            v-if="editSynopsis"
             :starting-text="draft.synopsis"
             bare-bones
             max-height="150px"
@@ -28,11 +38,21 @@
         </div>
         <div>
           <div class="text-h4">Article Body</div>
+          <q-card v-if="!editArticle" class="my-card">
+            <q-card-section horizontal>
+              <div class="q-pt-sm q-pl-sm" v-html="draft.content" />
+              <q-space />
+              <q-card-actions vertical>
+                <q-btn flat round icon="edit" @click="handleArticleEdit" />
+              </q-card-actions>
+            </q-card-section>
+          </q-card>
           <composition-editor
+            v-if="editArticle"
             :starting-text="draft.content"
             font-options
-            max-height="150px"
-            @save-work="handleContentSave"
+            max-height="400px"
+            @save-work="handleArticleSave"
           />
         </div>
       </q-form>
@@ -75,6 +95,8 @@ export default {
     return {
       workbench,
       draft: blankDraft,
+      editSynopsis: ref(false),
+      editArticle: ref(false),
     }
   },
   async created() {
@@ -91,14 +113,28 @@ export default {
       this.save()
       this.$router.push({ name: 'ArticleWorkbench' })
     },
-    handleSynopsisSave(content) {
-      this.draft.synopsis = content
+    handleSynopsisEdit() {
+      this.editSynopsis = true
     },
-    handleContentSave(content) {
+    handleSynopsisSave(content) {
+      console.log('saving synopsis', content)
+      this.draft.synopsis = content
+      this.editSynopsis = false
+    },
+    handleArticleEdit() {
+      this.editArticle = true
+    },
+    handleArticleSave(content) {
       this.draft.content = content
+      this.editArticle = false
     },
   },
 }
 </script>
 
-<style></style>
+<style>
+.my-card {
+  width: 100%;
+  max-width: 350px;
+}
+</style>
