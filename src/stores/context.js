@@ -3,7 +3,7 @@ import { fetchPublishedArticles, fetchArticle } from '../api/PowerUpApi'
 
 export const useContextStore = defineStore('context', {
   state: () => ({
-    messageToUser: 'At your service...',
+    messageToUser: 'Time to learn something...',
     recommendationsLoaded: false,
     articlesById: {},
     articleList: [],
