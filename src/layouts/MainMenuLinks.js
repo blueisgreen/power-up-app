@@ -7,6 +7,13 @@ export default [
     exact: true,
   },
   {
+    title: 'Article Workbench',
+    caption: 'For creating articles (editors only)',
+    icon: 'far fa-edit',
+    route: 'ArticleWorkbench',
+    rolesWithAccess: ['author', 'editor', 'editorInChief'],
+  },
+  {
     title: 'Account',
     caption: 'Your account information',
     icon: 'fas fa-user',
@@ -21,11 +28,10 @@ export default [
     route: 'SupportCenter',
   },
   {
-    title: 'Article Workbench',
-    caption: 'For creating articles (editors only)',
-    icon: 'far fa-edit',
-    route: 'ArticleWorkbench',
-    rolesWithAccess: ['author', 'editor', 'editorInChief'],
+    title: 'About',
+    caption: 'About Power Up Magazine',
+    icon: 'fas fa-atom',
+    route: 'AboutPage',
   },
   {
     title: 'Customer Support',
@@ -42,15 +48,9 @@ export default [
     rolesWithAccess: ['admin'],
   },
   {
-    title: 'About',
-    caption: 'About Power Up Magazine',
-    icon: 'fas fa-atom',
-    route: 'AboutPage',
+    title: 'Experimental',
+    caption: 'For trying out new widgets',
+    icon: 'fas fa-flask',
+    route: 'Scratch',
   },
-  // {
-  //   title: 'Scratch',
-  //   caption: 'About Power Up Magazine',
-  //   icon: 'fas fa-atom',
-  //   route: 'Scratch',
-  // },
 ]

@@ -16,7 +16,7 @@ export const useWorkbenchStore = defineStore('workbench', {
     articleList: [],
     articlesById: {},
     draftArticle: {},
-    draftLesson: '',
+    draftLesson: null,
   }),
   getters: {
     articles() {

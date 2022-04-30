@@ -41,7 +41,6 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import { useStore, mapGetters } from 'vuex'
 import { useUserStore } from '../stores/user'
 import AuthorizationWidget from 'components/AuthorizationWidget.vue'
 import EssentialLink from 'components/EssentialLink.vue'
@@ -72,11 +71,13 @@ export default defineComponent({
   computed: {
     visibleMenuItems() {
       return this.essentialLinks.filter((menuItem) => {
+        console.log('roles for item', menuItem.rolesWithAccess);
         return (
           !menuItem.rolesWithAccess ||
           (this.user.isSignedIn &&
-            menuItem.rolesWithAccess.filter((itemRole) =>
-              this.user.roles.includes(itemRole)
+            menuItem.rolesWithAccess.some((itemRole) =>
+              // this.user.roles.includes(itemRole)
+              this.user.hasRole(itemRole)
             ))
         )
       })

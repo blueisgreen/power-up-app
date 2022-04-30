@@ -9,33 +9,32 @@ export const useUserStore = defineStore('user', {
   state: () => {
     return {
       signedIn: false,
-      userId: '',
-      alias: '',
+      userId: null,
+      alias: null,
       roles: [],
       profile: {
-        accountId: '',
-        createdAt: new Date(),
-        termsAcceptedAt: new Date(),
-        cookiesAcceptedAt: new Date(),
-        emailCommsAcceptedAt: new Date(),
+        accountId: null,
+        createdAt: null,
+        termsAcceptedAt: null,
+        cookiesAcceptedAt: null,
+        emailCommsAcceptedAt: null,
       },
     }
   },
   getters: {
     isSignedIn: (state) => state.signedIn,
-    isGuest: (state) =>
-      state.roles.find((role) => role === 'member') !== undefined,
-    isAuthor: (state) =>
-      state.roles.find((role) => role === 'author') !== undefined,
-    isEditor: (state) =>
-      state.roles.find((role) => role === 'editor') !== undefined,
+    isGuest: (state) => state.roles.some((role) => role === 'member'),
+    isAuthor: (state) => state.roles.some((role) => role === 'author'),
+    isEditor: (state) => state.roles.some((role) => role === 'editor'),
     isEditorInChief: (state) =>
-      state.roles.find((role) => role === 'editorInChief') !== undefined,
-    isAdmin: (state) =>
-      state.roles.find((role) => role === 'admin') !== undefined,
+      state.roles.some((role) => role === 'editorInChief'),
+    isAdmin: (state) => state.roles.some((role) => role === 'admin'),
     areTermsOkay: (state) => !!state.profile.termsAcceptedAt,
     isEmailOkay: (state) => !!state.profile.emailCommsAcceptedAt,
     areCookiesOkay: (state) => !!state.profile.cookiesAcceptedAt,
+    hasRole: (state) => {
+      return (roleToCheck) => state.roles.includes(roleToCheck)
+    },
   },
   actions: {
     signInUser(user) {
@@ -81,7 +80,7 @@ export const useUserStore = defineStore('user', {
     },
     async agreeToEmail() {
       const result = await agreeToEmailComms()
-      console.log('result of agree to email comms', result);
+      console.log('result of agree to email comms', result)
     },
   },
 })
