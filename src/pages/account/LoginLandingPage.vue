@@ -21,6 +21,7 @@ import { defineComponent } from 'vue'
 import { useUserStore } from '../../stores/user'
 import { setAuthHeader } from '../../boot/axios'
 import jwtDecode from 'jwt-decode'
+import { useQuasar } from 'quasar'
 
 // stash jwt for use in subsequent API calls
 // stash roles and preferences in local store
@@ -30,9 +31,21 @@ import jwtDecode from 'jwt-decode'
 export default defineComponent({
   setup() {
     const userStore = useUserStore()
+    const q = useQuasar()
+    const cookieOpts = {
+      sameSite: 'Lax',
+      expires: '30d',
+    }
+    const rememberUser = (user) => {
+      q.cookies.set('who', user.who, cookieOpts)
+      q.cookies.set('alias', user.alias, cookieOpts)
+      q.cookies.set('roles', user.roles, cookieOpts)
+    }
     const setUserInfo = (token, user) => {
       setAuthHeader(token)
       userStore.signInUser(user)
+      console.log('cookies:' + q.cookies.getAll())
+      rememberUser(user)
     }
     return {
       setUserInfo,

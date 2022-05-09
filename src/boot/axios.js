@@ -24,7 +24,6 @@ export default boot(({ app }) => {
 })
 
 const setAuthHeader = (token) => {
-  console.log('jwt:', token);
   api.defaults.headers.common['Authorization'] = 'Bearer ' + token
 }
 

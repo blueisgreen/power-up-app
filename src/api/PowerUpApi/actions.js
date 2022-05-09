@@ -1,4 +1,3 @@
-import { registerRuntimeHelpers } from '@vue/compiler-core'
 import { api } from '../../boot/axios'
 
 export async function recordAction(actionCode, details) {
