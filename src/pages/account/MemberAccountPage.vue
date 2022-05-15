@@ -10,7 +10,7 @@
         </q-item-section>
         <q-item-section>
           <q-item-label>{{
-            formatDayMonthYear(profile.createdAt)
+            formatDayMonthYear(userStore.createdAt)
           }}</q-item-label>
         </q-item-section>
       </q-item>
@@ -19,7 +19,7 @@
           <q-item-label class="text-bold">Screen name:</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ profile.alias }}</q-item-label>
+          <q-item-label>{{ userStore.alias }}</q-item-label>
         </q-item-section>
       </q-item>
       <q-item>
@@ -27,7 +27,7 @@
           <q-item-label class="text-bold">Email:</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label v-if="profile.email">{{ profile.email }}</q-item-label>
+          <q-item-label v-if="userStore.email">{{ userStore.email }}</q-item-label>
           <q-item-label v-else class="text-italic">unknown</q-item-label>
         </q-item-section>
       </q-item>
@@ -36,10 +36,10 @@
           <q-item-label class="text-bold">Avatar:</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-avatar v-if="profile.avatarUrl">
-            <img :src="profile.avatarUrl" />
+          <q-avatar v-if="userStore.avatarUrl">
+            <img :src="userStore.avatarUrl" />
           </q-avatar>
-          <q-item-label v-if="profile.avatarUrl === null">Unknown</q-item-label>
+          <q-item-label v-if="userStore.avatarUrl === null">Unknown</q-item-label>
         </q-item-section>
       </q-item>
 
@@ -58,7 +58,7 @@
             I agree to receive email about Power Up Magazine.
           </q-item-label>
           <q-item-label v-if="userStore.isEmailOkay" caption>
-            On {{ formatDayMonthYear(profile.emailAcceptedAt) }}, you said email
+            On {{ formatDayMonthYear(userStore.emailCommsAcceptedAt) }}, you said email
             from us is OK.
           </q-item-label>
         </q-item-section>
@@ -85,7 +85,7 @@
             >Check to allow cookies.</q-item-label
           >
           <q-item-label v-if="userStore.areCookiesOkay" caption>
-            On {{ formatDayMonthYear(profile.cookiesAcceptedAt) }}, you said
+            On {{ formatDayMonthYear(userStore.cookiesAcceptedAt) }}, you said
             cookies are OK.
           </q-item-label>
         </q-item-section>
@@ -99,7 +99,7 @@
       </q-item>
 
       <q-separator spaced />
-      <terms-of-use :terms="terms" :accepted-at="profile.termsAcceptedAt" />
+      <terms-of-use :terms="terms" :accepted-at="userStore.termsAcceptedAt" />
 
       <q-separator spaced />
       <q-item-label header>Technical Details</q-item-label>
@@ -109,7 +109,7 @@
           <q-item-label class="text-bold">Account ID</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ profile.accountId }}</q-item-label>
+          <q-item-label>{{ userStore.accountId }}</q-item-label>
         </q-item-section>
       </q-item>
 
@@ -128,7 +128,7 @@
         </q-item-section>
         <q-item-section>
           <q-item-label>{{
-            formatDayMonthYear(profile.updatedAt)
+            formatDayMonthYear(userStore.updatedAt)
           }}</q-item-label>
         </q-item-section>
       </q-item>
@@ -143,7 +143,7 @@ import { formatDayMonthYear } from '../../composables/powerUpUtils'
 import TermsOfUse from './TermsOfUse.vue'
 import InfoDialog from '../../components/InfoDialog'
 
-// FIXME: rethink entire profile - lots of personalization use cases are not right
+// FIXME: rethink entire userStore - lots of personalization use cases are not right
 export default defineComponent({
   components: {
     TermsOfUse,
@@ -151,7 +151,6 @@ export default defineComponent({
   },
   setup() {
     const userStore = useUserStore()
-    const profile = userStore.profile
     const terms = ref([])
     onMounted(async () => {
       await userStore.fetchMyProfile()
@@ -201,7 +200,6 @@ export default defineComponent({
       terms,
       dialogValues,
       userStore,
-      profile,
     }
   },
   methods: {
