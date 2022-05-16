@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-btn-dropdown v-show="!isSignedIn" color="primary" label="Sign In">
+    <q-btn-dropdown v-show="!userStore.isSignedIn" color="primary" label="Sign In">
       <q-list style="max-width: 200px">
         <q-item v-close-popup clickable @click="() => handleSignIn('google')">
           <q-item-section avatar
@@ -44,7 +44,7 @@
         </q-btn-dropdown>
       </q-list>
     </q-btn-dropdown>
-    <q-btn v-show="isSignedIn" @click="handleSignOut">Sign Out</q-btn>
+    <q-btn v-show="userStore.isSignedIn" @click="handleSignOut">Sign Out</q-btn>
 
     <q-dialog v-model="popup">
       <q-card>
@@ -100,22 +100,17 @@ export default {
       unsupportedAuthProviders,
     }
   },
-  computed: {
-    isSignedIn() {
-      return this.userStore.isSignedIn
-    },
-  },
   methods: {
-    handleSignOut() {
-      recordClick('Sign Out button', 'clear credentials')
+    async handleSignOut() {
+      await recordClick('Sign Out button', 'clear credentials')
       this.userStore.signOutUser()
     },
     async handleSignIn(pid) {
       await recordClick('Sign In button', 'sign in using ' + pid)
       window.location.href = `${apiUrlBase}/login?pid=${pid}`
     },
-    track(provider) {
-      recordClick('Sign In button', 'user prefers ' + provider.code)
+    async track(provider) {
+      await recordClick('Sign In button', 'user voted to support ' + provider.code)
       this.popup = true
       this.contextStore.setUserMessage(
         `Thanks for telling us you prefer to sign in with ${provider.label}.`
