@@ -29,34 +29,39 @@
 <script>
 import { useQuasar } from 'quasar'
 import { defineComponent, ref } from 'vue'
-
-// TODO: call API to join as a member
+import { useUserStore } from 'src/stores/user'
 
 export default defineComponent({
   setup() {
-    const $q = useQuasar()
+    const q = useQuasar()
+    const userStore = useUserStore()
     const formValues = ref({
       screenName: '',
       termsModel: false,
       cookiesModel: false,
     })
     return {
+      q,
+      userStore,
       formValues,
-      $q,
     }
   },
   methods: {
     onSubmit() {
       if (this.formValues.termsModel !== true) {
-        this.$q.notify({
+        this.q.notify({
           color: 'red-5',
           textColor: 'white',
           icon: 'warning',
           message: 'You must accept the terms to join.',
         })
       } else {
-        console.log('you are joining - except it does not work yet')
-        this.$q.notify({
+        this.userStore.becomeMember(
+          this.formValues.screenName,
+          this.formValues.termsModel,
+          this.formValues.cookiesModel
+        )
+        this.q.notify({
           color: 'green-4',
           textColor: 'white',
           icon: 'cloud_done',
