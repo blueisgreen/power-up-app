@@ -1,28 +1,60 @@
 <template>
-  <div>
-    <p class="text-h3">Set Up Account</p>
-    <q-form greedy @submit="onSubmit">
-      <q-input
-        v-model="formValues.screenName"
-        outlined
-        label="Screen Name"
-        hint="This is how you would like to be know within the Power Up community. Use an alias, a nickname, your given name, anything you like."
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Please type something']"
-      />
-      <q-toggle
-        v-model="formValues.termsModel"
-        label="I agree to the terms of use."
-      />
-      <q-toggle
-        v-model="formValues.cookiesModel"
-        label="Cookies are fine by me."
-      />
-      <p>
-        Power Up Magazine uses cookies for your benefit when using the website.
-      </p>
-      <q-btn label="Power Up! (Join)" type="submit" color="primary" />
-    </q-form>
+  <div class="q-pa-md">
+    <div class="q-gutter-md" style="max-width: 400px">
+      <p class="text-h4">Become a Member</p>
+      <q-form greedy @submit="onSubmit">
+        <p class="text-h6">Choose an alias</p>
+        <q-input
+          v-model="formValues.screenName"
+          class="field-vspace"
+          label="Screen Name / Alias"
+          outlined
+          stack-label
+          maxlength="50"
+          hint="How you will be known to Power Up members."
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+        />
+        <p class="text-h6">Terms of use</p>
+        <q-scroll-area class="bordered" style="height: 200px">
+          <p>
+            By using the Power Up website and applications, you are agreeing to
+            the following terms of use.
+          </p>
+          <ul>
+            <li>
+              This website is for educational and informational purposes
+              only. You might also be amused, entertained, dazzled, and
+              inspired. No guarantees.
+            </li>
+            <li>
+              Be polite. Constructive commentary, honest feedback, alternative
+              viewpoints, and humor are welcome. Personal attacks and abusive
+              language are not.
+            </li>
+            <li>
+              You agree to our use of cookies to remember that it is you. We
+              want to give you the best experience we can, and that is difficult
+              to do if we keep forgetting who you are.
+            </li>
+            <li>
+              These terms are subject to change. When they do, you can find
+              updates here.
+            </li>
+          </ul>
+        </q-scroll-area>
+        <q-toggle
+          v-model="formValues.termsModel"
+          class="field-vspace"
+          label="I agree to the terms of use."
+        />
+        <p class="field-vspace">
+          Power Up Magazine uses cookies for your benefit when using the
+          website.
+        </p>
+        <q-btn label="Power Up! (Join)" type="submit" color="primary" />
+      </q-form>
+    </div>
   </div>
 </template>
 
@@ -38,7 +70,6 @@ export default defineComponent({
     const formValues = ref({
       screenName: '',
       termsModel: false,
-      cookiesModel: false,
     })
     return {
       q,
@@ -59,7 +90,7 @@ export default defineComponent({
         this.userStore.becomeMember(
           this.formValues.screenName,
           this.formValues.termsModel,
-          this.formValues.cookiesModel
+          this.formValues.termsModel // terms include accepting cookies
         )
         this.q.notify({
           color: 'green-4',
@@ -73,4 +104,12 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.field-vspace {
+  margin-bottom: 1em;
+}
+.bordered {
+  border: 1px solid gray;
+  padding: 0.5em;
+}
+</style>
