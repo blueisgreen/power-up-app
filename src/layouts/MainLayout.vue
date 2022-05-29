@@ -71,7 +71,6 @@ export default defineComponent({
   computed: {
     visibleMenuItems() {
       return this.essentialLinks.filter((menuItem) => {
-        console.log('roles for item', menuItem.rolesWithAccess);
         return (
           !menuItem.rolesWithAccess ||
           (this.user.isSignedIn &&

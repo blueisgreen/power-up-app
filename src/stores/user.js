@@ -68,6 +68,7 @@ export const useUserStore = defineStore('user', {
       this.cookiesAcceptedAt = payload.cookies_accepted_at
       this.emailCommsAcceptedAt = payload.email_comms_accepted_at
       this.accountStatusId = payload.account_status_id
+      this.roles = payload.roles
     },
     setAlias(alias) {
       this.alias = alias
@@ -88,7 +89,7 @@ export const useUserStore = defineStore('user', {
     },
     async becomeMember(alias, okToTerms, okToCookies) {
       const profile = await becomeMember(alias, okToTerms, okToCookies)
-      console.log('after becoming member', profile);
+      this.loadProfile(profile.data)
     },
     async becomeContributor() {},
     async updateAgreeToTerms() {
