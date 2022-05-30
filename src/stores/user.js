@@ -6,6 +6,7 @@ import {
   agreeToEmailComms,
   agreeToCookies,
   becomeMember,
+  becomeContributor,
 } from '../api/PowerUpApi'
 
 export const useUserStore = defineStore('user', {
@@ -91,7 +92,10 @@ export const useUserStore = defineStore('user', {
       const profile = await becomeMember(alias, okToTerms, okToCookies)
       this.loadProfile(profile.data)
     },
-    async becomeContributor() {},
+    async askToBecomeContributor() {
+      const profile = await becomeContributor()
+      this.loadProfile(profile.data)
+    },
     async updateAgreeToTerms() {
       const result = await agreeToTerms()
       console.log('result of agree to email comms', result)

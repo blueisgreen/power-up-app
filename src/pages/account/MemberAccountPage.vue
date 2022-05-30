@@ -69,6 +69,11 @@
           <q-item-label v-else class="text-italic">unknown</q-item-label>
         </q-item-section>
       </q-item>
+      <q-item>
+        <q-item-section>
+          <q-btn label="Become a contributor" @click="handleBecomeContributor" />
+        </q-item-section>
+      </q-item>
     </q-list>
   </q-page>
 </template>
@@ -112,6 +117,9 @@ export default defineComponent({
       this.userStore.updateAgreeToEmail()
     },
     saveEmail(email) {},
+    handleBecomeContributor() {
+      this.userStore.askToBecomeContributor()
+    }
   },
 })
 </script>

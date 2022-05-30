@@ -17,6 +17,11 @@ export async function becomeMember(alias, okToTerms, okToCookies) {
   })
 }
 
+export async function becomeContributor() {
+  console.log('PowerUpService.becomeContributor')
+  return await api.post('/my/account/contributor')
+}
+
 export async function fetchOwnProfile() {
   console.log('PowerUpService.fetchOwnProfile')
   // TODO: - verify jwt in header before sending
