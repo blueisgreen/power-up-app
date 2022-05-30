@@ -23,9 +23,9 @@
           </p>
           <ul>
             <li>
-              This website is for educational and informational purposes
-              only. You might also be amused, entertained, dazzled, and
-              inspired. No guarantees.
+              This website is for educational and informational purposes only.
+              You might also be amused, entertained, dazzled, and inspired. No
+              guarantees.
             </li>
             <li>
               Be polite. Constructive commentary, honest feedback, alternative
