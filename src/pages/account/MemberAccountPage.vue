@@ -8,7 +8,25 @@
           <q-item-label class="text-bold">Screen name:</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ userStore.alias }}</q-item-label>
+          <q-item-label v-show="!aliasModel.edit"
+            >{{ aliasModel.alias }} <q-btn icon="edit" @click="editAlias"
+          /></q-item-label>
+          <span v-show="aliasModel.edit">
+            <q-input
+              v-model="aliasModel.alias"
+              class="field-vspace"
+              label="Screen Name / Alias"
+              outlined
+              stack-label
+              maxlength="50"
+              hint="How you will be known to Power Up members."
+              lazy-rules
+              :rules="[
+                (val) => (val && val.length > 0) || 'Please type something',
+              ]" />
+            <q-btn icon="cancel" @click="resetAlias" />
+            <q-btn icon="check" @click="updateAlias"
+          /></span>
         </q-item-section>
       </q-item>
       <q-item>
@@ -19,7 +37,9 @@
           <q-avatar v-if="userStore.avatarUrl">
             <img :src="userStore.avatarUrl" />
           </q-avatar>
-          <q-item-label v-if="userStore.avatarUrl === null">Unknown</q-item-label>
+          <q-item-label v-if="userStore.avatarUrl === null"
+            >Unknown</q-item-label
+          >
         </q-item-section>
       </q-item>
       <q-item>
@@ -37,10 +57,7 @@
       <q-item-label header>Settings</q-item-label>
       <q-item v-ripple tag="label">
         <q-item-section side>
-          <q-checkbox
-            v-model="emailModel"
-            @click="toggleEmailComm"
-          />
+          <q-checkbox v-model="emailModel" @click="toggleEmailComm" />
         </q-item-section>
         <q-item-section>
           <q-item-label>Email Communication</q-item-label>
@@ -48,8 +65,8 @@
             I agree to receive email about Power Up Magazine.
           </q-item-label>
           <q-item-label v-if="userStore.isEmailOkay" caption>
-            On {{ formatDayMonthYear(userStore.emailCommsAcceptedAt) }}, you said email
-            from us is OK.
+            On {{ formatDayMonthYear(userStore.emailCommsAcceptedAt) }}, you
+            said email from us is OK.
           </q-item-label>
         </q-item-section>
         <q-item-section side top>
@@ -65,13 +82,18 @@
           <q-item-label class="text-bold">Email:</q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label v-if="userStore.email">{{ userStore.email }}</q-item-label>
+          <q-item-label v-if="userStore.email">{{
+            userStore.email
+          }}</q-item-label>
           <q-item-label v-else class="text-italic">unknown</q-item-label>
         </q-item-section>
       </q-item>
       <q-item>
         <q-item-section>
-          <q-btn label="Become a contributor" @click="handleBecomeContributor" />
+          <q-btn
+            label="Become a contributor"
+            @click="handleBecomeContributor"
+          />
         </q-item-section>
       </q-item>
     </q-list>
@@ -98,28 +120,46 @@ export default defineComponent({
           'We will only send you email about Power Up Magazine. We will not share your email address with anyone.',
       },
     }
+    const aliasModel = ref({
+      alias: '',
+      edit: false,
+    })
     const emailModel = ref(false)
 
     return {
       formatDayMonthYear,
       dialogValues,
       userStore,
-      emailModel
+      aliasModel,
+      emailModel,
     }
   },
   async mounted() {
     await this.userStore.fetchMyProfile()
+    this.aliasModel.alias = this.userStore.alias
     this.emailModel = this.userStore.isEmailOkay
   },
   methods: {
-    acknowledgeCookies() {},
     toggleEmailComm() {
       this.userStore.updateAgreeToEmail()
+    },
+    editAlias() {
+      this.aliasModel.edit = true
+    },
+    updateAlias() {
+      this.userStore.updateMyProfile({
+        alias: this.aliasModel.alias
+      })
+      this.aliasModel.edit = false
+    },
+    resetAlias() {
+      this.aliasModel.alias = this.userStore.alias
+      this.aliasModel.edit = false
     },
     saveEmail(email) {},
     handleBecomeContributor() {
       this.userStore.askToBecomeContributor()
-    }
+    },
   },
 })
 </script>

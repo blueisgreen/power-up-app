@@ -96,7 +96,7 @@ export default defineComponent({
           color: 'green-4',
           textColor: 'white',
           icon: 'cloud_done',
-          message: 'Your application was submitted. Good luck!',
+          message: 'Welcome to Power Up!',
         })
       }
     },
