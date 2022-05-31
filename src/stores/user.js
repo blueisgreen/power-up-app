@@ -6,7 +6,7 @@ import {
   agreeToEmailComms,
   agreeToCookies,
   becomeMember,
-  becomeContributor,
+  becomeAuthor,
 } from '../api/PowerUpApi'
 
 export const useUserStore = defineStore('user', {
@@ -30,6 +30,9 @@ export const useUserStore = defineStore('user', {
     },
     isMember() {
       return this.hasRole('member')
+    },
+    isAuthor() {
+      return this.hasRole('author')
     },
     isEditor() {
       return this.hasRole('editor')
@@ -94,8 +97,8 @@ export const useUserStore = defineStore('user', {
       const profile = await becomeMember(alias, okToTerms, okToCookies)
       this.loadProfile(profile.data)
     },
-    async askToBecomeContributor() {
-      const profile = await becomeContributor()
+    async askToBecomeAuthor() {
+      const profile = await becomeAuthor()
       this.loadProfile(profile.data)
     },
     async updateAgreeToTerms() {

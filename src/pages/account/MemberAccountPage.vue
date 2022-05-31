@@ -88,11 +88,43 @@
           <q-item-label v-else class="text-italic">unknown</q-item-label>
         </q-item-section>
       </q-item>
+
+      <q-separator spaced />
+      <q-item-label header>Level Up</q-item-label>
+      <q-item v-if="userStore.isAuthor">
+        <q-item-section>
+          You are all set. Go to the Article Workbench and get typing.
+        </q-item-section>
+      </q-item>
+      <q-item v-if="!userStore.isAuthor">
+        <q-item-label
+          >You can submit articles that you have written to Power Up Magazine
+          for publication. Simply agree to the following terms.</q-item-label
+        >
+      </q-item>
       <q-item>
+        <div class="text-h6">Terms</div>
+        <ul>
+          <li>
+            Only submit material that you have written yourself. Any published
+            writing (i.e., visible to others
+          </li>
+          <li>
+            Your work may be declined from publication if it does not meet the
+            standards of Power Up editors.
+          </li>
+          <li>
+            Unless otherwise specified, you will not receive compensation for
+            your writing.
+          </li>
+        </ul>
+      </q-item>
+      <q-item v-if="!userStore.isAuthor">
         <q-item-section>
           <q-btn
-            label="Become a contributor"
-            @click="handleBecomeContributor"
+            label="Click to agree and become a Power Up writer"
+            no-caps
+            @click="handleBecomeAuthor"
           />
         </q-item-section>
       </q-item>
@@ -148,7 +180,7 @@ export default defineComponent({
     },
     updateAlias() {
       this.userStore.updateMyProfile({
-        alias: this.aliasModel.alias
+        alias: this.aliasModel.alias,
       })
       this.aliasModel.edit = false
     },
@@ -156,9 +188,13 @@ export default defineComponent({
       this.aliasModel.alias = this.userStore.alias
       this.aliasModel.edit = false
     },
-    saveEmail(email) {},
-    handleBecomeContributor() {
-      this.userStore.askToBecomeContributor()
+    saveEmail(email) {
+      this.userStore.updateMyProfile({
+        email,
+      })
+    },
+    handleBecomeAuthor() {
+      this.userStore.askToBecomeAuthor()
     },
   },
 })
