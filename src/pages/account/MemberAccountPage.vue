@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-md">
-    <h4>Your Power Up Account</h4>
+    <p class="text-h4">Your Power Up Account</p>
 
     <q-list padding bordered>
       <q-item>
@@ -90,11 +90,24 @@
       </q-item>
 
       <q-separator spaced />
-      <q-item-label header>Level Up</q-item-label>
+      <q-item-label header>Level Up - Extras</q-item-label>
+      <q-item>
+        <q-item-section
+          ><p class="text-h5">Write for Power Up Magazine</p></q-item-section
+        >
+      </q-item>
       <q-item v-if="userStore.isAuthor">
-        <q-item-section>
-          You are all set. Go to the Article Workbench and get typing.
-        </q-item-section>
+        <q-item-section class="text-primary" side
+          ><q-icon name="fas fa-feather"
+        /></q-item-section>
+        <q-item-section class="text-h6 text-primary"
+          >You are a Power Up writer!</q-item-section
+        >
+        <q-item-section
+          ><q-btn :to="{ name: 'ArticleWorkbench' }" no-caps color="primary"
+            >Go to Article Workbench</q-btn
+          ></q-item-section
+        >
       </q-item>
       <q-item v-if="!userStore.isAuthor">
         <q-item-label
@@ -103,21 +116,31 @@
         >
       </q-item>
       <q-item>
-        <div class="text-h6">Terms</div>
-        <ul>
-          <li>
-            Only submit material that you have written yourself. Any published
-            writing (i.e., visible to others
-          </li>
-          <li>
-            Your work may be declined from publication if it does not meet the
-            standards of Power Up editors.
-          </li>
-          <li>
-            Unless otherwise specified, you will not receive compensation for
-            your writing.
-          </li>
-        </ul>
+        <q-item-section class="text-h6" side>Terms</q-item-section>
+        <q-item-section>
+          <ul>
+            <li>
+              Only submit your own creative work. This applies to both writing
+              and images.
+            </li>
+            <li>
+              You retain the copyright to whatever you submit for publication.
+            </li>
+            <li>
+              You grant Happy Spirit Publishing permission to share your
+              submissions in Power Up Magazine.
+            </li>
+            <li>
+              Your submissions may be declined from publication if they do not
+              meet the standards of Power Up Magazine editors or for any other
+              reason.
+            </li>
+            <li>
+              Unless otherwise specified, you will not receive compensation for
+              your submissions.
+            </li>
+          </ul>
+        </q-item-section>
       </q-item>
       <q-item v-if="!userStore.isAuthor">
         <q-item-section>
@@ -146,7 +169,7 @@ export default defineComponent({
     const userStore = useUserStore()
     const dialogValues = {
       emailComms: {
-        prompt: 'Email Pledge',
+        prompt: 'Read our Email Pledge',
         title: 'Only the Good Stuff',
         message:
           'We will only send you email about Power Up Magazine. We will not share your email address with anyone.',
@@ -204,5 +227,8 @@ export default defineComponent({
 h4 {
   margin: 0em;
   margin-bottom: 0.5em;
+}
+.linkish {
+  color: navy;
 }
 </style>

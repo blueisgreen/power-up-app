@@ -47,10 +47,10 @@ export default [
     route: 'AdminPanels',
     rolesWithAccess: ['admin'],
   },
-  {
-    title: 'Experimental',
-    caption: 'For trying out new widgets',
-    icon: 'fas fa-flask',
-    route: 'Scratch',
-  },
+  // {
+  //   title: 'Experimental',
+  //   caption: 'For trying out new widgets',
+  //   icon: 'fas fa-flask',
+  //   route: 'Scratch',
+  // },
 ]
