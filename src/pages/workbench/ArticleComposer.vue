@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-pa-md">
     <h4>Article {{ $route.params.articleId }}: {{ draft.headline }}</h4>
-    <div class="row">
+    <div>
       <q-form class="q-gutter-sm">
         <q-input
           v-model="draft.headline"
