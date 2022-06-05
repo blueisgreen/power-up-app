@@ -26,7 +26,7 @@
       size="sm"
       padding="xs"
       label="Retract"
-      color="positive"
+      color="warning"
       icon="unpublished"
       @click="() => workbench.retract(article.id)"
     />
@@ -46,7 +46,7 @@
       size="sm"
       padding="xs"
       label="Revive"
-      color="warning"
+      color="positive"
       icon="unarchive"
       @click="() => workbench.revive(article.id)"
     />
@@ -100,7 +100,7 @@ export default defineComponent({
       return !!this.article.archivedAt
     },
     canDelete() {
-      return !!this.article.archivedAt
+      return this.user.isEditor && !!this.article.archivedAt
     },
   },
   methods: {
