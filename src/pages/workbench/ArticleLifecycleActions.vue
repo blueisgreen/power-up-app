@@ -7,7 +7,7 @@
       label="Edit"
       color="primary"
       icon="edit"
-      :disable="canEdit"
+      :disable="!canEdit"
       @click="() => editArticle(article.id)"
     />
     <q-btn

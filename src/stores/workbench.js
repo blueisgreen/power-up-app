@@ -87,10 +87,12 @@ export const useWorkbenchStore = defineStore('workbench', {
       }
     },
     async create(headline) {
-      const article = await createArticle({ headline })
-      this.articlesById[article.id] = article
-      if (!this.articleList.includes(article)) {
+      try {
+        const article = await createArticle({ headline })
+        this.articlesById[article.id] = article
         this.articleList.unshift(article)
+      } catch (err) {
+        console.error(err)
       }
     },
     async save(update) {
