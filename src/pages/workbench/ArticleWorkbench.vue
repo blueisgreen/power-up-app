@@ -41,11 +41,7 @@
             <q-item-label header>Actions</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item
-          v-for="article in workbench.articles"
-          :key="article"
-          v-ripple
-        >
+        <q-item v-for="article in workbench.articles" :key="article" v-ripple>
           <q-item-section>
             <q-item-label>{{ article.headline }}</q-item-label>
             <q-item-label caption>{{ article.byline }}</q-item-label>
@@ -65,67 +61,7 @@
             >
           </q-item-section>
           <q-item-section>
-            <q-btn-group push spread>
-              <q-btn
-                push
-                size="sm"
-                padding="xs"
-                label="Edit"
-                color="primary"
-                icon="edit"
-                :disable="article.publishedAt !== null"
-                @click="() => editArticle(article.id)"
-              />
-              <q-btn
-                v-if="article.publishedAt === null"
-                push
-                size="sm"
-                padding="xs"
-                label="Publish"
-                color="positive"
-                icon="publish"
-                @click="() => publishArticle(article.id)"
-              />
-              <q-btn
-                v-if="article.publishedAt !== null"
-                push
-                size="sm"
-                padding="xs"
-                label="Retract"
-                color="positive"
-                icon="unpublished"
-                @click="() => retractArticle(article.id)"
-              />
-              <q-btn
-                v-if="article.archivedAt === null"
-                push
-                size="sm"
-                padding="xs"
-                label="Archive"
-                color="warning"
-                icon="archive"
-                @click="() => archiveArticle(article.id)"
-              />
-              <q-btn
-                v-if="article.archivedAt !== null"
-                push
-                size="sm"
-                padding="xs"
-                label="Revive"
-                color="warning"
-                icon="unarchive"
-                @click="() => reviveArticle(article.id)"
-              />
-              <q-btn
-                push
-                size="sm"
-                padding="xs"
-                label="Delete"
-                color="negative"
-                icon="delete"
-                @click="() => deleteArticle(article.id)"
-              />
-            </q-btn-group>
+            <article-lifecycle-actions :article="article" />
           </q-item-section>
         </q-item>
       </q-list>
@@ -134,19 +70,25 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { useWorkbenchStore } from '../../stores/workbench'
 import { formatDayMonthYear } from '../../composables/powerUpUtils'
+import ArticleLifecycleActions from './ArticleLifecycleActions.vue'
 
 export default defineComponent({
+  components: {
+    ArticleLifecycleActions,
+  },
   setup() {
     const workbench = useWorkbenchStore()
-    onMounted(() => workbench.loadArticleIndex())
     return {
       newHeadline: ref(''),
       workbench,
       formatDayMonthYear,
     }
+  },
+  created() {
+    this.workbench.loadArticleIndex()
   },
   methods: {
     createArticle() {
