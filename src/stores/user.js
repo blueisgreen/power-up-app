@@ -95,10 +95,12 @@ export const useUserStore = defineStore('user', {
     },
     async becomeMember(alias, okToTerms, okToCookies) {
       const profile = await becomeMember(alias, okToTerms, okToCookies)
+      console.log('joined', profile.data)
       this.loadProfile(profile.data)
     },
     async askToBecomeAuthor() {
       const profile = await becomeAuthor()
+      console.log('became writer', profile.data)
       this.loadProfile(profile.data)
     },
     async updateAgreeToTerms() {

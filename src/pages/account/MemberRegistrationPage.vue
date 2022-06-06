@@ -78,7 +78,7 @@ export default defineComponent({
     }
   },
   methods: {
-    onSubmit() {
+    async onSubmit() {
       if (this.formValues.termsModel !== true) {
         this.q.notify({
           color: 'red-5',
@@ -87,11 +87,12 @@ export default defineComponent({
           message: 'You must accept the terms to join.',
         })
       } else {
-        this.userStore.becomeMember(
+        await this.userStore.becomeMember(
           this.formValues.screenName,
           this.formValues.termsModel,
           this.formValues.termsModel // terms include accepting cookies
         )
+        // TODO: redirect to account page and show confirmation there
         this.q.notify({
           color: 'green-4',
           textColor: 'white',
