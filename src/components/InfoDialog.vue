@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md q-gutter-sm">
-    <q-btn :label="prompt" color="primary" @click="showDialog" />
+    <q-btn :label="prompt" color="primary" no-caps @click="showDialog" />
   </div>
 </template>
 

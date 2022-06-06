@@ -5,7 +5,7 @@ import SimpleLayout from 'layouts/SimpleLayout'
 
 const routes = [
   {
-    path: '/full/',
+    path: '/',
     component: MainLayout,
     children: [
       {
@@ -142,7 +142,7 @@ const routes = [
   },
 
   {
-    path: '/',
+    path: '/simple',
     component: SimpleLayout,
     children: [
       {
@@ -151,7 +151,7 @@ const routes = [
         component: () => import('../pages/SimpleStartPage.vue'),
       },
       {
-        path: '/wsy',
+        path: 'wsy',
         name: 'WhatSayYou',
         component: () => import('../pages/whatsayyou/WhatSayYouPage.vue'),
       },

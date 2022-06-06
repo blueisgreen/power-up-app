@@ -23,6 +23,17 @@ export const useContextStore = defineStore('context', {
     clearUserMessage() {
       this.messageToUser = ''
     },
+    addArticleToList(article) {
+      this.articleList.push(article.id)
+      this.articlesById[article.id] = article
+    },
+    removeArticleFromList(id) {
+      delete this.articlesById[id]
+      const ind = this.articleList.findIndex(item => item.id === id)
+      if (ind > -1) {
+        this.articleList.splice(ind, 1)
+      }
+    },
     async loadSuggestedArticles() {
       try {
         if (this.recommendationsLoaded) {
@@ -31,10 +42,7 @@ export const useContextStore = defineStore('context', {
         this.setUserMessage('Looking for something to read...')
         const articles = await fetchPublishedArticles()
         this.articleList = []
-        articles.forEach((article) => {
-          this.articleList.push(article.id)
-          this.articlesById[article.id] = article
-        })
+        articles.forEach((article) => this.addArticleToList(article))
         this.recommendationsLoaded = true
         this.setUserMessage('Loaded some recommendations.')
       } catch (error) {

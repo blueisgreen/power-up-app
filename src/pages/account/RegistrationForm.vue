@@ -218,7 +218,7 @@ export default {
           message: 'Submitted',
         })
         console.log('about to dispatch registration action')
-        this.user(updateMyProfile, {
+        this.user.updateMyProfile({
           publicId: this.accountId,
           alias: this.desiredAlias,
           email: this.unverifiedEmail || this.socialEmail,

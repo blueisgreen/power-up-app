@@ -3,63 +3,45 @@
     <h3>Login</h3>
     <q-card bordered>
       <q-card-section>
-        This page should redirect immediately to where you want to be.
+        Not where you want to be? Sorry. Try the menu.
       </q-card-section>
-      <q-separator inset />
-      <q-card-section>
-        Session Token: {{ token }} <br />
-        Go To Page: {{ goTo }} <br />
-      </q-card-section>
-      <q-separator inset />
-      <q-card-section> Session Details: {{ authDetails }} </q-card-section>
     </q-card>
   </q-page>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
 import { useUserStore } from '../../stores/user'
 import { setAuthHeader } from '../../boot/axios'
 import jwtDecode from 'jwt-decode'
 
-// stash jwt for use in subsequent API calls
-// stash roles and preferences in local store
-// redirect to page or home (default)
-// or handle failure to log in
-
-export default defineComponent({
+export default {
   setup() {
     const userStore = useUserStore()
-    const setUserInfo = (token, user) => {
-      setAuthHeader(token)
-      userStore.signInUser(user)
-    }
     return {
-      setUserInfo,
+      userStore,
     }
   },
-  data() {
-    const { token, goTo } = this.$route.query
-    const authDetails = jwtDecode(token)
-    this.setUserInfo(token, authDetails.user)
-    return {
-      token,
-      goTo,
-      authDetails,
-    }
-  },
-  mounted() {
-    console.log('mounted: redirect to', this.goTo)
+  created() {
     const navMap = {
       home: 'FrontPage',
       register: 'MemberRegistration',
     }
-    const destination = navMap[this.goTo]
-    if (this.goTo) {
-      this.$router.push({ name: destination })
-    }
+    const { token, goTo } = this.$route.query
+    setAuthHeader(token)
+
+    const authDetails = jwtDecode(token)
+    this.userStore.signInUser(authDetails.user)
+
+    console.log('user is', this.userStore.alias, this.userStore.userId)
+    console.log('service says redirect to', goTo)
+
+    const destination = this.userStore.isMember
+      ? navMap[goTo]
+      : navMap['register']
+
+    this.$router.push({ name: destination })
   },
-})
+}
 </script>
 
 <style scoped></style>

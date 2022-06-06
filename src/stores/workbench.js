@@ -38,9 +38,10 @@ export const useWorkbenchStore = defineStore('workbench', {
   actions: {
     updateArticle(article) {
       this.articlesById[article.id] = article
-      const articleIndex = this.articleList.indexOf(
+      const articleIndex = this.articleList.findIndex(
         (item) => item.id === article.id
       )
+      console.log('updating article at index', articleIndex)
       this.articleList[articleIndex] = article
     },
     async loadArticleIndex() {
@@ -87,10 +88,12 @@ export const useWorkbenchStore = defineStore('workbench', {
       }
     },
     async create(headline) {
-      const article = await createArticle({ headline })
-      this.articlesById[article.id] = article
-      if (!this.articleList.includes(article)) {
+      try {
+        const article = await createArticle({ headline })
+        this.articlesById[article.id] = article
         this.articleList.unshift(article)
+      } catch (err) {
+        console.error(err)
       }
     },
     async save(update) {
@@ -120,7 +123,7 @@ export const useWorkbenchStore = defineStore('workbench', {
     async retract(id) {
       try {
         const results = await retractArticle(id)
-        this.updateArticle(results)
+        await this.updateArticle(results)
       } catch (err) {
         console.error(err)
       }

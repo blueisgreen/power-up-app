@@ -10,24 +10,23 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { mapState, mapActions } from 'vuex'
+import { useUserStore } from '../stores/user'
 
 export default defineComponent({
   setup() {
     return {
       error: null,
+      user: useUserStore()
     }
   },
   computed: {
-    ...mapState('profile', ['accountId']),
     loading() {
-      return this.accountId === null
+      return this.user.profile === null
     },
   },
   created() {
-    this.fetchMyProfile()
+    this.user.fetchMyProfile()
   },
-  methods: mapActions('profile', ['fetchMyProfile']),
 })
 </script>
 

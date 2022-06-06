@@ -3,10 +3,7 @@
     <div class="row q-col-gutter-lg">
       <div class="col" style="max-width: 500px">
         <div class="text-h3">What Say You?</div>
-        <composition-editor
-          :starting-text="prose"
-          @save-work="handleSave"
-        />
+        <composition-editor :starting-text="prose" @save-work="handleSave" />
         <composition-editor
           :starting-text="prose"
           bare-bones
@@ -19,10 +16,7 @@
           font-options
           @save-work="handleSave"
         />
-        <composition-editor
-          font-options
-          @save-work="handleSave"
-        />
+        <composition-editor font-options @save-work="handleSave" />
       </div>
       <div class="col">
         <div class="text-h3">What You Said</div>
@@ -31,7 +25,7 @@
         </q-card>
         <hr />
         <q-card v-for="(point, index) in savePoints" :key="index">
-          <q-card-section v-html="point" />
+          <q-card-section><span v-html="point" /></q-card-section>
         </q-card>
       </div>
     </div>
