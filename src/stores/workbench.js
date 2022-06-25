@@ -45,11 +45,6 @@ export const useWorkbenchStore = defineStore('workbench', {
       this.articleList[articleIndex] = article
     },
     async loadArticleIndex() {
-      /*
-      TODO: NOTE FOR FUTURE:
-        the idea is to deal with summary while browsing articles;
-        call to fetch should specific "summary-only"
-      */
       try {
         this.articlesById = {}
         this.articleList = []
@@ -63,26 +58,10 @@ export const useWorkbenchStore = defineStore('workbench', {
       }
     },
     async loadArticleForEdit(id) {
-      /*
-      TODO: NOTE FOR FUTURE:
-        now that we want to edit an article, fetch the full article,
-        which might be quite long
-      */
       try {
         const original = this.articlesById[id]
-        if (!original) {
-          original = await fetchArticle(id)
-        }
-        this.draftArticle = Object.assign(
-          {},
-          {
-            id: original.id,
-            headline: original.headline,
-            byline: original.byline,
-            synopsis: original.synopsis,
-            content: original.content,
-          }
-        )
+        const content = await fetchArticle(id)
+        this.draftArticle = Object.assign({}, original, content)
       } catch (err) {
         console.error(err)
       }

@@ -12,23 +12,13 @@ async function fetchArticles(articleSet) {
 
 export async function fetchAllArticles() {
   console.log('PowerUpAPI.fetchAllArticles')
-  return await fetchArticles('/articles')
-}
-
-export async function fetchPublishedArticles() {
-  console.log('PowerUpAPI.fetchPublishedArticles')
-  return await fetchArticles('/articles/published')
-}
-
-export async function fetchArchivedArticles() {
-  console.log('PowerUpAPI.fetchArchivedArticles')
-  return await fetchArticles('/articles/archived')
+  return await fetchArticles('/workbench/articles')
 }
 
 export async function fetchArticle(articleId) {
   console.log('PowerUpAPI.fetchArticle', articleId)
   try {
-    const results = await api.get(`/articles/${articleId}`)
+    const results = await api.get(`/workbench/articles/${articleId}`)
     return results.data
   } catch (err) {
     console.error(err)
@@ -61,7 +51,7 @@ export async function saveArticle(update) {
 export async function publishArticle(articleId) {
   console.log('PowerUpAPI.publishArticle', articleId)
   try {
-    const results =  await api.put(`/articles/${articleId}/publish`)
+    const results = await api.put(`/articles/${articleId}/publish`)
     return results.data
   } catch (err) {
     console.error(err)
