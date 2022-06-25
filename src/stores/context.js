@@ -3,7 +3,7 @@ import { fetchPublishedArticles, fetchArticle } from '../api/PowerUpApi'
 
 export const useContextStore = defineStore('context', {
   state: () => ({
-    messageToUser: 'Time to learn something...',
+    messageToUser: 'Learn about the awesomeness of nuclear power.',
     recommendationsLoaded: false,
     articlesById: {},
     articleList: [],
@@ -23,13 +23,18 @@ export const useContextStore = defineStore('context', {
     clearUserMessage() {
       this.messageToUser = ''
     },
+    sortArticles() {
+      this.articleList.sort((a, b) => {
+        return this.articlesById[a].createdAt < this.articlesById[b].createdAt
+      })
+    },
     addArticleToList(article) {
       this.articleList.push(article.id)
       this.articlesById[article.id] = article
     },
     removeArticleFromList(id) {
       delete this.articlesById[id]
-      const ind = this.articleList.findIndex(item => item.id === id)
+      const ind = this.articleList.findIndex((item) => item.id === id)
       if (ind > -1) {
         this.articleList.splice(ind, 1)
       }
@@ -43,8 +48,9 @@ export const useContextStore = defineStore('context', {
         const articles = await fetchPublishedArticles()
         this.articleList = []
         articles.forEach((article) => this.addArticleToList(article))
+        this.sortArticles()
         this.recommendationsLoaded = true
-        this.setUserMessage('Loaded some recommendations.')
+        this.setUserMessage('Here are some recommendations for you.')
       } catch (error) {
         console.error(error)
         this.setUserMessage(
@@ -60,7 +66,7 @@ export const useContextStore = defineStore('context', {
           this.articlesById[article.id] = article
           this.setUserMessage('There you go. Happy reading.')
         } else {
-          this.setUserMessage('We already have that one.')
+          this.setUserMessage('Enjoy limitless power!')
         }
       } catch (error) {
         console.error(error)
