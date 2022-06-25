@@ -1,8 +1,8 @@
 <template>
-  <q-card class="shadow-5 summary-card">
+  <q-card bordered class="shadow-5 summary-card">
     <q-card-section>
       <div class="text-h5">{{ summary.headline }}</div>
-      <div class="text-subtitle1">by {{ summary.byline }}</div>
+      <div class="text-subtitle1 text-italic">by {{ summary.byline }}</div>
       <div class="subdued">
         {{ formatDayMonthYear(summary.publishedAt) }}
       </div>
@@ -18,8 +18,11 @@
 </template>
 
 <script>
-import { formatDayMonthYear, prettyTrunc } from '../composables/powerUpUtils.js'
-export default {
+import { defineComponent } from 'vue'
+import { formatDayMonthYear } from '../composables/powerUpUtils.js'
+
+export default defineComponent({
+  name: 'ArticleSummary',
   props: {
     summary: {
       type: Object,
@@ -29,17 +32,16 @@ export default {
   setup() {
     return {
       formatDayMonthYear,
-      prettyTrunc,
     }
   },
-}
+})
 </script>
 
 <style lang="sass" scoped>
 .summary-card
   width: 100%
-  background: $indigo-10
-  color: $yellow-12
+  background: $primary
+  color: $grey-9
 .subdued
-  color: $light-blue-3
+  color: $grey-8
 </style>
