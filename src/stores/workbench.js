@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import {
-  fetchAllArticles,
-  fetchArticle,
+  fetchMyArticles,
+  fetchMyArticle,
   createArticle,
   saveArticle,
   publishArticle,
@@ -48,7 +48,7 @@ export const useWorkbenchStore = defineStore('workbench', {
       try {
         this.articlesById = {}
         this.articleList = []
-        const articles = await fetchAllArticles()
+        const articles = await fetchMyArticles()
         articles.forEach((article) => {
           this.articleList.push(article)
           this.articlesById[article.id] = article
@@ -60,7 +60,7 @@ export const useWorkbenchStore = defineStore('workbench', {
     async loadArticleForEdit(id) {
       try {
         const original = this.articlesById[id]
-        const content = await fetchArticle(id)
+        const content = await fetchMyArticle(id)
         this.draftArticle = Object.assign({}, original, content)
       } catch (err) {
         console.error(err)

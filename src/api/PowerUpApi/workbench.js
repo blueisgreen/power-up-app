@@ -1,8 +1,9 @@
 import { api } from '../../boot/axios'
 
-async function fetchArticles(articleSet) {
+export async function fetchMyArticles() {
+  console.log('PowerUpAPI.fetchMyArticles')
   try {
-    const results = await api.get(articleSet)
+    const results = await api.get('/workbench/articles')
     return results.data
   } catch (err) {
     console.error(err)
@@ -10,13 +11,8 @@ async function fetchArticles(articleSet) {
   }
 }
 
-export async function fetchAllArticles() {
-  console.log('PowerUpAPI.fetchAllArticles')
-  return await fetchArticles('/workbench/articles')
-}
-
-export async function fetchArticle(articleId) {
-  console.log('PowerUpAPI.fetchArticle', articleId)
+export async function fetchMyArticle(articleId) {
+  console.log('PowerUpAPI.fetchMyArticle', articleId)
   try {
     const results = await api.get(`/workbench/articles/${articleId}`)
     return results.data
