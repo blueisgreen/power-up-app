@@ -36,7 +36,7 @@ export async function createArticle(update) {
 export async function saveArticle(update) {
   console.log('PowerUpAPI.saveArticle', update)
   try {
-    const results = await api.put(`/articles/${update.id}`, update)
+    const results = await api.put(`/workbench/articles/${update.id}`, update)
     return results.data
   } catch (err) {
     console.error(err)
@@ -47,7 +47,7 @@ export async function saveArticle(update) {
 export async function publishArticle(articleId) {
   console.log('PowerUpAPI.publishArticle', articleId)
   try {
-    const results = await api.put(`/articles/${articleId}/publish`)
+    const results = await api.put(`/workbench/articles/${articleId}/publish`)
     return results.data
   } catch (err) {
     console.error(err)
@@ -58,7 +58,7 @@ export async function publishArticle(articleId) {
 export async function retractArticle(articleId) {
   console.log('PowerUpAPI.retractArticle', articleId)
   try {
-    const results = await api.put(`/articles/${articleId}/retract`)
+    const results = await api.put(`/workbench/articles/${articleId}/retract`)
     return results.data
   } catch (err) {
     console.error(err)
@@ -69,7 +69,7 @@ export async function retractArticle(articleId) {
 export async function archiveArticle(articleId) {
   console.log('PowerUpAPI.archiveArticle', articleId)
   try {
-    const results = await api.delete(`/articles/${articleId}`)
+    const results = await api.delete(`/workbench/articles/${articleId}`)
     return results.data
   } catch (err) {
     console.error(err)
@@ -80,7 +80,7 @@ export async function archiveArticle(articleId) {
 export async function reviveArticle(articleId) {
   console.log('PowerUpAPI.reviveArticle', articleId)
   try {
-    const results = await api.put(`/articles/${articleId}/revive`)
+    const results = await api.put(`/workbench/articles/${articleId}/revive`)
     return results.data
   } catch (err) {
     console.error(err)
@@ -90,5 +90,5 @@ export async function reviveArticle(articleId) {
 
 export async function purgeArticle(articleId) {
   console.log('PowerUpAPI.purgeArticle', articleId)
-  return await api.delete(`/articles/${articleId}/purge`)
+  return await api.delete(`/workbench/articles/${articleId}/purge`)
 }
