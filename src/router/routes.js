@@ -89,6 +89,11 @@ const routes = [
             component: () => import('../pages/workbench/ArticleWorkbench.vue'),
           },
           {
+            path: 'proofing',
+            name: 'ArticleProofing',
+            component: () => import('../pages/workbench/ArticleProofing.vue'),
+          },
+          {
             path: 'articles/edit/:articleId',
             name: 'ArticleComposer',
             component: () => import('../pages/workbench/ArticleComposer.vue'),

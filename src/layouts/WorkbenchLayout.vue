@@ -3,6 +3,12 @@
     <q-banner class="bg-accent text-white text-center" inline-actions>
       <span class="text-weight-bold text-uppercase">Workbench</span>
       <template #action>
+        <q-btn
+          v-if="user.isEditor"
+          label="Proofing Desk"
+          color="purple-3"
+          :to="{name: 'ArticleProofing'}"
+        ></q-btn>
         <q-btn icon="help" round color="purple-3" @click="help = true"></q-btn>
       </template>
     </q-banner>
@@ -20,33 +26,46 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          Now click on the EDIT button. That will open your article where you can change the title, decide what byline to use (your alias, your real name, whatever you like), and most
-          importantly, write the contents of the article. Each field gets saved as you go. The big text areas have their own Save buttons, so that you can save as you go.
+          Now click on the EDIT button. That will open your article where you
+          can change the title, decide what byline to use (your alias, your real
+          name, whatever you like), and most importantly, write the contents of
+          the article. Each field gets saved as you go. The big text areas have
+          their own Save buttons, so that you can save as you go.
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          You leave the editor by clicking on one of the actions at the bottom. (You'll see.) Be sure to choose the one that saves your work.
+          You leave the editor by clicking on one of the actions at the bottom.
+          (You'll see.) Be sure to choose the one that saves your work.
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          When everything is ready, you will want to publish your article, which makes it available to readers who come to Power Up Magazine. Click the PUBLISH button. If you are a verified contributor, your article will simply appear. Ta da!
+          When everything is ready, you will want to publish your article, which
+          makes it available to readers who come to Power Up Magazine. Click the
+          PUBLISH button. If you are a verified contributor, your article will
+          simply appear. Ta da!
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          When unverified writers click PUBLISH, the article will be pending until one of Power Up Magazine's editors takes a look. Either the editor will approve finish publishing the article, or you will get a message that explains any problems that need to be resolved.
+          When unverified writers click PUBLISH, the article will be pending
+          until one of Power Up Magazine's editors takes a look. Either the
+          editor will approve finish publishing the article, or you will get a
+          message that explains any problems that need to be resolved.
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          Finally, if you want to change a published article, you have to RETRACT it first. That means it will stop being shown. Maybe you want to fix a typo or do some editing. For now, you can only edit unpublished articles, so click RETRACT and then EDIT. Publish again whenever you are ready.
+          Finally, if you want to change a published article, you have to
+          RETRACT it first. That means it will stop being shown. Maybe you want
+          to fix a typo or do some editing. For now, you can only edit
+          unpublished articles, so click RETRACT and then EDIT. Publish again
+          whenever you are ready.
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          P.S. Use ARCHIVE to throw your article away. It will be gone, although we might be able to recover it for you it you archived by mistake.
+          P.S. Use ARCHIVE to throw your article away. It will be gone, although
+          we might be able to recover it for you it you archived by mistake.
         </q-card-section>
 
-        <q-card-section class="q-pt-none">
-          P.P.S. Have fun!
-        </q-card-section>
+        <q-card-section class="q-pt-none"> P.P.S. Have fun! </q-card-section>
 
         <q-card-actions align="right">
           <q-btn v-close-popup flat label="OK" color="primary" />
@@ -61,13 +80,16 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { useContextStore } from 'src/stores/context'
+import { useUserStore } from 'src/stores/user'
 
 export default defineComponent({
   setup() {
     const context = useContextStore()
+    const user = useUserStore()
     return {
       help: ref(false),
       context,
+      user,
     }
   },
   mounted() {
