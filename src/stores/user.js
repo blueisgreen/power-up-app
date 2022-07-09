@@ -44,13 +44,13 @@ export const useUserStore = defineStore('user', {
       return this.hasRole('admin')
     },
     areTermsOkay() {
-      return this.termsAcceptedAt !== null
+      return !!this.termsAcceptedAt
     },
     isEmailOkay() {
-      return this.emailCommsAcceptedAt !== null
+      return !!this.emailCommsAcceptedAt
     },
     areCookiesOkay() {
-      return this.cookiesAcceptedAt !== null
+      return !!this.cookiesAcceptedAt
     },
   },
   actions: {
@@ -65,13 +65,13 @@ export const useUserStore = defineStore('user', {
     loadProfile(payload) {
       this.alias = payload.alias
       this.email = payload.email
-      this.avatarUrl = payload.avatar_url
-      this.createdAt = payload.created_at
-      this.updatedAt = payload.updated_at
-      this.termsAcceptedAt = payload.terms_accepted_at
-      this.cookiesAcceptedAt = payload.cookies_accepted_at
-      this.emailCommsAcceptedAt = payload.email_comms_accepted_at
-      this.accountStatusId = payload.account_status_id
+      this.avatarUrl = payload.avatarUrl
+      this.createdAt = payload.createdAt
+      this.updatedAt = payload.updatedAt
+      this.termsAcceptedAt = payload.termsAcceptedAt
+      this.cookiesAcceptedAt = payload.cookiesAcceptedAt
+      this.emailCommsAcceptedAt = payload.emailCommsAcceptedAt
+      this.accountStatusId = payload.accountStatusId
       if (payload.roles) {
         this.roles = payload.roles
       }

@@ -16,7 +16,7 @@
           :rules="[(val) => (val && val.length > 0) || 'Please type something']"
         />
         <p class="text-h6">Terms of use</p>
-        <q-scroll-area class="bordered" style="height: 200px">
+        <q-scroll-area class="bordered" style="height: 200px" visible>
           <p>
             By using the Power Up website and applications, you are agreeing to
             the following terms of use.
@@ -62,23 +62,30 @@
 import { useQuasar } from 'quasar'
 import { defineComponent, ref } from 'vue'
 import { useUserStore } from 'src/stores/user'
+import { useContextStore } from 'src/stores/context'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   setup() {
     const q = useQuasar()
+    const router = useRouter()
     const userStore = useUserStore()
+    const context = useContextStore()
     const formValues = ref({
       screenName: '',
       termsModel: false,
     })
     return {
       q,
+      context,
+      router,
       userStore,
       formValues,
     }
   },
   methods: {
-    async onSubmit() {
+    async onSubmit(e, go) {
+      e.preventDefault()
       if (this.formValues.termsModel !== true) {
         this.q.notify({
           color: 'red-5',
@@ -99,6 +106,10 @@ export default defineComponent({
           icon: 'cloud_done',
           message: 'Welcome to Power Up!',
         })
+        this.context.setUserMessage(
+          'Now you are a member of Power Up Magazine. Well done.'
+        )
+        this.router.push({ name: 'UserAccount' })
       }
     },
   },
