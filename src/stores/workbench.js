@@ -30,7 +30,7 @@ export const useWorkbenchStore = defineStore('workbench', {
       return (
         this.draftArticle.headline !== original.headline ||
         this.draftArticle.byline !== original.byline ||
-        this.draftArticle.synopsis != original.synopsis ||
+        this.draftArticle.synopsis !== original.synopsis ||
         this.draftArticle.content !== original.content
       )
     },
