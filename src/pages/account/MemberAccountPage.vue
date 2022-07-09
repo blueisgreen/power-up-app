@@ -158,6 +158,7 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { useUserStore } from '../../stores/user'
+import { useContextStore } from 'src/stores/context'
 import { formatDayMonthYear } from '../../composables/powerUpUtils'
 import InfoDialog from '../../components/InfoDialog'
 
@@ -167,6 +168,7 @@ export default defineComponent({
   },
   setup() {
     const userStore = useUserStore()
+    const context = useContextStore()
     const dialogValues = {
       emailComms: {
         prompt: 'Read our Email Pledge',
@@ -185,6 +187,7 @@ export default defineComponent({
       formatDayMonthYear,
       dialogValues,
       userStore,
+      context,
       aliasModel,
       emailModel,
     }
@@ -216,8 +219,11 @@ export default defineComponent({
         email,
       })
     },
-    handleBecomeAuthor() {
-      this.userStore.askToBecomeAuthor()
+    async handleBecomeAuthor() {
+      await this.userStore.askToBecomeAuthor()
+      this.context.setUserMessage(
+        'Fantastic. You are ready to contribute to Power Up Magazine. Fame awaits.'
+      )
     },
   },
 })
