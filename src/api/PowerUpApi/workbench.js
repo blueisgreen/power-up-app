@@ -92,3 +92,15 @@ export async function purgeArticle(articleId) {
   console.log('PowerUpAPI.purgeArticle', articleId)
   return await api.delete(`/workbench/articles/${articleId}/purge`)
 }
+
+export async function fetchPendingArticles() {
+  console.log('PowerUpAPI.fetchPendingArticles')
+  try {
+    const results = await api.get('/workbench/articles/pending')
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return []
+  }
+}
+
