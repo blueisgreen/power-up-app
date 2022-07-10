@@ -29,42 +29,56 @@
         <q-item-section>
           <q-item-label>{{ article.headline }}</q-item-label>
           <q-item-label caption>by {{ article.byline }}</q-item-label>
-          <q-item-label>Author: {{ article.author }} ({{ article.authorKey }})</q-item-label>
+          <q-item-label
+            >Author: {{ article.author }} ({{
+              article.authorKey
+            }})</q-item-label
+          >
         </q-item-section>
         <q-item-section side top>
-          <q-btn-group>
+          <q-btn-group rounded>
             <q-btn
-              color="primary"
-              label="Publish"
+              color="green-5"
+              icon="check"
               @click="() => publish(article.id)"
             />
             <q-btn
               color="negative"
-              label="Send Back"
-              @click="() => sendBack(article.id)"
+              icon="cancel"
+              @click="() => confirmDecline(article.id)"
             />
           </q-btn-group>
         </q-item-section>
       </q-item>
     </div>
+    <q-dialog v-model="sendBackPopup" persistent>
+      <q-card style="min-width: 350px">
+        <q-card-section class="q-pt-none">
+          <q-input
+            v-model="explanation"
+            type="textarea"
+            dense
+            autofocus
+            label="Message to contributor"
+            hint="Be kind"
+            @keyup.enter="decline"
+          />
+        </q-card-section>
+        <q-card-actions align="right" class="text-primary">
+          <q-btn v-close-popup flat label="Cancel" />
+          <q-btn
+            v-close-popup
+            flat
+            label="Decline to Publish"
+            @click="decline"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
     <div v-if="active" class="section">
       <div class="text-h3">{{ active.headline }}</div>
       <div class="text-subtitle2">by {{ active.byline }}</div>
       <div class="text-body1">{{ active.content }}</div>
-      <q-btn-group>
-        <q-btn
-          color="primary"
-          glossy
-          label="Publish"
-          @click="() => publish(active.id)"
-        />
-        <q-btn
-          color="negative"
-          glossy
-          label="Send Back"
-          @click="() => sendBack(active.id)"
-        />
-      </q-btn-group>
     </div>
   </q-page>
 </template>
@@ -80,6 +94,9 @@ export default defineComponent({
     const workbench = useWorkbenchStore()
     return {
       active: ref(null),
+      sendBackPopup: ref(false),
+      articleToSendBack: ref(-1),
+      explanation: ref(''),
       workbench,
       formatDayMonthYear,
     }
@@ -94,16 +111,29 @@ export default defineComponent({
     },
     clearSelected() {
       this.active = null
+      this.articleToSendBack = -1
+      this.explanation = ''
     },
     async publish(id) {
       await this.workbench.publish(id)
       this.clearSelected()
       this.workbench.loadPendingArticles()
     },
-    async sendBack(id) {
-      this.workbench.retract(id)
-      this.clearSelected()
-      this.workbench.loadPendingArticles()
+    async confirmDecline(id) {
+      this.articleToSendBack = id
+      this.sendBackPopup = true
+    },
+    async decline() {
+      if (this.articleToSendBack > 0) {
+        this.workbench.retract(this.articleToSendBack)
+        // TODO: send note to author
+        console.log('Note to contributor: ' + this.explaination)
+        this.clearSelected()
+        this.workbench.loadPendingArticles()
+        this.sendBackPopup = false
+      } else {
+        console.log('Decline to publish')
+      }
     },
   },
 })
