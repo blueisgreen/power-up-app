@@ -39,10 +39,20 @@
           </q-item-label>
         </q-item-section>
         <q-item-section>
-      <q-btn-group>
-        <q-btn color="primary" glossy label="Publish" @click="() => publish(article.id)" />
-        <q-btn color="negative" glossy label="Send Back" @click="() => sendBack(article.id)"/>
-      </q-btn-group>
+          <q-btn-group>
+            <q-btn
+              color="primary"
+              glossy
+              label="Publish"
+              @click="() => publish(article.id)"
+            />
+            <q-btn
+              color="negative"
+              glossy
+              label="Send Back"
+              @click="() => sendBack(article.id)"
+            />
+          </q-btn-group>
         </q-item-section>
       </q-item>
     </div>
@@ -51,8 +61,18 @@
       <div class="text-subtitle2">by {{ active.byline }}</div>
       <div class="text-body1">{{ active.content }}</div>
       <q-btn-group>
-        <q-btn color="primary" glossy label="Publish" @click="() => publish(active.id)" />
-        <q-btn color="negative" glossy label="Send Back" @click="() => sendBack(active.id)"/>
+        <q-btn
+          color="primary"
+          glossy
+          label="Publish"
+          @click="() => publish(active.id)"
+        />
+        <q-btn
+          color="negative"
+          glossy
+          label="Send Back"
+          @click="() => sendBack(active.id)"
+        />
       </q-btn-group>
     </div>
   </q-page>
@@ -81,11 +101,18 @@ export default defineComponent({
       this.active = article
       await this.workbench.lazyLoadArticleContent(article.id)
     },
-    publish(id) {
-      console.log('publish ' + id)
+    clearSelected() {
+      this.active = null
     },
-    sendBack(id) {
-      console.log('send back to author ' + id)
+    async publish(id) {
+      await this.workbench.publish(id)
+      this.clearSelected()
+      this.workbench.loadPendingArticles()
+    },
+    async sendBack(id) {
+      this.workbench.retract(id)
+      this.clearSelected()
+      this.workbench.loadPendingArticles()
     },
   },
 })
