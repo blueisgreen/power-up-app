@@ -19,15 +19,22 @@
         <q-item-label caption>{{ article.byline }}</q-item-label>
       </q-item-section>
       <q-item-section>
-        <q-item-label
-          >Created: {{ formatDayMonthYear(article.createdAt) }}</q-item-label
+        <q-item-label v-if="!!article.archivedAt"
+          >Archived since {{ formatDayMonthYear(article.archivedAt) }}</q-item-label
         >
-        <q-item-label
-          >Published:
+        <q-item-label v-if="!!article.publishedAt"
+          >Published since
           {{ formatDayMonthYear(article.publishedAt) }}</q-item-label
         >
+        <q-item-label v-if="!!article.requestedToPublishAt" class="text-weight-bolder text-italic"
+          >Pending approval since
+          {{ formatDayMonthYear(article.requestedToPublishAt) }}</q-item-label
+        >
         <q-item-label
-          >Archived: {{ formatDayMonthYear(article.archivedAt) }}</q-item-label
+          >Last updated on {{ formatDayMonthYear(article.createdAt) }}</q-item-label
+        >
+        <q-item-label
+          >Created on {{ formatDayMonthYear(article.createdAt) }}</q-item-label
         >
       </q-item-section>
       <q-item-section>
@@ -57,4 +64,5 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>

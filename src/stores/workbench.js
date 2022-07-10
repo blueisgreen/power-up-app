@@ -9,6 +9,7 @@ import {
   archiveArticle,
   reviveArticle,
   purgeArticle,
+  fetchPendingArticles,
 } from '../api/PowerUpApi'
 
 export const useWorkbenchStore = defineStore('workbench', {
@@ -17,6 +18,7 @@ export const useWorkbenchStore = defineStore('workbench', {
     articlesById: {},
     draftArticle: {},
     draftLesson: null,
+    articlesToReview: [],
   }),
   getters: {
     articles() {
@@ -30,7 +32,7 @@ export const useWorkbenchStore = defineStore('workbench', {
       return (
         this.draftArticle.headline !== original.headline ||
         this.draftArticle.byline !== original.byline ||
-        this.draftArticle.synopsis != original.synopsis ||
+        this.draftArticle.synopsis !== original.synopsis ||
         this.draftArticle.content !== original.content
       )
     },
@@ -53,6 +55,24 @@ export const useWorkbenchStore = defineStore('workbench', {
           this.articleList.push(article)
           this.articlesById[article.id] = article
         })
+      } catch (err) {
+        console.error(err)
+      }
+    },
+    async loadPendingArticles() {
+      try {
+        const articles = await fetchPendingArticles()
+        articles.sort((a, b) => a.requestedToPublishAt < b.requestedToPublishAt)
+        this.articlesToReview = articles
+      } catch (err) {
+        console.error(err)
+      }
+    },
+    async lazyLoadArticleContent(id) {
+      try {
+        const restOfArticle = await fetchMyArticle(id)
+        const article = this.articlesToReview.find((item) => item.id === id)
+        article.content = restOfArticle.content
       } catch (err) {
         console.error(err)
       }

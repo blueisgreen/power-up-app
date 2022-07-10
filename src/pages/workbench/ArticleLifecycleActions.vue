@@ -88,10 +88,10 @@ export default defineComponent({
       return !this.article.publishedAt
     },
     canPublish() {
-      return !this.article.publishedAt
+      return !this.article.publishedAt && !this.article.requestedToPublishAt
     },
     canRetract() {
-      return !!this.article.publishedAt
+      return !!this.article.publishedAt || this.article.requestedToPublishAt
     },
     canArchive() {
       return !this.article.archivedAt
