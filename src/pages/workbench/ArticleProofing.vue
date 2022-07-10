@@ -5,16 +5,11 @@
     <div class="section">
       <q-list v-if="workbench.articlesToReview.length" bordered separator dense>
         <q-item>
+          <q-item-section side>Submitted</q-item-section>
           <q-item-section>
-            <q-item-label header>Author</q-item-label>
+            <q-item-label header>Headline / Byline / Author</q-item-label>
           </q-item-section>
-          <q-item-section>
-            <q-item-label header>Headline / Byline</q-item-label>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label header>Submitted</q-item-label>
-          </q-item-section>
-          <q-item-section>
+          <q-item-section side>
             <q-item-label header>Actions</q-item-label>
           </q-item-section>
         </q-item>
@@ -26,29 +21,25 @@
         clickable
         @click="() => selectToReview(article)"
       >
-        <q-item-section>
-          <q-item-label>Who wrote this?</q-item-label>
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{ article.headline }}</q-item-label>
-          <q-item-label caption>{{ article.byline }}</q-item-label>
-        </q-item-section>
-        <q-item-section>
+        <q-item-section side top>
           <q-item-label>
             {{ formatDayMonthYear(article.requestedToPublishAt) }}
           </q-item-label>
         </q-item-section>
         <q-item-section>
+          <q-item-label>{{ article.headline }}</q-item-label>
+          <q-item-label caption>by {{ article.byline }}</q-item-label>
+          <q-item-label>Author: {{ article.author }} ({{ article.authorKey }})</q-item-label>
+        </q-item-section>
+        <q-item-section side top>
           <q-btn-group>
             <q-btn
               color="primary"
-              glossy
               label="Publish"
               @click="() => publish(article.id)"
             />
             <q-btn
               color="negative"
-              glossy
               label="Send Back"
               @click="() => sendBack(article.id)"
             />
