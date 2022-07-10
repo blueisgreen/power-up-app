@@ -127,7 +127,7 @@ export default defineComponent({
       if (this.articleToSendBack > 0) {
         this.workbench.retract(this.articleToSendBack)
         // TODO: send note to author
-        console.log('Note to contributor: ' + this.explaination)
+        console.log('Note to contributor: ' + this.explanation)
         this.clearSelected()
         this.workbench.loadPendingArticles()
         this.sendBackPopup = false
