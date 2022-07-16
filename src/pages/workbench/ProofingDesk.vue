@@ -86,28 +86,34 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { useWorkbenchStore } from '../../stores/workbench'
+import { useEditingDeskStore } from '../../stores/editingDesk'
 import { formatDayMonthYear } from '../../composables/powerUpUtils'
 
 export default defineComponent({
   components: {},
   setup() {
     const workbench = useWorkbenchStore()
+    const editingDesk = useEditingDeskStore()
     return {
       active: ref(null),
       sendBackPopup: ref(false),
       articleToSendBack: ref(-1),
       explanation: ref(''),
       workbench,
+      editingDesk,
       formatDayMonthYear,
     }
   },
   created() {
-    this.workbench.loadPendingArticles()
+    this.editingDesk.loadPendingArticles()
   },
   methods: {
+    async refreshArticleList() {
+      await this.loadArticlesForEditor()
+    },
     async selectToReview(article) {
       this.active = article
-      await this.workbench.lazyLoadArticleContent(article.id)
+      await this.editingDesk.loadArticleContent(article.id)
     },
     clearSelected() {
       this.active = null
@@ -117,19 +123,20 @@ export default defineComponent({
     async publish(id) {
       await this.workbench.publish(id)
       this.clearSelected()
-      this.workbench.loadPendingArticles()
+      this.editorWorkbench.loadPendingArticles()
     },
     async confirmDecline(id) {
       this.articleToSendBack = id
       this.sendBackPopup = true
     },
+    // FIXME: decide whether to combine editor view into workbench; or split out article cache
     async decline() {
       if (this.articleToSendBack > 0) {
         this.workbench.retract(this.articleToSendBack)
         // TODO: send note to author
         console.log('Note to contributor: ' + this.explanation)
         this.clearSelected()
-        this.workbench.loadPendingArticles()
+        this.editorWorkbench.loadPendingArticles()
         this.sendBackPopup = false
       } else {
         console.log('Decline to publish')

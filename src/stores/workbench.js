@@ -12,12 +12,14 @@ import {
   fetchPendingArticles,
 } from '../api/PowerUpApi'
 
+/**
+ * At the moment, dedicated to authors. Consider renaming to "authoring."
+ */
 export const useWorkbenchStore = defineStore('workbench', {
   state: () => ({
     articleList: [],
     articlesById: {},
     draftArticle: {},
-    draftLesson: null,
     articlesToReview: [],
   }),
   getters: {
@@ -39,6 +41,7 @@ export const useWorkbenchStore = defineStore('workbench', {
   },
   actions: {
     updateArticle(article) {
+      // FIXME: this is not right - list article IDs, merge update with byIndex set
       this.articlesById[article.id] = article
       const articleIndex = this.articleList.findIndex(
         (item) => item.id === article.id
@@ -64,15 +67,6 @@ export const useWorkbenchStore = defineStore('workbench', {
         const articles = await fetchPendingArticles()
         articles.sort((a, b) => a.requestedToPublishAt < b.requestedToPublishAt)
         this.articlesToReview = articles
-      } catch (err) {
-        console.error(err)
-      }
-    },
-    async lazyLoadArticleContent(id) {
-      try {
-        const restOfArticle = await fetchMyArticle(id)
-        const article = this.articlesToReview.find((item) => item.id === id)
-        article.content = restOfArticle.content
       } catch (err) {
         console.error(err)
       }

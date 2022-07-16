@@ -91,7 +91,7 @@ const routes = [
           {
             path: 'proofing',
             name: 'ArticleProofing',
-            component: () => import('../pages/workbench/ArticleProofing.vue'),
+            component: () => import('../pages/workbench/ProofingDesk.vue'),
           },
           {
             path: 'articles/edit/:articleId',

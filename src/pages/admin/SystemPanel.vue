@@ -103,11 +103,11 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { date } from 'quasar'
-import { fetchActions, actionFilterBuilder } from '../../api/PowerUpApi'
+import { fetchActions, queryFilterBuilder } from '../../api/PowerUpApi'
 
 export default defineComponent({
   setup() {
-    const filterBuilder = actionFilterBuilder()
+    const filterBuilder = queryFilterBuilder()
     const activity = ref([])
     const userKeyFilter = ref('')
     const actionCodeFilter = ref('')
