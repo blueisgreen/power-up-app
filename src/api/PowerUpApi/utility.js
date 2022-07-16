@@ -13,6 +13,10 @@ export const queryFilterBuilder = () => {
       this.filterSet.action = code
       return this
     },
+    setStatus(code) {
+      this.filterSet.status = code
+      return this
+    },
     setUserKey(key) {
       this.filterSet.user = key
       return this

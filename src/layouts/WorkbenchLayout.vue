@@ -5,9 +5,9 @@
       <template #action>
         <q-btn
           v-if="user.isEditor"
-          label="Proofing Desk"
+          label="Editing Desk"
           color="purple-3"
-          :to="{name: 'ArticleProofing'}"
+          :to="{name: 'ArticleEditingDesk'}"
         ></q-btn>
         <q-btn icon="help" round color="purple-3" @click="help = true"></q-btn>
       </template>

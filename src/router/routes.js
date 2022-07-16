@@ -90,8 +90,8 @@ const routes = [
           },
           {
             path: 'proofing',
-            name: 'ArticleProofing',
-            component: () => import('../pages/workbench/ProofingDesk.vue'),
+            name: 'ArticleEditingDesk',
+            component: () => import('../pages/workbench/ArticleEditingDesk.vue'),
           },
           {
             path: 'articles/edit/:articleId',
