@@ -9,7 +9,6 @@ import {
   archiveArticle,
   reviveArticle,
   purgeArticle,
-  fetchPendingArticles,
 } from '../api/PowerUpApi'
 
 /**
@@ -58,15 +57,6 @@ export const useWorkbenchStore = defineStore('workbench', {
           this.articleList.push(article)
           this.articlesById[article.id] = article
         })
-      } catch (err) {
-        console.error(err)
-      }
-    },
-    async loadPendingArticles() {
-      try {
-        const articles = await fetchPendingArticles()
-        articles.sort((a, b) => a.requestedToPublishAt < b.requestedToPublishAt)
-        this.articlesToReview = articles
       } catch (err) {
         console.error(err)
       }

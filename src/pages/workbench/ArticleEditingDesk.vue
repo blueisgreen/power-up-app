@@ -5,12 +5,11 @@
     <div class="section">
       <q-list v-if="editingDesk.articleList.length" bordered separator dense>
         <q-item>
-          <q-item-section side>Submitted</q-item-section>
           <q-item-section>
             <q-item-label header>Headline / Byline / Author</q-item-label>
           </q-item-section>
           <q-item-section side>
-            <q-item-label header>Actions</q-item-label>
+            <q-item-label header>Actions / Key Dates</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -21,11 +20,6 @@
         clickable
         @click="() => selectToReview(article)"
       >
-        <q-item-section side top>
-          <q-item-label>
-            {{ formatDayMonthYear(article.requestedToPublishAt) }}
-          </q-item-label>
-        </q-item-section>
         <q-item-section>
           <q-item-label>{{ article.headline }}</q-item-label>
           <q-item-label caption>by {{ article.byline }}</q-item-label>
@@ -36,6 +30,14 @@
           >
         </q-item-section>
         <q-item-section side top>
+          <q-item-label>
+            Created: {{ formatDayMonthYear(article.createdAt) }}
+          </q-item-label>
+          <q-item-label>
+            Request to publish: {{ formatDayMonthYear(article.requestedToPublishAt) }}
+          </q-item-label>
+        </q-item-section>
+        <q-item-section v-if="!!article.requestedToPublishAt" side top>
           <q-btn-group rounded>
             <q-btn
               color="green-5"
@@ -78,6 +80,7 @@
     <div v-if="active" class="section">
       <div class="text-h3">{{ active.headline }}</div>
       <div class="text-subtitle2">by {{ active.byline }}</div>
+      <div><span v-html="active.content" /></div>
       <div class="text-body1">{{ active.content }}</div>
     </div>
   </q-page>
@@ -113,7 +116,7 @@ export default defineComponent({
     },
     async selectToReview(article) {
       this.active = article
-      await this.editingDesk.loadArticleContent(article.id)
+      await this.editingDesk.loadArticleForReview(article.id)
     },
     clearSelected() {
       this.active = null
@@ -123,7 +126,7 @@ export default defineComponent({
     async publish(id) {
       await this.workbench.publish(id)
       this.clearSelected()
-      this.editorWorkbench.loadPendingArticles()
+      this.editingDesk.loadPendingArticles()
     },
     async confirmDecline(id) {
       this.articleToSendBack = id
@@ -136,7 +139,7 @@ export default defineComponent({
         // TODO: send note to author
         console.log('Note to contributor: ' + this.explanation)
         this.clearSelected()
-        this.editorWorkbench.loadPendingArticles()
+        this.editingDesk.loadPendingArticles()
         this.sendBackPopup = false
       } else {
         console.log('Decline to publish')

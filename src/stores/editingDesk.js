@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 import {
-  fetchPendingArticles,
   fetchArticlesForEditorReview,
   publishArticle,
+  fetchArticleContent,
   queryFilterBuilder,
 } from 'src/api/PowerUpApi'
 
@@ -23,10 +23,15 @@ export const useEditingDeskStore = defineStore('editingDesk', {
   }),
   getters: {
     articleList: (state) => Object.values(state.articles),
-    // articlesToReview: (state) => {
-    //   state.articleList
-    //     .sort((a, b) => a.requestedToPublishAt < b.requestedToPublishAt)
-    // },
+    articlesToReview: (state) => {
+      state.articleList.sort((a, b) => {
+        if (state.filterSettings.pending) {
+          a.requestedToPublishAt < b.requestedToPublishAt
+        } else {
+          a.createdAt > b.createdAt
+        }
+      })
+    },
   },
   actions: {
     /*
@@ -77,10 +82,9 @@ export const useEditingDeskStore = defineStore('editingDesk', {
     updateArticleInStore(update) {
       const articleToUpdate = this.articles[update.id]
       if (articleToUpdate) {
-        this.articles[update.id] = Object.assign({}, articleToUpdate, update)
+        this.articles[update.id].content = update.content
       } else {
         console.warn('article not found in local store on update')
-        this.articles[update.id] = update
       }
     },
     async loadArticles() {
