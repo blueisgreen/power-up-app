@@ -3,7 +3,7 @@
     <div class="text-h4">Articles to Review</div>
     <div class="section">-- search / filter bar goes here --</div>
     <div class="section">
-      <q-list v-if="workbench.articlesToReview.length" bordered separator dense>
+      <q-list v-if="editingDesk.articleList.length" bordered separator dense>
         <q-item>
           <q-item-section side>Submitted</q-item-section>
           <q-item-section>
@@ -15,7 +15,7 @@
         </q-item>
       </q-list>
       <q-item
-        v-for="article in workbench.articlesToReview"
+        v-for="article in editingDesk.articleList"
         :key="article"
         v-ripple
         clickable

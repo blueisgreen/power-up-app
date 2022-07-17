@@ -17,7 +17,7 @@ export async function fetchArticlesForEditorReview(filter) {
     const queryStr = filter.buildQueryString()
     // console.log('filter', filter)
     // console.log('finding actions that match:', queryStr)
-    const results = await api.get(`/workbench/articles?${queryStr}`)
+    const results = await api.get(`/workbench/editing?${queryStr}`)
     return results.data
   } catch (err) {
     console.error(err)

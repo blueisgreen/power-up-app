@@ -22,14 +22,11 @@ export const useEditingDeskStore = defineStore('editingDesk', {
     filterBuilder: queryFilterBuilder(),
   }),
   getters: {
-    articleList() {
-      return this.articles.values
-    },
-    articlesToReview() {
-      return this.articles.values.sort(
-        (a, b) => a.requestedToPublishAt < b.requestedToPublishAt
-      )
-    },
+    articleList: (state) => Object.values(state.articles),
+    // articlesToReview: (state) => {
+    //   state.articleList
+    //     .sort((a, b) => a.requestedToPublishAt < b.requestedToPublishAt)
+    // },
   },
   actions: {
     /*
