@@ -1,7 +1,38 @@
 <template>
   <q-page class="q-pa-md">
     <div class="text-h4">Articles to Review</div>
-    <div class="section">-- search / filter bar goes here --</div>
+
+    <div class="section">
+      <q-toolbar class="bg-grey-3">
+        <q-toolbar-title>Filter</q-toolbar-title>
+        <q-select
+          v-model="editingDesk.filterStatus"
+          :options="editingDesk.statusFilterOptions"
+          class="filter-style"
+          outlined
+          clearable
+          label="Status"
+        />
+        <q-separator vertical />
+        <q-select
+          v-model="editingDesk.filterLimit"
+          :options="filterLimitOptions"
+          outlined
+          class="filter-style"
+          label="# per page"
+        />
+        <q-separator vertical />
+        <q-btn icon="search" @click="refresh" />
+        <q-space />
+        <span v-if="false">
+          <q-btn icon="navigate_before" @click="prior" />
+          <q-btn icon="navigate_next" @click="next" />
+          <q-separator vertical />
+          <span>Offset: {{ editingDesk.filterOffset }}</span>
+        </span>
+      </q-toolbar>
+    </div>
+
     <div class="section">
       <q-list v-if="editingDesk.articleList.length" bordered separator dense>
         <q-item>
@@ -33,8 +64,15 @@
           <q-item-label>
             Created: {{ formatDayMonthYear(article.createdAt) }}
           </q-item-label>
-          <q-item-label>
-            Request to publish: {{ formatDayMonthYear(article.requestedToPublishAt) }}
+          <q-item-label v-if="!!article.publishedAt">
+            Published: {{ formatDayMonthYear(article.publishedAt) }}
+          </q-item-label>
+          <q-item-label v-if="!!article.archivedAt">
+            Archived: {{ formatDayMonthYear(article.archivedAt) }}
+          </q-item-label>
+          <q-item-label v-if="!!article.requestedToPublishAt">
+            Request to publish:
+            {{ formatDayMonthYear(article.requestedToPublishAt) }}
           </q-item-label>
         </q-item-section>
         <q-item-section v-if="!!article.requestedToPublishAt" side top>
@@ -97,7 +135,9 @@ export default defineComponent({
   setup() {
     const workbench = useWorkbenchStore()
     const editingDesk = useEditingDeskStore()
+    const filterLimitOptions = ['10', '25', '50', '100']
     return {
+      statusFilter: ref('pending'),
       active: ref(null),
       sendBackPopup: ref(false),
       articleToSendBack: ref(-1),
@@ -105,15 +145,18 @@ export default defineComponent({
       workbench,
       editingDesk,
       formatDayMonthYear,
+      filterLimitOptions,
     }
   },
   created() {
     this.editingDesk.loadPendingArticles()
   },
   methods: {
-    async refreshArticleList() {
-      await this.loadArticlesForEditor()
+    async refresh() {
+      await this.editingDesk.loadArticles()
     },
+    async prior() {},
+    async next() {},
     async selectToReview(article) {
       this.active = article
       await this.editingDesk.loadArticleForReview(article.id)
@@ -149,4 +192,8 @@ export default defineComponent({
 })
 </script>
 
-<style></style>
+<style>
+.filter-style {
+  min-width: 100px;
+}
+</style>

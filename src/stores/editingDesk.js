@@ -11,14 +11,21 @@ export const useEditingDeskStore = defineStore('editingDesk', {
     articles: {},
     filteredArticles: [],
     articleContents: {},
-    filterSettings: {
-      author: null,
-      pending: false,
-      published: false,
-      archived: false,
-      limit: 20,
-      offset: 0,
-    },
+    // filterSettings: {
+    //   author: null,
+    //   status: null,
+    //   limit: 20,
+    //   offset: 0,
+    // },
+    filterAuthor: null,
+    filterStatus: null,
+    statusFilterOptions: ['pending', 'published', 'archived'],
+    filterLimit: 10,
+    filterOffset: 0,
+    //   { label: 'Pending', value: 'pending' },
+    //   { label: 'Published', value: 'published' },
+    //   { label: 'Archived', value: 'archived' },
+    // ],
     filterBuilder: queryFilterBuilder(),
   }),
   getters: {
@@ -38,42 +45,22 @@ export const useEditingDeskStore = defineStore('editingDesk', {
      * NOTE: status filters are mutually exclusive: pending, published, archived
      */
     filterByUser(user) {
-      this.filterSettings.user = user
+      this.filterUser = user
     },
     limitReturnedItems(count) {
-      this.filterSettings.limit = count
+      this.filterLimit = count
     },
     filterPending() {
-      this.filterSettings.pending = true
-      this.filterSettings.published = false
-      this.filterSettings.archived = false
-    },
-    filterPublished() {
-      this.filterSettings.pending = false
-      this.filterSettings.published = true
-      this.filterSettings.archived = false
-    },
-    filterArchived() {
-      this.filterSettings.pending = false
-      this.filterSettings.published = false
-      this.filterSettings.archived = true
+      this.filterStatus = 'pending'
     },
     applyFilters() {
       this.filterBuilder
-        .setLimit(this.filterSettings.limit)
-        .setOffset(this.filterSettings.offset)
-      if (this.filterSettings.author) {
-        this.filterBuilder.setUserKey(this.filterSettings.author)
+        .setLimit(this.filterLimit)
+        .setOffset(this.filterOffset)
+      if (this.filterAuthor) {
+        this.filterBuilder.setUserKey(this.filterAuthor)
       }
-      if (this.filterSettings.pending) {
-        this.filterBuilder.setStatus('pending')
-      }
-      if (this.filterSettings.published) {
-        this.filterBuilder.setStatus('published')
-      }
-      if (this.filterSettings.archived) {
-        this.filterBuilder.setStatus('archived')
-      }
+      this.filterBuilder.setStatus(this.filterStatus)
     },
     storeArticles(list) {
       this.articles = {}
