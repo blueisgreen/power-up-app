@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
 import {
-  fetchArticlesForEditorReview,
-  publishArticle,
-  fetchArticleContent,
   queryFilterBuilder,
+  fetchArticlesForEditorReview,
+  fetchArticleContent,
+  publishArticle,
+  retractArticle,
 } from 'src/api/PowerUpApi'
 
 export const useEditingDeskStore = defineStore('editingDesk', {
@@ -11,21 +12,11 @@ export const useEditingDeskStore = defineStore('editingDesk', {
     articles: {},
     filteredArticles: [],
     articleContents: {},
-    // filterSettings: {
-    //   author: null,
-    //   status: null,
-    //   limit: 20,
-    //   offset: 0,
-    // },
     filterAuthor: null,
     filterStatus: null,
     statusFilterOptions: ['pending', 'published', 'archived'],
     filterLimit: 10,
     filterOffset: 0,
-    //   { label: 'Pending', value: 'pending' },
-    //   { label: 'Published', value: 'published' },
-    //   { label: 'Archived', value: 'archived' },
-    // ],
     filterBuilder: queryFilterBuilder(),
   }),
   getters: {
@@ -41,9 +32,6 @@ export const useEditingDeskStore = defineStore('editingDesk', {
     },
   },
   actions: {
-    /*
-     * NOTE: status filters are mutually exclusive: pending, published, archived
-     */
     filterByUser(user) {
       this.filterUser = user
     },
@@ -54,9 +42,7 @@ export const useEditingDeskStore = defineStore('editingDesk', {
       this.filterStatus = 'pending'
     },
     applyFilters() {
-      this.filterBuilder
-        .setLimit(this.filterLimit)
-        .setOffset(this.filterOffset)
+      this.filterBuilder.setLimit(this.filterLimit).setOffset(this.filterOffset)
       if (this.filterAuthor) {
         this.filterBuilder.setUserKey(this.filterAuthor)
       }
@@ -67,9 +53,11 @@ export const useEditingDeskStore = defineStore('editingDesk', {
       list.forEach((item) => (this.articles[item.id] = item))
     },
     updateArticleInStore(update) {
+      // FIXME: merge new props into existing article or replace?
       const articleToUpdate = this.articles[update.id]
       if (articleToUpdate) {
-        this.articles[update.id].content = update.content
+        // this.articles[update.id].content = update.content
+        Object.assign(this.articles[update.id], update)
       } else {
         console.warn('article not found in local store on update')
       }
@@ -84,6 +72,14 @@ export const useEditingDeskStore = defineStore('editingDesk', {
         console.error(err)
       }
     },
+    async loadNext() {
+      this.filterBuilder.nextPage()
+      await this.loadArticles()
+    },
+    async loadPrior() {
+      this.filterBuilder.priorPage()
+      await this.loadArticles()
+    },
     async loadPendingArticles() {
       try {
         this.filterPending()
@@ -92,19 +88,6 @@ export const useEditingDeskStore = defineStore('editingDesk', {
         console.error(err)
       }
     },
-    // async loadNext() {
-    //   // FIXME: anticipating problems keeping offset in sync; see above (check dirty filter)
-    // },
-    // async loadPendingArticles() {
-    //   // TODO: should be able to delete once following method works
-    //   try {
-    //     const pendingList = await fetchPendingArticles()
-    //     this.storeArticles(pendingList)
-    //     this.filterPending()
-    //   } catch (err) {
-    //     console.error(err)
-    //   }
-    // },
     async loadArticleForReview(id) {
       // FIXME:
       try {
@@ -114,10 +97,18 @@ export const useEditingDeskStore = defineStore('editingDesk', {
         console.error(err)
       }
     },
-    async approvePublishing(id) {
+    async approveToPublish(id) {
       try {
         const results = await publishArticle(id)
         this.updateArticleInStore(results)
+      } catch (err) {
+        console.error(err)
+      }
+    },
+    async denyToPublish(id) {
+      try {
+        const results = await retractArticle(id)
+        await this.updateArticleInStore(results)
       } catch (err) {
         console.error(err)
       }

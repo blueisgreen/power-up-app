@@ -25,8 +25,8 @@
         <q-btn icon="search" @click="refresh" />
         <q-space />
         <span v-if="false">
-          <q-btn icon="navigate_before" @click="prior" />
-          <q-btn icon="navigate_next" @click="next" />
+          <q-btn icon="navigate_before" @click="editingDesk.loadNext" />
+          <q-btn icon="navigate_next" @click="editingDesk.loadPrior" />
           <q-separator vertical />
           <span>Offset: {{ editingDesk.filterOffset }}</span>
         </span>
@@ -137,7 +137,6 @@ export default defineComponent({
     const editingDesk = useEditingDeskStore()
     const filterLimitOptions = ['10', '25', '50', '100']
     return {
-      statusFilter: ref('pending'),
       active: ref(null),
       sendBackPopup: ref(false),
       articleToSendBack: ref(-1),
@@ -167,18 +166,16 @@ export default defineComponent({
       this.explanation = ''
     },
     async publish(id) {
-      await this.workbench.publish(id)
+      await this.editingDesk.approveToPublish(id)
       this.clearSelected()
-      this.editingDesk.loadPendingArticles()
     },
     async confirmDecline(id) {
       this.articleToSendBack = id
       this.sendBackPopup = true
     },
-    // FIXME: decide whether to combine editor view into workbench; or split out article cache
     async decline() {
       if (this.articleToSendBack > 0) {
-        this.workbench.retract(this.articleToSendBack)
+        this.workbench.denyToPublish(this.articleToSendBack)
         // TODO: send note to author
         console.log('Note to contributor: ' + this.explanation)
         this.clearSelected()
