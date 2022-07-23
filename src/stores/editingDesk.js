@@ -23,7 +23,7 @@ export const useEditingDeskStore = defineStore('editingDesk', {
     articleList: (state) => Object.values(state.articles),
     articlesToReview: (state) => {
       state.articleList.sort((a, b) => {
-        if (state.filterSettings.pending) {
+        if (state.filterStatus === 'pending') {
           a.requestedToPublishAt < b.requestedToPublishAt
         } else {
           a.createdAt > b.createdAt

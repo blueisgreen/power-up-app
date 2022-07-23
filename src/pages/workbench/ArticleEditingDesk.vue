@@ -177,6 +177,11 @@ export default defineComponent({
       if (this.articleToSendBack > 0) {
         this.workbench.denyToPublish(this.articleToSendBack)
         // TODO: send note to author
+      const denialMessage = {
+        purpose: 'denyPublishing',
+        message: this.explanation,
+      }
+
         console.log('Note to contributor: ' + this.explanation)
         this.clearSelected()
         this.editingDesk.loadPendingArticles()
