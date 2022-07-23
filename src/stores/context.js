@@ -47,14 +47,10 @@ export const useContextStore = defineStore('context', {
     },
     async loadArticle(key) {
       try {
-        if (!(this.articles[key] || this.articles[key].content)) {
-          this.setUserMessage('Just a moment while we grab that.')
-          const article = await fetchArticle(key)
-          this.addToArticles(article)
-          this.setUserMessage('There you go. Happy reading.')
-        } else {
-          this.setUserMessage('Enjoy limitless power!')
-        }
+        this.setUserMessage('Just a moment while we grab that.')
+        const article = await fetchArticle(key)
+        this.addToArticles(article)
+        this.setUserMessage('There you go. Happy reading.')
       } catch (error) {
         console.error(error)
       }

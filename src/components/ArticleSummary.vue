@@ -40,8 +40,9 @@ export default defineComponent({
 <style lang="sass" scoped>
 .summary-card
   width: 100%
-  background: $primary
-  color: $grey-9
+  background: $blue-grey-1
+  color: $grey-10
+  border: $primary 2px solid
 .subdued
   color: $grey-8
 </style>
