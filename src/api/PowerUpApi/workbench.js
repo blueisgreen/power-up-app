@@ -11,10 +11,10 @@ export async function fetchMyArticles() {
   }
 }
 
-export async function fetchMyArticle(articleId) {
-  console.log('PowerUpAPI.fetchMyArticle', articleId)
+export async function fetchMyArticle(key) {
+  console.log('PowerUpAPI.fetchMyArticle', key)
   try {
-    const results = await api.get(`/workbench/articles/${articleId}`)
+    const results = await api.get(`/workbench/articles/${key}`)
     return results.data
   } catch (err) {
     console.error(err)
@@ -44,10 +44,10 @@ export async function saveArticle(update) {
   }
 }
 
-export async function publishArticle(articleId) {
-  console.log('PowerUpAPI.publishArticle', articleId)
+export async function publishArticle(key) {
+  console.log('PowerUpAPI.publishArticle', key)
   try {
-    const results = await api.put(`/workbench/articles/${articleId}/publish`)
+    const results = await api.put(`/workbench/articles/${key}/publish`)
     return results.data
   } catch (err) {
     console.error(err)
@@ -55,10 +55,10 @@ export async function publishArticle(articleId) {
   }
 }
 
-export async function retractArticle(articleId) {
-  console.log('PowerUpAPI.retractArticle', articleId)
+export async function retractArticle(key) {
+  console.log('PowerUpAPI.retractArticle', key)
   try {
-    const results = await api.put(`/workbench/articles/${articleId}/retract`)
+    const results = await api.put(`/workbench/articles/${key}/retract`)
     return results.data
   } catch (err) {
     console.error(err)
@@ -66,10 +66,10 @@ export async function retractArticle(articleId) {
   }
 }
 
-export async function archiveArticle(articleId) {
-  console.log('PowerUpAPI.archiveArticle', articleId)
+export async function archiveArticle(key) {
+  console.log('PowerUpAPI.archiveArticle', key)
   try {
-    const results = await api.delete(`/workbench/articles/${articleId}`)
+    const results = await api.delete(`/workbench/articles/${key}`)
     return results.data
   } catch (err) {
     console.error(err)
@@ -77,10 +77,10 @@ export async function archiveArticle(articleId) {
   }
 }
 
-export async function reviveArticle(articleId) {
-  console.log('PowerUpAPI.reviveArticle', articleId)
+export async function reviveArticle(key) {
+  console.log('PowerUpAPI.reviveArticle', key)
   try {
-    const results = await api.put(`/workbench/articles/${articleId}/revive`)
+    const results = await api.put(`/workbench/articles/${key}/revive`)
     return results.data
   } catch (err) {
     console.error(err)
@@ -88,7 +88,7 @@ export async function reviveArticle(articleId) {
   }
 }
 
-export async function purgeArticle(articleId) {
-  console.log('PowerUpAPI.purgeArticle', articleId)
-  return await api.delete(`/workbench/articles/${articleId}/purge`)
+export async function purgeArticle(key) {
+  console.log('PowerUpAPI.purgeArticle', key)
+  return await api.delete(`/workbench/articles/${key}/purge`)
 }

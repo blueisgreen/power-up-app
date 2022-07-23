@@ -12,10 +12,10 @@ export async function fetchArticlesForEditorReview(filter) {
   }
 }
 
-export async function fetchArticleContent(articleId) {
-  console.log('PowerUpAPI.fetchArticleContent', articleId)
+export async function fetchArticleContent(key) {
+  console.log('PowerUpAPI.fetchArticleContent', key)
   try {
-    const results = await api.get(`/workbench/editing/${articleId}`)
+    const results = await api.get(`/workbench/editing/${key}`)
     return results.data
   } catch (err) {
     console.error(err)
