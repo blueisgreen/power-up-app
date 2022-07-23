@@ -36,7 +36,7 @@ export async function createArticle(update) {
 export async function saveArticle(update) {
   console.log('PowerUpAPI.saveArticle', update)
   try {
-    const results = await api.put(`/workbench/articles/${update.id}`, update)
+    const results = await api.put(`/workbench/articles/${update.articleKey}`, update)
     return results.data
   } catch (err) {
     console.error(err)

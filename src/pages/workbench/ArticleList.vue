@@ -1,6 +1,6 @@
 <template>
   <div class="text-h4">Articles</div>
-  <p v-if="!workbench.articles || workbench.articles.length < 1">None found</p>
+  <p v-if="workbench.articleList.length < 1">None found</p>
   <q-list v-if="workbench.articles.length" bordered separator dense>
     <q-item>
       <q-item-section>
@@ -13,7 +13,7 @@
         <q-item-label header>Actions</q-item-label>
       </q-item-section>
     </q-item>
-    <q-item v-for="article in workbench.articles" :key="article" v-ripple>
+    <q-item v-for="article in workbench.articleList" :key="article" v-ripple>
       <q-item-section>
         <q-item-label>{{ article.headline }}</q-item-label>
         <q-item-label caption>{{ article.byline }}</q-item-label>

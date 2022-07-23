@@ -2,10 +2,10 @@
   <q-list>
     <q-item
       v-for="article in context.suggestedArticles"
-      :key="article.id"
+      :key="article.articleKey"
       clickable
       class="article-block"
-      @click="() => viewArticle(article.id)"
+      @click="() => viewArticle(article.articleKey)"
     >
       <q-item-section>
         <article-summary :summary="article" />
@@ -34,10 +34,10 @@ export default defineComponent({
     this.context.loadSuggestedArticles()
   },
   methods: {
-    viewArticle(id) {
+    viewArticle(key) {
       this.$router.push({
         name: 'ArticlePage',
-        params: { articleId: id },
+        params: { articleKey: key },
       })
     },
   },

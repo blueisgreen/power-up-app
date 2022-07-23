@@ -28,7 +28,7 @@ export default defineComponent({
     }
   },
   created() {
-    this.workbench.loadArticleIndex()
+    this.workbench.loadArticlesAuthorOwns()
   },
 })
 </script>
