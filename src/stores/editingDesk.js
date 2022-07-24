@@ -4,7 +4,7 @@ import {
   fetchArticlesForEditorReview,
   fetchArticleContent,
   publishArticle,
-  retractArticle,
+  denyToPublishArticle,
 } from 'src/api/PowerUpApi'
 
 export const useEditingDeskStore = defineStore('editingDesk', {
@@ -52,10 +52,8 @@ export const useEditingDeskStore = defineStore('editingDesk', {
       list.forEach((item) => (this.articles[item.articleKey] = item))
     },
     updateArticleInStore(update) {
-      // FIXME: merge new props into existing article or replace?
       const articleToUpdate = this.articles[update.articleKey]
       if (articleToUpdate) {
-        // this.articles[update.id].content = update.content
         Object.assign(this.articles[update.articleKey], update)
       } else {
         console.warn('article not found in local store on update')
@@ -103,10 +101,11 @@ export const useEditingDeskStore = defineStore('editingDesk', {
         console.error(err)
       }
     },
-    async denyToPublish(key) {
+    async denyToPublish(key, explanation) {
       try {
-        const results = await retractArticle(key)
-        await this.updateArticleInStore(results)
+        const results = await denyToPublishArticle(key, explanation)
+        await this.updateArticleInStore(results.article)
+        console.log('Message delivered: ' + results.messageToUser)
       } catch (err) {
         console.error(err)
       }

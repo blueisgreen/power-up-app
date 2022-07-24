@@ -140,7 +140,7 @@ export default defineComponent({
       active: ref(null),
       sendBackPopup: ref(false),
       articleToSendBack: ref(null),
-      explanation: ref(''),
+      explanation: ref('This article violates the terms that you agreed to.'),
       workbench,
       editingDesk,
       formatDayMonthYear,
@@ -175,16 +175,8 @@ export default defineComponent({
     },
     async decline() {
       if (this.articleToSendBack) {
-        this.editingDesk.denyToPublish(this.articleToSendBack.articleKey)
-        // TODO: send note to author
-        const denialMessage = {
-          purpose: 'denyPublishing',
-          message: this.explanation,
-        }
-
-        console.log('Note to contributor: ' + this.explanation)
+        this.editingDesk.denyToPublish(this.articleToSendBack.articleKey, this.explanation)
         this.clearSelected()
-        this.editingDesk.loadPendingArticles()
         this.sendBackPopup = false
       } else {
         console.log('Decline to publish')

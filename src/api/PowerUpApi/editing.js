@@ -22,3 +22,20 @@ export async function fetchArticleContent(key) {
     return null
   }
 }
+
+export async function denyToPublishArticle(key, message) {
+  console.log('PowerUpAPI.denyToPublishArticle', key)
+  try {
+    const payload = {
+      message,
+    }
+    const results = await api.put(
+      `/workbench/editing/${key}/denyToPublish`,
+      payload
+    )
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return null
+  }
+}
