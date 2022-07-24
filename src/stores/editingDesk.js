@@ -51,10 +51,10 @@ export const useEditingDeskStore = defineStore('editingDesk', {
       this.articles = {}
       list.forEach((item) => (this.articles[item.articleKey] = item))
     },
-    updateArticleInStore(update) {
-      const articleToUpdate = this.articles[update.articleKey]
+    updateArticleIndex(latest) {
+      const articleToUpdate = this.articles[latest.articleKey]
       if (articleToUpdate) {
-        Object.assign(this.articles[update.articleKey], update)
+        Object.assign(articleToUpdate, latest)
       } else {
         console.warn('article not found in local store on update')
       }
@@ -88,7 +88,7 @@ export const useEditingDeskStore = defineStore('editingDesk', {
     async loadArticleForReview(key) {
       try {
         const articleContent = await fetchArticleContent(key)
-        this.updateArticleInStore(articleContent)
+        this.updateArticleIndex(articleContent)
       } catch (err) {
         console.error(err)
       }
@@ -96,7 +96,7 @@ export const useEditingDeskStore = defineStore('editingDesk', {
     async approveToPublish(key) {
       try {
         const results = await publishArticle(key)
-        this.updateArticleInStore(results)
+        this.updateArticleIndex(results)
       } catch (err) {
         console.error(err)
       }
@@ -104,8 +104,7 @@ export const useEditingDeskStore = defineStore('editingDesk', {
     async denyToPublish(key, explanation) {
       try {
         const results = await denyToPublishArticle(key, explanation)
-        await this.updateArticleInStore(results.article)
-        console.log('Message delivered: ' + results.messageToUser)
+        this.updateArticleIndex(results)
       } catch (err) {
         console.error(err)
       }
