@@ -13,10 +13,13 @@
           <tr
             v-for="msg in myMessages"
             :key="msg.id"
-            :class="{ selected: (msg.id === activeMessageId) }"
+            :class="{ selected: msg.id === activeMessageId }"
             @click="() => handleSelectMessage(msg.id)"
           >
-            <td>{{ msg.id === activeMessageId ? '* ' : '' }}{{ formatDate(msg.createdAt) }}</td>
+            <td>
+              {{ msg.id === activeMessageId ? '* ' : ''
+              }}{{ formatDate(msg.createdAt) }}
+            </td>
             <td>{{ msg.purpose }}</td>
             <td>{{ prettyTrunc(msg.message, 60) }}</td>
           </tr>
@@ -24,7 +27,12 @@
       </q-markup-table>
     </q-scroll-area>
     <show-message v-if="!!activeMessage" :message="activeMessage" />
-    <show-message v-for="msg in activeRelatedMessages" :key="msg.id" :message="msg" is-response />
+    <show-message
+      v-for="msg in activeRelatedMessages"
+      :key="msg.id"
+      :message="msg"
+      is-response
+    />
   </div>
 </template>
 
@@ -39,14 +47,9 @@ export default {
     ShowMessage,
   },
   setup() {
-    const myMessages = ref([])
-    onMounted(async () => {
-      const msgs = await fetchMyInquiries()
-      msgs.forEach((msg) => myMessages.value.push(msg))
-    })
     return {
       activeMessageId: ref(-1),
-      myMessages,
+      myMessages: ref([]),
       relatedMessages: reactive({}),
       formatDate,
       prettyTrunc,
@@ -61,6 +64,10 @@ export default {
       return this.relatedMessages[this.activeMessageId]
     },
   },
+  async mounted() {
+    const msgs = await fetchMyInquiries()
+    msgs.forEach((msg) => this.myMessages.value.push(msg))
+  },
   methods: {
     async handleSelectMessage(id) {
       this.activeMessageId = id
@@ -69,7 +76,7 @@ export default {
         const related = await this.fetchRelatedMessages(id)
         if (related.length > 0) {
           related.forEach((msg) => this.relatedMessages[id].push(msg))
-          console.log('related messages', related, this.relatedMessages[id]);
+          console.log('related messages', related, this.relatedMessages[id])
         }
       }
     },
