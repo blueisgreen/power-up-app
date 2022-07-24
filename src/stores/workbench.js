@@ -58,8 +58,10 @@ export const useWorkbenchStore = defineStore('workbench', {
     },
     async loadArticleForEdit(articleKey) {
       try {
+        const original = this.articles[articleKey]
         const content = await fetchMyArticle(articleKey)
         this.storeInArticles(content)
+        this.draftArticle = Object.assign({}, original, content)
       } catch (err) {
         console.error(err)
       }

@@ -1,6 +1,7 @@
 <template>
   <q-page class="q-pa-md">
-    <h4>Article {{ $route.params.articleKey }}: {{ draft.headline }}</h4>
+    <h4>Article: {{ draft.headline }}</h4>
+    <div class="q-gutter-sm">Key: {{ $route.params.articleKey }}</div>
     <div>
       <q-form class="q-gutter-sm">
         <q-input

@@ -80,12 +80,12 @@
             <q-btn
               color="green-5"
               icon="check"
-              @click="() => publish(article.id)"
+              @click="() => publish(article)"
             />
             <q-btn
               color="negative"
               icon="cancel"
-              @click="() => confirmDecline(article.id)"
+              @click="() => confirmDecline(article)"
             />
           </q-btn-group>
         </q-item-section>
@@ -139,7 +139,7 @@ export default defineComponent({
     return {
       active: ref(null),
       sendBackPopup: ref(false),
-      articleToSendBack: ref(-1),
+      articleToSendBack: ref(null),
       explanation: ref(''),
       workbench,
       editingDesk,
@@ -158,29 +158,29 @@ export default defineComponent({
     async next() {},
     async selectToReview(article) {
       this.active = article
-      await this.editingDesk.loadArticleForReview(article.id)
+      await this.editingDesk.loadArticleForReview(article.articleKey)
     },
     clearSelected() {
       this.active = null
-      this.articleToSendBack = -1
+      this.articleToSendBack = null
       this.explanation = ''
     },
-    async publish(id) {
-      await this.editingDesk.approveToPublish(id)
+    async publish(article) {
+      await this.editingDesk.approveToPublish(article.articleKey)
       this.clearSelected()
     },
-    async confirmDecline(id) {
-      this.articleToSendBack = id
+    async confirmDecline(article) {
+      this.articleToSendBack = article
       this.sendBackPopup = true
     },
     async decline() {
-      if (this.articleToSendBack > 0) {
-        this.workbench.denyToPublish(this.articleToSendBack)
+      if (this.articleToSendBack) {
+        this.editingDesk.denyToPublish(this.articleToSendBack.articleKey)
         // TODO: send note to author
-      const denialMessage = {
-        purpose: 'denyPublishing',
-        message: this.explanation,
-      }
+        const denialMessage = {
+          purpose: 'denyPublishing',
+          message: this.explanation,
+        }
 
         console.log('Note to contributor: ' + this.explanation)
         this.clearSelected()

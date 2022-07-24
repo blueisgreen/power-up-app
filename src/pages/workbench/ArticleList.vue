@@ -1,7 +1,7 @@
 <template>
   <div class="text-h4">Articles</div>
   <p v-if="workbench.articleList.length < 1">None found</p>
-  <q-list v-if="workbench.articles.length" bordered separator dense>
+  <q-list v-if="workbench.articleList.length" bordered separator dense>
     <q-item>
       <q-item-section>
         <q-item-label header>Headline / Byline</q-item-label>

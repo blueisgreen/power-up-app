@@ -88,7 +88,6 @@ export const useEditingDeskStore = defineStore('editingDesk', {
       }
     },
     async loadArticleForReview(key) {
-      // FIXME:
       try {
         const articleContent = await fetchArticleContent(key)
         this.updateArticleInStore(articleContent)
