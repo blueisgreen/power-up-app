@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { ref, onMounted, reactive } from 'vue'
+import { ref, reactive } from 'vue'
 import { formatDate, prettyTrunc } from '../../composables/powerUpUtils'
 import { fetchMyInquiries, fetchRelatedMessages } from '../../api/PowerUpApi'
 import ShowMessage from './ShowMessage.vue'
@@ -66,7 +66,7 @@ export default {
   },
   async mounted() {
     const msgs = await fetchMyInquiries()
-    msgs.forEach((msg) => this.myMessages.value.push(msg))
+    msgs.forEach((msg) => this.myMessages.push(msg))
   },
   methods: {
     async handleSelectMessage(id) {
