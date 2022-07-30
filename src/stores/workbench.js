@@ -9,78 +9,58 @@ import {
   archiveArticle,
   reviveArticle,
   purgeArticle,
-  fetchPendingArticles,
 } from '../api/PowerUpApi'
 
+/**
+ * Dedicated to authors for writing articles and managing their lifecycle.
+ */
 export const useWorkbenchStore = defineStore('workbench', {
   state: () => ({
-    articleList: [],
-    articlesById: {},
+    articles: {},
     draftArticle: {},
-    draftLesson: null,
-    articlesToReview: [],
   }),
   getters: {
-    articles() {
-      return this.articleList
-    },
-    originalOfDraft() {
-      return this.articlesById[this.draftArticle.id]
+    articleList: (state) => Object.values(state.articles),
+    lastSavedDraft() {
+      return this.articles[this.draftArticle.articleKey]
     },
     isDraftArticleDirty() {
-      const original = this.originalOfDraft || {}
+      const baseline = this.lastSavedDraft || {}
       return (
-        this.draftArticle.headline !== original.headline ||
-        this.draftArticle.byline !== original.byline ||
-        this.draftArticle.synopsis !== original.synopsis ||
-        this.draftArticle.content !== original.content
+        this.draftArticle.headline !== baseline.headline ||
+        this.draftArticle.byline !== baseline.byline ||
+        this.draftArticle.synopsis !== baseline.synopsis ||
+        this.draftArticle.content !== baseline.content
       )
     },
   },
   actions: {
-    updateArticle(article) {
-      this.articlesById[article.id] = article
-      const articleIndex = this.articleList.findIndex(
-        (item) => item.id === article.id
-      )
-      console.log('updating article at index', articleIndex)
-      this.articleList[articleIndex] = article
+    storeInArticles(article) {
+      const cachedArticle = this.articles[article.articleKey]
+      if (cachedArticle) {
+        Object.assign(cachedArticle, article)
+      } else {
+        this.articles[article.articleKey] = article
+      }
     },
-    async loadArticleIndex() {
+    clearArticles() {
+      this.articles = {}
+      this.draftArticle = {}
+    },
+    async loadArticlesAuthorOwns() {
       try {
-        this.articlesById = {}
-        this.articleList = []
+        this.clearArticles()
         const articles = await fetchMyArticles()
-        articles.forEach((article) => {
-          this.articleList.push(article)
-          this.articlesById[article.id] = article
-        })
+        articles.forEach((article) => this.storeInArticles(article))
       } catch (err) {
         console.error(err)
       }
     },
-    async loadPendingArticles() {
+    async loadArticleForEdit(articleKey) {
       try {
-        const articles = await fetchPendingArticles()
-        articles.sort((a, b) => a.requestedToPublishAt < b.requestedToPublishAt)
-        this.articlesToReview = articles
-      } catch (err) {
-        console.error(err)
-      }
-    },
-    async lazyLoadArticleContent(id) {
-      try {
-        const restOfArticle = await fetchMyArticle(id)
-        const article = this.articlesToReview.find((item) => item.id === id)
-        article.content = restOfArticle.content
-      } catch (err) {
-        console.error(err)
-      }
-    },
-    async loadArticleForEdit(id) {
-      try {
-        const original = this.articlesById[id]
-        const content = await fetchMyArticle(id)
+        const original = this.articles[articleKey]
+        const content = await fetchMyArticle(articleKey)
+        this.storeInArticles(content)
         this.draftArticle = Object.assign({}, original, content)
       } catch (err) {
         console.error(err)
@@ -89,8 +69,7 @@ export const useWorkbenchStore = defineStore('workbench', {
     async create(headline) {
       try {
         const article = await createArticle({ headline })
-        this.articlesById[article.id] = article
-        this.articleList.unshift(article)
+        this.storeInArticles(article)
       } catch (err) {
         console.error(err)
       }
@@ -98,7 +77,7 @@ export const useWorkbenchStore = defineStore('workbench', {
     async save(update) {
       try {
         const results = await saveArticle(update)
-        this.updateArticle(results)
+        this.storeInArticles(results)
       } catch (err) {
         console.error(err)
       }
@@ -106,48 +85,47 @@ export const useWorkbenchStore = defineStore('workbench', {
     async saveDraft() {
       try {
         const results = await saveArticle(this.draftArticle)
-        this.updateArticle(results)
+        this.storeInArticles(results)
       } catch (err) {
         console.error(err)
       }
     },
-    async publish(id) {
+    async publish(articleKey) {
       try {
-        const results = await publishArticle(id)
-        this.updateArticle(results)
+        const results = await publishArticle(articleKey)
+        this.storeInArticles(results)
       } catch (err) {
         console.error(err)
       }
     },
-    async retract(id) {
+    async retract(articleKey) {
       try {
-        const results = await retractArticle(id)
-        await this.updateArticle(results)
+        const results = await retractArticle(articleKey)
+        await this.storeInArticles(results)
       } catch (err) {
         console.error(err)
       }
     },
-    async archive(id) {
+    async archive(articleKey) {
       try {
-        const results = await archiveArticle(id)
-        this.updateArticle(results)
+        const results = await archiveArticle(articleKey)
+        this.storeInArticles(results)
       } catch (err) {
         console.error(err)
       }
     },
-    async revive(id) {
+    async revive(articleKey) {
       try {
-        const results = await reviveArticle(id)
-        this.updateArticle(results)
+        const results = await reviveArticle(articleKey)
+        this.storeInArticles(results)
       } catch (err) {
         console.error(err)
       }
     },
-    async purge(id) {
+    async purge(articleKey) {
       try {
-        await purgeArticle(id)
-        delete this.articlesById[id]
-        this.articleList = this.articleList.filter((item) => item.id === id)
+        await purgeArticle(articleKey)
+        delete this.articles[articleKey]
       } catch (err) {
         console.error(err)
       }

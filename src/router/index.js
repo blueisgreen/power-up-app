@@ -39,7 +39,7 @@ export default route(function ({ store /*, ssrContext*/ }) {
 
   Router.beforeEach((to, from, next) => {
     const userStore = useUserStore()
-    recordNav(to.name)
+    // recordNav(to.name)
     if (
       to.matched.some((record) => record.meta.requireAuth) &&
       !userStore.isSignedIn

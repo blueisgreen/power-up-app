@@ -35,7 +35,7 @@ const routes = [
         ],
       },
       {
-        path: 'article/:articleId',
+        path: 'article/:articleKey',
         name: 'ArticlePage',
         component: () => import('../pages/ArticleReaderPage.vue'),
         props: true,
@@ -90,11 +90,11 @@ const routes = [
           },
           {
             path: 'proofing',
-            name: 'ArticleProofing',
-            component: () => import('../pages/workbench/ArticleProofing.vue'),
+            name: 'ArticleEditingDesk',
+            component: () => import('../pages/workbench/ArticleEditingDesk.vue'),
           },
           {
-            path: 'articles/edit/:articleId',
+            path: 'articles/edit/:articleKey',
             name: 'ArticleComposer',
             component: () => import('../pages/workbench/ArticleComposer.vue'),
           },

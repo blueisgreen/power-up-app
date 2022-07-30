@@ -1,7 +1,7 @@
 <template>
   <div class="text-h4">Articles</div>
-  <p v-if="!workbench.articles || workbench.articles.length < 1">None found</p>
-  <q-list v-if="workbench.articles.length" bordered separator dense>
+  <p v-if="workbench.articleList.length < 1">None found</p>
+  <q-list v-if="workbench.articleList.length" bordered separator dense>
     <q-item>
       <q-item-section>
         <q-item-label header>Headline / Byline</q-item-label>
@@ -13,12 +13,15 @@
         <q-item-label header>Actions</q-item-label>
       </q-item-section>
     </q-item>
-    <q-item v-for="article in workbench.articles" :key="article" v-ripple>
+    <q-item v-for="article in workbench.articleList" :key="article" v-ripple>
       <q-item-section>
         <q-item-label>{{ article.headline }}</q-item-label>
         <q-item-label caption>{{ article.byline }}</q-item-label>
       </q-item-section>
       <q-item-section>
+        <q-item-label v-if="article.hasMessage && !article.publishedAt">
+          <q-btn type="a" :to="{ name: 'SupportCenter' }" no-caps dense color="primary">You have a message about this.</q-btn>
+          </q-item-label>
         <q-item-label v-if="!!article.archivedAt"
           >Archived since {{ formatDayMonthYear(article.archivedAt) }}</q-item-label
         >

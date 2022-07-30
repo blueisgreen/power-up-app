@@ -8,7 +8,7 @@
       color="primary"
       icon="edit"
       :disable="!canEdit"
-      @click="() => editArticle(article.id)"
+      @click="() => editArticle(article.articleKey)"
     />
     <q-btn
       v-if="canPublish"
@@ -18,7 +18,7 @@
       label="Publish"
       color="positive"
       icon="publish"
-      @click="() => workbench.publish(article.id)"
+      @click="() => workbench.publish(article.articleKey)"
     />
     <q-btn
       v-if="canRetract"
@@ -28,7 +28,7 @@
       label="Retract"
       color="warning"
       icon="unpublished"
-      @click="() => workbench.retract(article.id)"
+      @click="() => workbench.retract(article.articleKey)"
     />
     <q-btn
       v-if="canArchive"
@@ -38,7 +38,7 @@
       label="Archive"
       color="warning"
       icon="archive"
-      @click="() => workbench.archive(article.id)"
+      @click="() => workbench.archive(article.articleKey)"
     />
     <q-btn
       v-if="canRestore"
@@ -48,7 +48,7 @@
       label="Revive"
       color="positive"
       icon="unarchive"
-      @click="() => workbench.revive(article.id)"
+      @click="() => workbench.revive(article.articleKey)"
     />
     <q-btn
       v-if="canDelete"
@@ -58,7 +58,7 @@
       label="Delete"
       color="negative"
       icon="delete"
-      @click="() => workbench.purge(article.id)"
+      @click="() => workbench.purge(article.articleKey)"
     />
   </q-btn-group>
 </template>
@@ -104,8 +104,8 @@ export default defineComponent({
     },
   },
   methods: {
-    editArticle(id) {
-      this.$router.push({ name: 'ArticleComposer', params: { articleId: id } })
+    editArticle(key) {
+      this.$router.push({ name: 'ArticleComposer', params: { articleKey: key } })
     },
   },
 })

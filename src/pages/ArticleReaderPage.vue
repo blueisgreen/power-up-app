@@ -35,11 +35,11 @@ export default {
   },
   computed: {
     activeArticle() {
-      return this.context.article(this.$route.params.articleId)
+      return this.context.article(this.$route.params.articleKey)
     },
   },
   created() {
-    this.context.loadArticle(this.$route.params.articleId)
+    this.context.loadArticle(this.$route.params.articleKey)
   },
   methods: {},
 }

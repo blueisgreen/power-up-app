@@ -1,6 +1,7 @@
 <template>
   <q-page class="q-pa-md">
-    <h4>Article {{ $route.params.articleId }}: {{ draft.headline }}</h4>
+    <h4>Article: {{ draft.headline }}</h4>
+    <div class="q-gutter-sm">Key: {{ $route.params.articleKey }}</div>
     <div>
       <q-form class="q-gutter-sm">
         <q-input
@@ -100,7 +101,7 @@ export default {
     }
   },
   async created() {
-    await this.workbench.loadArticleForEdit(this.$route.params.articleId)
+    await this.workbench.loadArticleForEdit(this.$route.params.articleKey)
     this.draft = this.workbench.draftArticle
   },
   methods: {
