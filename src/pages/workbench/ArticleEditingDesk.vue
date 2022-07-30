@@ -136,11 +136,13 @@ export default defineComponent({
     const workbench = useWorkbenchStore()
     const editingDesk = useEditingDeskStore()
     const filterLimitOptions = ['10', '25', '50', '100']
+    const defaultRejectMsg =
+      'If you would like more information, please email support@happyspiritpublishing.com.'
     return {
       active: ref(null),
       sendBackPopup: ref(false),
       articleToSendBack: ref(null),
-      explanation: ref('This article violates the terms that you agreed to.'),
+      explanation: ref(defaultRejectMsg),
       workbench,
       editingDesk,
       formatDayMonthYear,
@@ -175,7 +177,10 @@ export default defineComponent({
     },
     async decline() {
       if (this.articleToSendBack) {
-        this.editingDesk.denyToPublish(this.articleToSendBack.articleKey, this.explanation)
+        this.editingDesk.denyToPublish(
+          this.articleToSendBack.articleKey,
+          this.explanation
+        )
         this.clearSelected()
         this.sendBackPopup = false
       } else {
