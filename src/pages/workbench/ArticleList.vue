@@ -19,6 +19,9 @@
         <q-item-label caption>{{ article.byline }}</q-item-label>
       </q-item-section>
       <q-item-section>
+        <q-item-label v-if="article.hasMessage && !article.publishedAt">
+          <q-btn type="a" :to="{ name: 'SupportCenter' }" no-caps dense color="primary">You have a message about this.</q-btn>
+          </q-item-label>
         <q-item-label v-if="!!article.archivedAt"
           >Archived since {{ formatDayMonthYear(article.archivedAt) }}</q-item-label
         >
