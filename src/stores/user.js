@@ -63,6 +63,7 @@ export const useUserStore = defineStore('user', {
       this.$reset()
     },
     loadProfile(payload) {
+      console.log(payload)
       this.alias = payload.alias
       this.email = payload.email
       this.avatarUrl = payload.avatarUrl

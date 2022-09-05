@@ -33,7 +33,7 @@ export async function updateOwnProfile(updates) {
   console.log('PowerUpService.updateOwnProfile')
   // TODO: - verify jwt in header before sending
   console.log(api.defaults.headers.common['Authorization'])
-  return await api.put('/my/profile', updates)
+  return await api.put('/myself', updates)
 }
 
 export async function agreeToTerms() {
