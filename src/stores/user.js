@@ -116,9 +116,9 @@ export const useUserStore = defineStore('user', {
       this.loadProfile(profile.data)
     },
     async askToBecomeAuthor() {
-      const profile = await becomeAuthor()
+      const profile = await becomeAuthor(this.alias)
       console.log('became writer', profile.data)
-      this.loadProfile(profile.data)
+      this.loadContext(profile.data)
     },
     async updateAgreeToTerms() {
       const result = await agreeToTerms()

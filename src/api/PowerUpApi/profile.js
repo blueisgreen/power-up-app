@@ -30,9 +30,9 @@ export async function becomeMember(alias, okToTerms, okToCookies) {
   })
 }
 
-export async function becomeAuthor() {
+export async function becomeAuthor(penName = 'A. Nonymous') {
   console.log('PowerUpService.becomeAuthor')
-  return await api.post('/myself/author')
+  return await api.post('/myself/author', { penName })
 }
 
 /**
