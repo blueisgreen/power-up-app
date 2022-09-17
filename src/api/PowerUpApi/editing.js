@@ -4,7 +4,7 @@ export async function fetchArticlesForEditorReview(filter) {
   console.log('PowerUpAPI.fetchArticlesForEditorReview')
   try {
     const queryStr = filter.buildQueryString()
-    const results = await api.get(`/workbench/editing?${queryStr}`)
+    const results = await api.get(`/articles/editing?${queryStr}`)
     return results.data
   } catch (err) {
     console.error(err)
@@ -15,7 +15,7 @@ export async function fetchArticlesForEditorReview(filter) {
 export async function fetchArticleContent(key) {
   console.log('PowerUpAPI.fetchArticleContent', key)
   try {
-    const results = await api.get(`/workbench/editing/${key}`)
+    const results = await api.get(`/articles/authoring/${key}`)
     return results.data
   } catch (err) {
     console.error(err)
@@ -30,7 +30,7 @@ export async function denyToPublishArticle(key, message) {
       message,
     }
     const results = await api.put(
-      `/workbench/editing/${key}/denyToPublish`,
+      `/articles/editing/${key}/deny-to-publish`,
       payload
     )
     return results.data
