@@ -8,6 +8,21 @@ export async function oauthLogin(authProvider, code, state) {
   console.log(response)
 }
 
+export async function fetchOwnContext() {
+  console.log('PowerUpService.fetchOwnContext')
+  return await api.get('/myself/')
+}
+
+export async function fetchOwnProfile() {
+  console.log('PowerUpService.fetchOwnProfile')
+  return await api.get('/myself/profile')
+}
+
+export async function updateOwnProfile(updates) {
+  console.log('PowerUpService.updateOwnProfile')
+  return await api.put('/myself/profile', updates)
+}
+
 export async function becomeMember(alias, okToTerms, okToCookies) {
   console.log('PowerUpService.becomeMember')
   return await api.post('/myself/join', {
@@ -18,20 +33,6 @@ export async function becomeMember(alias, okToTerms, okToCookies) {
 export async function becomeAuthor() {
   console.log('PowerUpService.becomeAuthor')
   return await api.post('/myself/author')
-}
-
-export async function fetchOwnProfile() {
-  console.log('PowerUpService.fetchOwnProfile')
-  // TODO: - verify jwt in header before sending
-  console.log(api.defaults.headers.common['Authorization'])
-  return await api.get('/myself/profile')
-}
-
-export async function updateOwnProfile(updates) {
-  console.log('PowerUpService.updateOwnProfile')
-  // TODO: - verify jwt in header before sending
-  console.log(api.defaults.headers.common['Authorization'])
-  return await api.put('/myself/profile', updates)
 }
 
 /**

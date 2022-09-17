@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import {
   fetchOwnProfile,
   updateOwnProfile,
-  agreeToTerms,
   agreeToEmailComms,
   agreeToCookies,
   becomeMember,
@@ -11,9 +10,10 @@ import {
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    userId: null,
+    userKey: null,
     alias: null,
-    roles: [],
+    accountStatus: null,
+    roles: {},
     email: null,
     avatarUrl: null,
     createdAt: null,
@@ -23,59 +23,71 @@ export const useUserStore = defineStore('user', {
   }),
   getters: {
     isSignedIn() {
-      return this.userId !== null
+      return this.userKey !== null
     },
-    hasRole() {
-      return (roleToCheck) => this.roles.includes(roleToCheck)
-    },
-    isMember() {
-      return this.hasRole('member')
-    },
-    isAuthor() {
-      return this.hasRole('author')
-    },
-    isEditor() {
-      return this.hasRole('editor')
-    },
-    isEditorInChief() {
-      return this.hasRole('editorInChief')
+    hasRole: (state) => {
+      return (roleToCheck) => !!state.roles[roleToCheck]
     },
     isAdmin() {
-      return this.hasRole('admin')
+      return this.roles.admin
     },
-    areTermsOkay() {
+    isAuthor() {
+      return this.roles.author
+    },
+    isEditor() {
+      return this.roles.editor
+    },
+    isMember() {
+      return this.roles.member
+    },
+    isModerator() {
+      return this.roles.moderator
+    },
+    isProducer() {
+      return this.roles.producer
+    },
+    isSupport() {
+      return this.roles.support
+    },
+    isTermsOkay() {
       return !!this.termsAcceptedAt
     },
     isEmailOkay() {
       return !!this.emailCommsAcceptedAt
     },
-    areCookiesOkay() {
+    isCookiesOkay() {
       return !!this.cookiesAcceptedAt
     },
   },
   actions: {
     signInUser(user) {
-      this.userId = user.who
+      console.log(user)
+      this.userKey = user.userKey
       this.alias = user.alias
-      this.roles = user.roles
+      user.roles.forEach((role) => (this.roles[role] = true))
     },
     signOutUser() {
       this.$reset()
     },
+    loadContext(payload) {
+      console.log(payload)
+      this.userKey = payload.userKey
+      this.alias = payload.alias
+      this.accountStatus = payload.accountStatus
+      this.roles = payload.hasRole
+    },
     loadProfile(payload) {
       console.log(payload)
+      this.userKey = payload.userKey
       this.alias = payload.alias
       this.email = payload.email
       this.avatarUrl = payload.avatarUrl
+      this.accountStatus = payload.accountStatus
       this.createdAt = payload.createdAt
       this.updatedAt = payload.updatedAt
       this.termsAcceptedAt = payload.termsAcceptedAt
       this.cookiesAcceptedAt = payload.cookiesAcceptedAt
       this.emailCommsAcceptedAt = payload.emailCommsAcceptedAt
-      this.accountStatusId = payload.accountStatusId
-      if (payload.roles) {
-        this.roles = payload.roles
-      }
     },
     setAlias(alias) {
       this.alias = alias
@@ -85,6 +97,10 @@ export const useUserStore = defineStore('user', {
     },
     setAvatarUrl(avatarUrl) {
       this.alias = avatarUrl
+    },
+    async fetchMyContext() {
+      const profile = await fetchOwnProfile()
+      this.loadProfile(profile.data)
     },
     async fetchMyProfile() {
       const profile = await fetchOwnProfile()
