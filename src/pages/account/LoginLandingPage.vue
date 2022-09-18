@@ -32,7 +32,7 @@ export default {
     const authDetails = jwtDecode(token)
     this.userStore.signInUser(authDetails.user)
 
-    console.log('user is', this.userStore.alias, this.userStore.userId)
+    console.log('user is', this.userStore.alias, this.userStore.userKey)
     console.log('service says redirect to', goTo)
 
     const destination = this.userStore.isMember
