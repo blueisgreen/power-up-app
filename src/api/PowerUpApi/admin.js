@@ -22,7 +22,7 @@ export async function fetchUserRoles(userKey) {
 
 export async function addUserRole(userKey, role) {
   try {
-    const results = await api.put(`/admin/users/${userKey}/roles/${role}`)
+    const results = await api.put(`/admin/users/${userKey}/roles`, [role])
     return results.status === 204
   } catch (err) {
     console.error(err)
@@ -32,7 +32,7 @@ export async function addUserRole(userKey, role) {
 
 export async function removeUserRole(userKey, role) {
   try {
-    const results = await api.delete(`/admin/users/${userKey}/roles/${role}`)
+    const results = await api.delete(`/admin/users/${userKey}/roles`, [role])
     return results.status === 204
   } catch (err) {
     console.error(err)

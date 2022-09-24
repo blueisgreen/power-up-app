@@ -21,3 +21,14 @@ export async function fetchArticle(key) {
     return null
   }
 }
+
+export async function fetchCompleteArticle(key) {
+  console.log('PowerUpAPI.fetchArticle', key)
+  try {
+    const results = await api.get(`/articles/${key}/full`)
+    return results.data
+  } catch (err) {
+    console.error(err)
+    return null
+  }
+}

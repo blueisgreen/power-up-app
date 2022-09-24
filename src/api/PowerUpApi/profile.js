@@ -8,37 +8,31 @@ export async function oauthLogin(authProvider, code, state) {
   console.log(response)
 }
 
-export async function becomeMember(alias, okToTerms, okToCookies) {
-  console.log('PowerUpService.becomeMember')
-  return await api.post('/my/account/member', {
-    alias,
-    okToTerms,
-    okToCookies,
-  })
-}
-
-export async function becomeAuthor() {
-  console.log('PowerUpService.becomeAuthor')
-  return await api.post('/my/account/author')
+export async function fetchOwnContext() {
+  console.log('PowerUpService.fetchOwnContext')
+  return await api.get('/myself/')
 }
 
 export async function fetchOwnProfile() {
   console.log('PowerUpService.fetchOwnProfile')
-  // TODO: - verify jwt in header before sending
-  console.log(api.defaults.headers.common['Authorization'])
-  return await api.get('/my/profile')
+  return await api.get('/myself/profile')
 }
 
 export async function updateOwnProfile(updates) {
   console.log('PowerUpService.updateOwnProfile')
-  // TODO: - verify jwt in header before sending
-  console.log(api.defaults.headers.common['Authorization'])
-  return await api.put('/myself', updates)
+  return await api.put('/myself/profile', updates)
 }
 
-export async function agreeToTerms() {
-  console.log('PowerUpService.agreeToTerms')
-  return await api.put('/my/termsOK')
+export async function becomeMember(alias, okToTerms, okToCookies) {
+  console.log('PowerUpService.becomeMember')
+  return await api.post('/myself/join', {
+    alias,
+  })
+}
+
+export async function becomeAuthor(penName = 'A. Nonymous') {
+  console.log('PowerUpService.becomeAuthor')
+  return await api.post('/myself/author', { penName })
 }
 
 /**
@@ -50,7 +44,7 @@ export async function agreeToTerms() {
  */
 export async function agreeToCookies() {
   console.log('PowerUpService.agreeToCookies')
-  return await api.put('/my/cookiesOK')
+  return await api.put('/myself/settings', { acceptCookies: true })
 }
 
 /**
@@ -61,5 +55,5 @@ export async function agreeToCookies() {
  */
 export async function agreeToEmailComms() {
   console.log('PowerUpService.agreeToEmailComms')
-  return await api.put('/my/emailCommsOK')
+  return await api.put('/myself/settings', { acceptEmailComms: true })
 }
